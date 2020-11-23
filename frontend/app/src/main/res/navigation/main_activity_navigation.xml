@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_navigation"
+    app:startDestination="@id/exampleFragment">
+
+    <fragment
+        android:id="@+id/exampleFragment"
+        android:name="com.wsiz.projekt_zespolowy.ExampleFragment"
+        tools:layout="@layout/example_fragment_layout">
+
+        <action
+            android:id="@+id/action_exampleFragment_to_exampleFragment2"
+            app:destination="@id/exampleFragment2"
+            app:enterAnim="@anim/appearing_alpha"
+            app:exitAnim="@anim/disappearing_alpha"
+            app:popEnterAnim="@anim/appearing_alpha"
+            app:popExitAnim="@anim/disappearing_alpha" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/exampleFragment2"
+        android:name="com.wsiz.projekt_zespolowy.ExampleFragment2"
+        tools:layout="@layout/example_fragment_2_layout">
+
+        <action
+            android:id="@+id/action_exampleFragment2_to_exampleFragment3"
+            app:destination="@id/exampleFragment3"
+            app:enterAnim="@anim/appearing_alpha"
+            app:exitAnim="@anim/disappearing_alpha"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/appearing_alpha"
+            app:popExitAnim="@anim/disappearing_alpha" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/exampleFragment3"
+        android:name="com.wsiz.projekt_zespolowy.ExampleFragment3"
+        tools:layout="@layout/example_fragment_3_layout">
+
+        <action
+            android:id="@+id/action_exampleFragment3_to_exampleFragment"
+            app:destination="@id/exampleFragment"
+            app:enterAnim="@anim/appearing_alpha"
+            app:exitAnim="@anim/disappearing_alpha"
+            app:popEnterAnim="@anim/appearing_alpha"
+            app:popExitAnim="@anim/disappearing_alpha" />
+    </fragment>
+</navigation>
