@@ -1,10 +1,11 @@
-package com.wsiz.projekt_zespolowy
+package com.wsiz.projekt_zespolowy.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.wsiz.projekt_zespolowy.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/exampleFragment"
-        android:name="com.wsiz.projekt_zespolowy.ExampleFragment"
-        tools:layout="@layout/example_fragment_layout">
+        android:name="com.wsiz.projekt_zespolowy.fragment.home.HomeFragment"
+        tools:layout="@layout/home_fragment_layout">
 
         <action
             android:id="@+id/action_exampleFragment_to_exampleFragment2"
@@ -21,8 +21,8 @@
 
     <fragment
         android:id="@+id/exampleFragment2"
-        android:name="com.wsiz.projekt_zespolowy.ExampleFragment2"
-        tools:layout="@layout/example_fragment_2_layout">
+        android:name="com.wsiz.projekt_zespolowy.fragment.ArticlesFragment"
+        tools:layout="@layout/articles_fragment_layout">
 
         <action
             android:id="@+id/action_exampleFragment2_to_exampleFragment3"
@@ -36,8 +36,8 @@
 
     <fragment
         android:id="@+id/exampleFragment3"
-        android:name="com.wsiz.projekt_zespolowy.ExampleFragment3"
-        tools:layout="@layout/example_fragment_3_layout">
+        android:name="com.wsiz.projekt_zespolowy.fragment.UserFragment"
+        tools:layout="@layout/add_post_fragment_layout">
 
         <action
             android:id="@+id/action_exampleFragment3_to_exampleFragment"
