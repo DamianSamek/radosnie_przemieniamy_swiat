@@ -7,5 +7,5 @@ import pl.edu.wsiz.model.Post;
 
 public interface PostRepository extends CoreRepository<Post, Long> {
 
-	List<Post> findAllByUserIdOrderByCreateDateDesc(Long userId);
+	List<Post> findAllByUser_IdOrderByCreateDateDesc(Long userId);
 }

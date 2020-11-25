@@ -49,7 +49,7 @@ public class PostService extends CrudServiceImpl<Post> {
 	}
 
 	public List<Post> listByUserId(Long userId) {
-		return getRepository().findAllByUserIdOrderByCreateDateDesc(userId);
+		return getRepository().findAllByUser_IdOrderByCreateDateDesc(userId);
 	}
 	
 	public void like(Long id) {

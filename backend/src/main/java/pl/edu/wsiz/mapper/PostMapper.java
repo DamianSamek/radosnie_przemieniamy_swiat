@@ -6,10 +6,11 @@ import pl.edu.wsiz.core.CoreMapper;
 import pl.edu.wsiz.field.PostField;
 import pl.edu.wsiz.model.Post;
 
-public class PostMapper extends CoreMapper<Post>{ 
+public class PostMapper extends CoreMapper<Post> {
 
 	private static final long serialVersionUID = 1L;
-	{
+
+	public PostMapper() {
 		addFilter(Post.class, SimpleBeanPropertyFilter.serializeAllExcept(PostField.USER, PostField.USERS_WHO_LIKE));
 	}
 }
