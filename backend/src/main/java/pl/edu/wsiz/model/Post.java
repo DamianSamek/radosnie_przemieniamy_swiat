@@ -1,6 +1,7 @@
 package pl.edu.wsiz.model;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -49,7 +50,7 @@ public class Post extends BaseEntity {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "likes", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "user_id") })
-	Set<User> usersWhoLike;
+	Set<User> usersWhoLike = new HashSet<>();
 
 	public Long getUserId() {
 		return user.getId();

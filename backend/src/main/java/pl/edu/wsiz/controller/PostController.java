@@ -36,4 +36,10 @@ public class PostController extends CrudController<Post, PostService> {
 		List<Post> posts = getService().listByUserId(id);
 		return ResponseEntity.ok().body(postMapper.writeValueAsString(posts));
 	}
+	
+	@RequestMapping(value = "/like/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<String> like(@PathVariable Long id) throws JsonProcessingException {
+		getService().like(id);
+		return ResponseEntity.ok().body("{}");
+	}
 }
