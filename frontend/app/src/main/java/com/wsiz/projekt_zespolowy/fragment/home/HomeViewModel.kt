@@ -10,9 +10,6 @@ class HomeViewModel : ViewModel() {
 
     init {
         dominikaParaText.postValue("Dominika")
-    }
-
-    fun changeText() {
         Handler().postDelayed({
             dominikaParaText.postValue("Para")
         }, 3000)

@@ -26,10 +26,4 @@ class HomeFragment : Fragment() {
         binding.setVariable(BR.viewModel, viewModel)
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.viewModel?.changeText()
-    }
 }
