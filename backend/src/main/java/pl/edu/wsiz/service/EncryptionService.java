@@ -1,4 +1,4 @@
-package pl.edu.wsiz.service.impl;
+package pl.edu.wsiz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
