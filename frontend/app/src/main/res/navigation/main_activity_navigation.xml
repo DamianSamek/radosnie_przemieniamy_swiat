@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_activity_navigation"
-    app:startDestination="@id/exampleFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/exampleFragment"
+        android:id="@+id/homeFragment"
         android:name="com.wsiz.projekt_zespolowy.fragment.home.HomeFragment"
         tools:layout="@layout/home_fragment_layout">
 
         <action
-            android:id="@+id/action_exampleFragment_to_exampleFragment2"
-            app:destination="@id/exampleFragment2"
+            android:id="@+id/action_homeFragment_to_userFragment"
+            app:destination="@id/userFragment"
             app:enterAnim="@anim/appearing_alpha"
             app:exitAnim="@anim/disappearing_alpha"
             app:popEnterAnim="@anim/appearing_alpha"
@@ -20,31 +20,31 @@
     </fragment>
 
     <fragment
-        android:id="@+id/exampleFragment2"
-        android:name="com.wsiz.projekt_zespolowy.fragment.ArticlesFragment"
-        tools:layout="@layout/articles_fragment_layout">
-
-        <action
-            android:id="@+id/action_exampleFragment2_to_exampleFragment3"
-            app:destination="@id/exampleFragment3"
-            app:enterAnim="@anim/appearing_alpha"
-            app:exitAnim="@anim/disappearing_alpha"
-            app:launchSingleTop="true"
-            app:popEnterAnim="@anim/appearing_alpha"
-            app:popExitAnim="@anim/disappearing_alpha" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/exampleFragment3"
+        android:id="@+id/userFragment"
         android:name="com.wsiz.projekt_zespolowy.fragment.UserFragment"
-        tools:layout="@layout/add_post_fragment_layout">
+        tools:layout="@layout/user_fragment_layout">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/articlesFragment"
+        android:name="com.wsiz.projekt_zespolowy.fragment.ArticlesFragment"
+        tools:layout="@layout/home_fragment_layout">
 
         <action
-            android:id="@+id/action_exampleFragment3_to_exampleFragment"
-            app:destination="@id/exampleFragment"
+            android:id="@+id/action_homeFragment_to_userFragment"
+            app:destination="@id/oneArticleFragment"
             app:enterAnim="@anim/appearing_alpha"
             app:exitAnim="@anim/disappearing_alpha"
             app:popEnterAnim="@anim/appearing_alpha"
             app:popExitAnim="@anim/disappearing_alpha" />
     </fragment>
+
+    <fragment
+        android:id="@+id/oneArticleFragment"
+        android:name="com.wsiz.projekt_zespolowy.fragment.OneArticleFragment"
+        tools:layout="@layout/user_fragment_layout">
+
+    </fragment>
+
 </navigation>
