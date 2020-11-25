@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-public class CrudController<E extends BaseEntity, S extends CrudService<E>> {
+public abstract class CrudController<E extends BaseEntity, S extends CrudService<E>> {
 
 	public static final String UPDATE = "/update";
 	public static final String DETAILS = "/details/{id}";
@@ -22,9 +22,7 @@ public class CrudController<E extends BaseEntity, S extends CrudService<E>> {
 
 	ObjectMapper mapper;
 
-	protected S getService() {
-		return null;
-	};
+	protected abstract S getService();
 
 	@PostConstruct
 	public void postConstruct() {

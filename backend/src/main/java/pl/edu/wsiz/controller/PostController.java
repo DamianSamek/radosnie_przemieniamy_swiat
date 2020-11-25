@@ -22,13 +22,18 @@ import pl.edu.wsiz.service.PostService;
 public class PostController extends CrudController<Post, PostService> {
 
 	PostMapper postMapper = new PostMapper();
-	
+
 	@Autowired
 	PostService postService;
-	
+
+	@Override
+	protected PostService getService() {
+		return postService;
+	}
+
 	@RequestMapping(value = "/get-by-user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<String> getByUserId(@PathVariable Long id) throws JsonProcessingException {
-		List<Post> posts = postService.listByUserId(id);
+		List<Post> posts = getService().listByUserId(id);
 		return ResponseEntity.ok().body(postMapper.writeValueAsString(posts));
 	}
 }
