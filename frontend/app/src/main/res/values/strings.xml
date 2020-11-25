@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Radośnie Przemieniamy Świat</string>
+
+    <string name="add_post_fragment_post_description_hint">Dodaj opis</string>
+    <string name="add_post_fragment_add_post">Dodaj</string>
+    <string name="add_post_fragment_choose_image">Wybierz zdjęcie</string>
 </resources>

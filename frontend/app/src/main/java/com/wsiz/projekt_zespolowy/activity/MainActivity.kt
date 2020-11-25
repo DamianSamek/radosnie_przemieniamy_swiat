@@ -1,5 +1,6 @@
 package com.wsiz.projekt_zespolowy.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -20,5 +21,27 @@ class MainActivity : AppCompatActivity() {
         val navigationHost: NavHostFragment =
                 supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         return navigationHost.navController
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        val hostFragment = supportFragmentManager.fragments[0] as NavHostFragment
+        for(fragment in hostFragment.childFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        val hostFragment = supportFragmentManager.fragments[0] as NavHostFragment
+        for(fragment in hostFragment.childFragmentManager.fragments) {
+            fragment.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
     }
 }

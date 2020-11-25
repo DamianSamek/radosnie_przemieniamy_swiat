@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/exampleFragment"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/ic_launcher_background"
         android:menuCategory="secondary"
         android:title="Home" />
 
     <item
-        android:id="@+id/exampleFragment2"
+        android:id="@+id/articlesFragment"
         android:icon="@drawable/ic_launcher_background"
         android:menuCategory="secondary"
         android:title="News" />
 
     <item
-        android:id="@+id/exampleFragment3"
+        android:id="@+id/addPostFragment"
+        android:icon="@drawable/ic_launcher_background"
+        android:menuCategory="secondary"
+        android:title="Add post" />
+
+    <item
+        android:id="@+id/userFragment"
         android:icon="@drawable/ic_launcher_background"
         android:menuCategory="secondary"
         android:title="Account" />
+
 </menu>
