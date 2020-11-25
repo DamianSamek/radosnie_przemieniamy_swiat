@@ -8,8 +8,6 @@ import pl.edu.wsiz.core.CrudController;
 import pl.edu.wsiz.model.User;
 import pl.edu.wsiz.service.UserService;
 
-
-
 @RestController
 @RequestMapping("user")
 public class UserController extends CrudController<User, UserService> {
