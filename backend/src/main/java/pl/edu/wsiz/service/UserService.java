@@ -1,18 +1,17 @@
 package pl.edu.wsiz.service;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import pl.edu.wsiz.core.ApplicationException;
-import pl.edu.wsiz.core.CrudService;
-import pl.edu.wsiz.model.Post;
+import pl.edu.wsiz.core.CoreMapper;
+import pl.edu.wsiz.core.CrudServiceImpl;
+import pl.edu.wsiz.mapper.UserMapper;
 import pl.edu.wsiz.model.Role;
 import pl.edu.wsiz.model.User;
 import pl.edu.wsiz.repository.RoleRepository;
@@ -20,8 +19,10 @@ import pl.edu.wsiz.repository.UserRepository;
 import pl.edu.wsiz.util.ObjectUtilsExt;
 
 @Service
-public class UserService extends CrudService<User> {
+@Transactional(rollbackOn = Exception.class)
+public class UserService extends CrudServiceImpl<User> {
 
+	UserMapper userMapper = new UserMapper();
 	@Autowired
 	EncryptionService encryptionService;
 
@@ -34,6 +35,11 @@ public class UserService extends CrudService<User> {
 	@Override
 	protected UserRepository getRepository() {
 		return userRepository;
+	}
+
+	@Override
+	public CoreMapper<User> getMapper() {
+		return userMapper;
 	}
 
 	public String toJson(String username) throws JsonProcessingException {
@@ -52,10 +58,9 @@ public class UserService extends CrudService<User> {
 			return null;
 		}
 		return getRepository().findByUsername(loggedUserName);
-
 	}
 
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackOn = Exception.class)
 	public void createUser(User user) throws Exception {
 
 		if (getRepository().existsByUsername(user.getUsername())) {

@@ -15,11 +15,10 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 public class CrudController<E extends BaseEntity, S extends CrudService<E>> {
 
-	public static final String CREATE = "/create";
 	public static final String UPDATE = "/update";
-	public static final String DELETE = "/delete/{id}";
 	public static final String DETAILS = "/details/{id}";
 	public static final String LIST = "list";
+	public static final String CREATE = "/create";
 
 	ObjectMapper mapper;
 
@@ -36,7 +35,7 @@ public class CrudController<E extends BaseEntity, S extends CrudService<E>> {
 		mapper.setFilterProvider(filterProvider);
 	}
 
-	@RequestMapping(value = CREATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value=CREATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<String> create(@RequestBody E entity) throws Exception {
 		String response = getService().create(entity);
 		return ResponseEntity.ok().body(response);
@@ -53,8 +52,13 @@ public class CrudController<E extends BaseEntity, S extends CrudService<E>> {
 		String list = getService().listJson();
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@RequestMapping(value = UPDATE, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<String> update(@RequestBody E entity) throws Exception {
+		return ResponseEntity.ok().body(getService().update(entity));
+	}
 
-	@RequestMapping(value = DELETE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<String> delete(@PathVariable long id) throws Exception {
 		getService().delete(id);
 		return ResponseEntity.ok().body("");

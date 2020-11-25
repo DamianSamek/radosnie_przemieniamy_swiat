@@ -9,21 +9,17 @@ import org.springframework.core.GenericTypeResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Transactional(rollbackOn = Exception.class)
-public class CrudService<E extends BaseEntity> {
+public abstract class CrudServiceImpl<E extends BaseEntity> implements CrudService<E> {
 
-	public ObjectMapper getMapper() {
-		return null;
-	};
+	public abstract CoreMapper<E> getMapper();
 
-	protected CoreRepository<E, Long> getRepository() {
-		return null;
-	};
+	protected abstract CoreRepository<E, Long> getRepository();
 
 	private Class<E> persistentClass;
 
 	@SuppressWarnings("unchecked")
-	public CrudService() {
-		this.persistentClass = (Class<E>) GenericTypeResolver.resolveTypeArguments(getClass(), CrudService.class)[0];
+	public CrudServiceImpl() {
+		this.persistentClass = (Class<E>) GenericTypeResolver.resolveTypeArguments(getClass(), CrudServiceImpl.class)[0];
 	}
 
 	public E get(long id) {
@@ -53,8 +49,10 @@ public class CrudService<E extends BaseEntity> {
 	}
 
 	public String update(E entity) throws Exception {
-		getRepository().saveAndFlush(entity);
-		return getMapper().writeValueAsString(entity);
+		E entityToUpdate = get(entity.getId());
+		preUpdate(entityToUpdate, entity);
+		getRepository().saveAndFlush(entityToUpdate);
+		return getMapper().writeValueAsString(entityToUpdate);
 	}
 
 	public void delete(long id) {
@@ -74,5 +72,8 @@ public class CrudService<E extends BaseEntity> {
 	public void preCreate(E entity) throws Exception {
 		return;
 	}
-
+	
+	protected void preUpdate(E entityToUpdate, E newEntity) {
+		
+	}
 }

@@ -1,17 +1,23 @@
 package pl.edu.wsiz.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import pl.edu.wsiz.core.BaseEntity;
+import pl.edu.wsiz.field.PostField;
 
 @Entity
 @Table(name = "user")
@@ -34,6 +40,10 @@ public class User extends BaseEntity {
 
 	@Column
 	private Boolean enabled = Boolean.TRUE;
+	
+	@OneToMany(mappedBy = PostField.USER)
+	@OrderBy(PostField.CREATE_DATE+" DESC")
+	Set<Post> posts;
 
 	public Long getId() {
 		return id;
@@ -51,6 +61,7 @@ public class User extends BaseEntity {
 		this.username = username;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -73,6 +84,14 @@ public class User extends BaseEntity {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
 	}
 
 }
