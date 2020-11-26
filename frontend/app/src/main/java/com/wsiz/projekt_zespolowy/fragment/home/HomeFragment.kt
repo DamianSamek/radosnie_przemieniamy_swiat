@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment_layout, container, false)
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, viewModel)
