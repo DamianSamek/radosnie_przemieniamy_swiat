@@ -27,5 +27,7 @@ public interface CrudService <E extends BaseEntity> {
 	
 	void preCreate(E entity) throws Exception;
 	
+	void preDelete(E entity);
+	
 	
 }

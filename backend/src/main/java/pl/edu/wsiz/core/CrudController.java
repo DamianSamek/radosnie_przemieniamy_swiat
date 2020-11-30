@@ -19,7 +19,8 @@ public abstract class CrudController<E extends BaseEntity, S extends CrudService
 	public static final String DETAILS = "/details/{id}";
 	public static final String LIST = "list";
 	public static final String CREATE = "/create";
-
+	public static final String DELETE = "/delete/{id}";
+	
 	ObjectMapper mapper;
 
 	protected abstract S getService();
@@ -56,7 +57,7 @@ public abstract class CrudController<E extends BaseEntity, S extends CrudService
 		return ResponseEntity.ok().body(getService().update(entity));
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value= DELETE, method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<String> delete(@PathVariable long id) throws Exception {
 		getService().delete(id);
 		return ResponseEntity.ok().body("");

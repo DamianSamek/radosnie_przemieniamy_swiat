@@ -48,6 +48,11 @@ public class PostService extends CrudServiceImpl<Post> {
 		entityToUpdate.setImageURL(newEntity.getImageURL());
 	}
 
+	@Override
+	public void preDelete(Post entity) {
+		entity.getUsersWhoLike().clear();
+	}
+
 	public List<Post> listByUserId(Long userId) {
 		return getRepository().findAllByUser_IdOrderByCreateDateDesc(userId);
 	}

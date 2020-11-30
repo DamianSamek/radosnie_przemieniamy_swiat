@@ -62,6 +62,7 @@ public abstract class CrudServiceImpl<E extends BaseEntity> implements CrudServi
 	}
 
 	public void delete(E entity) {
+		preDelete(entity);
 		getRepository().delete(entity);
 	}
 
@@ -76,4 +77,6 @@ public abstract class CrudServiceImpl<E extends BaseEntity> implements CrudServi
 	protected void preUpdate(E entityToUpdate, E newEntity) {
 		
 	}
+	
+	public void preDelete(E entity) {}
 }

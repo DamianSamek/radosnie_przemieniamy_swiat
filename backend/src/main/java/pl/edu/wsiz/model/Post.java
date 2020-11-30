@@ -50,7 +50,7 @@ public class Post extends BaseEntity {
 	@NotNull
 	private LocalDateTime createDate;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name = "likes", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "user_id") })
 	Set<User> usersWhoLike = new HashSet<>();

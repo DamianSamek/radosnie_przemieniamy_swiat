@@ -60,7 +60,6 @@ public class UserService extends CrudServiceImpl<User> {
 		return getRepository().findByUsername(loggedUserName);
 	}
 
-	@Transactional(rollbackOn = Exception.class)
 	public void createUser(User user) throws Exception {
 
 		if (getRepository().existsByUsername(user.getUsername())) {
@@ -69,20 +68,8 @@ public class UserService extends CrudServiceImpl<User> {
 		String password = encryptionService.encode(user.getPassword());
 		user.setPassword(password);
 
-		String userRole = user.getRole().getRole();
-		Role role = roleRepository.findByRole(user.getRole().getRole());
+		Role role = roleRepository.findByRole("user");
 		user.setRole(role);
 		create(user);
-
-		switch (userRole) {
-		case "CLIENT": {
-
-			break;
-		}
-		case "SERVICE_PROVIDER": {
-			break;
-		}
-		}
 	}
-
 }
