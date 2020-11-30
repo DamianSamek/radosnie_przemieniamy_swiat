@@ -15,5 +15,7 @@ public class PostField extends CoreField {
 	public static final String LIKES_COUNT = "likesCount";
 	
 	public static final String USERS_WHO_LIKE = "usersWhoLike";
+	
+	public static final String IS_LIKED_BY_ME = "isLikedByMe";
 
 }

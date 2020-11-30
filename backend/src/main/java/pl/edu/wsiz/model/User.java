@@ -29,7 +29,7 @@ public class User extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column
+	@Column(unique = true)
 	private String username;
 
 	@ManyToOne
@@ -40,9 +40,9 @@ public class User extends BaseEntity {
 
 	@Column
 	private Boolean enabled = Boolean.TRUE;
-	
+
 	@OneToMany(mappedBy = PostField.USER)
-	@OrderBy(PostField.CREATE_DATE+" DESC")
+	@OrderBy(PostField.CREATE_DATE + " DESC")
 	Set<Post> posts;
 
 	public Long getId() {

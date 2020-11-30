@@ -17,10 +17,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import pl.edu.wsiz.core.BaseEntity;
+import pl.edu.wsiz.util.ObjectUtilsExt;
 
 @Entity
 @Table(name = "post")
@@ -51,6 +54,14 @@ public class Post extends BaseEntity {
 	@JoinTable(name = "likes", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "user_id") })
 	Set<User> usersWhoLike = new HashSet<>();
+	
+	public Boolean getIsLikedByMe() {
+		String loggedUserName = ObjectUtilsExt.get(() -> SecurityContextHolder.getContext().getAuthentication().getName());
+		if(loggedUserName == null) {
+			return false;
+		}
+		return usersWhoLike.stream().anyMatch( u -> loggedUserName.equals(u.getUsername()));
+	}
 
 	public Long getUserId() {
 		return user.getId();
