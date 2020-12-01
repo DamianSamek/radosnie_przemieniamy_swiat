@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +42,7 @@ public class Post extends BaseEntity {
 	@Column(name = "image_url")
 	private String imageURL;
 
-	@Column(name = "description", columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
 	@Column(name = "create_date", nullable = false)
@@ -54,13 +53,14 @@ public class Post extends BaseEntity {
 	@JoinTable(name = "likes", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "user_id") })
 	Set<User> usersWhoLike = new HashSet<>();
-	
+
 	public Boolean getIsLikedByMe() {
-		String loggedUserName = ObjectUtilsExt.get(() -> SecurityContextHolder.getContext().getAuthentication().getName());
-		if(loggedUserName == null) {
+		String loggedUserName = ObjectUtilsExt
+				.get(() -> SecurityContextHolder.getContext().getAuthentication().getName());
+		if (loggedUserName == null) {
 			return false;
 		}
-		return usersWhoLike.stream().anyMatch( u -> loggedUserName.equals(u.getUsername()));
+		return usersWhoLike.stream().anyMatch(u -> loggedUserName.equals(u.getUsername()));
 	}
 
 	public Long getUserId() {

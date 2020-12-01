@@ -41,6 +41,12 @@ public class UserService extends CrudServiceImpl<User> {
 	public CoreMapper<User> getMapper() {
 		return userMapper;
 	}
+	
+
+	@Override
+	protected void preUpdate(User entityToUpdate, User newEntity) {
+		entityToUpdate.setName(newEntity.getName());
+	}
 
 	public String toJson(String username) throws JsonProcessingException {
 		User user = getRepository().findByUsername(username);

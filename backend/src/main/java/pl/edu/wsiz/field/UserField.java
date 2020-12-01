@@ -11,4 +11,6 @@ public class UserField extends CoreField {
 	public static final String ENABLED = "enabled";
 
 	public static final String POSTS = "posts";
+	
+	public static final String NAME = "name";
 }

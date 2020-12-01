@@ -13,7 +13,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import pl.edu.wsiz.core.BaseEntity;
@@ -31,6 +30,9 @@ public class User extends BaseEntity {
 
 	@Column(unique = true)
 	private String username;
+	
+	@Column
+	private String name;
 
 	@ManyToOne
 	public Role role;
@@ -91,6 +93,14 @@ public class User extends BaseEntity {
 
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
