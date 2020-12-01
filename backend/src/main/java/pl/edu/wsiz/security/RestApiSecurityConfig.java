@@ -46,9 +46,9 @@ public class RestApiSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource)
-				.usersByUsernameQuery("select username , password, enabled from user where username=?")
+				.usersByUsernameQuery("select username , password, enabled from userr where username=?")
 				.authoritiesByUsernameQuery(
-						"select u.username, r.role from user u join role r on u.role_id = r.id where u.username=?")
+						"select u.username, r.role from userr u join role r on u.role_id = r.id where u.username=?")
 				.passwordEncoder(passwordEncoder);
 	}
 

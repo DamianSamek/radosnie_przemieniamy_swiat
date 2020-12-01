@@ -28,7 +28,7 @@ public class Article extends BaseEntity {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "userr_id", nullable = false)
 	@NotNull
 	private User user;
 	

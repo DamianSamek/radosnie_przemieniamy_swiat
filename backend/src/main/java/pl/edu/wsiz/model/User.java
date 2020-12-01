@@ -19,7 +19,7 @@ import pl.edu.wsiz.core.BaseEntity;
 import pl.edu.wsiz.field.PostField;
 
 @Entity
-@Table(name = "user")
+@Table(name = "userr")
 @JsonFilter("userFilter")
 @JsonPropertyOrder(alphabetic = true)
 public class User extends BaseEntity {
