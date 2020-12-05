@@ -1,6 +1,7 @@
 package com.wsiz.projekt_zespolowy.data.network
 
 import com.wsiz.projekt_zespolowy.data.network.service.ArticleService
+import com.wsiz.projekt_zespolowy.data.network.service.AuthenticationService
 import com.wsiz.projekt_zespolowy.data.network.service.PostService
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import dagger.Module
@@ -34,6 +35,11 @@ class ApiModule {
     @Provides
     fun providesArticleService(retrofit: Retrofit): ArticleService {
         return retrofit.create(ArticleService::class.java)
+    }
+
+    @Provides
+    fun providesAuthenticationService(retrofit: Retrofit): AuthenticationService {
+        return retrofit.create(AuthenticationService::class.java)
     }
 
     @Provides

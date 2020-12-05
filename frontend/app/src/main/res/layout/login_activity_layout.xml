@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wsiz.projekt_zespolowy.activity.login.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/loginView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="12dp"
+            android:enabled="@{viewModel.state != viewModel.State.LOADING}"
+            android:hint="@string/login_username_hint"
+            android:inputType="text"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toTopOf="@+id/glHorizontal50" />
+
+        <EditText
+            android:id="@+id/passwordView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="36dp"
+            android:enabled="@{viewModel.state != viewModel.State.LOADING}"
+            android:hint="@string/login_password_hint"
+            android:inputType="textPassword"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@+id/glHorizontal50" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:enabled="@{viewModel.state != viewModel.State.LOADING}"
+            android:onClick="@{() -> viewModel.login(loginView.getText().toString(), passwordView.getText().toString())}"
+            android:paddingStart="36dp"
+            android:paddingEnd="36dp"
+            android:text="@string/login_password_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordView" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glHorizontal50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

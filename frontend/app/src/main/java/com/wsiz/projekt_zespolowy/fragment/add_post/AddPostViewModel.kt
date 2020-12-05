@@ -27,6 +27,10 @@ class AddPostViewModel @ViewModelInject constructor(
         postImage.postValue(newPostImage)
     }
 
+    fun removeImage() {
+        postImage.postValue(null)
+    }
+
     fun addPost(description: String) {
         val bitmap = postImage.value
 

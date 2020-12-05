@@ -14,14 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RadośniePrzemieniamyŚwiat">
         <activity
-            android:name=".activity.MainActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:name=".activity.SplashActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.login.LoginActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

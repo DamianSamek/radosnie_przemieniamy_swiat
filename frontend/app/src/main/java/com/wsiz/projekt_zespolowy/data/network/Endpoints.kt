@@ -15,7 +15,10 @@ object Endpoints {
     const val UPDATE_POST = "$POST/update"
     const val GET_ALL_POSTS = "$POST/list"
     const val GET_USER_POSTS = "$POST/get-by-user/{$ID_PARAM}"
+    const val LIKE_POST = "$POST/like/{$ID_PARAM}"
 
     private const val ARTICLE = "article"
     const val GET_ALL_ARTICLES = "$ARTICLE/list"
+
+    const val LOGIN = "login"
 }

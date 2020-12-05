@@ -12,4 +12,8 @@ class HomeViewModel @ViewModelInject constructor(private val postRepository: Pos
     fun loadPosts(pageNumber: Int): Single<List<UserPost>> {
         return postRepository.getAll(pageNumber)
     }
+
+    fun like(postId: Int) {
+        postRepository.like(postId)
+    }
 }

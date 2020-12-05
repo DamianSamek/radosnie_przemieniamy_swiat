@@ -5,5 +5,7 @@ data class UserPostResponse(
     val imageURL: String,
     val userId: Int,
     val user: User,
+    val likesCount: Int,
+    val isLikedByMe: Boolean,
     val id: Int = -1
 )

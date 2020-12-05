@@ -1,5 +1,11 @@
 package com.wsiz.projekt_zespolowy.fragment.home
 
+import android.content.Context
+import android.graphics.Typeface
+import android.graphics.Typeface.BOLD
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +15,11 @@ import com.squareup.picasso.Picasso
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.PaginationAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
-import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 
-class PostsRecyclerViewAdapter(private val postInteractionContract: PostInteractionContract) :
+class PostsRecyclerViewAdapter(
+    private val postInteractionContract: PostInteractionContract
+) :
     PaginationAdapter<PostsRecyclerViewAdapter.PostViewHolder, UserPost>(postInteractionContract) {
-
-    private var currentUserId = -1
 
     override fun paginationGetItemCount() = items.size
 
@@ -22,13 +27,50 @@ class PostsRecyclerViewAdapter(private val postInteractionContract: PostInteract
         val post = items[position]
 
         holder.apply {
-            descriptionView.text = post.description
-            Picasso.get().load(post.imageURL).into(imageView)
+            likeIconView.setImageResource(if (post.isLikedByMe) R.drawable.ic_like_filled else R.drawable.ic_like_empty)
+            likeCountView.text = post.likesCount.toString()
+
+            Picasso.get().load(post.imageURL).noFade().into(imageView)
 
             itemView.setOnClickListener {
                 postInteractionContract.onPostClick(post)
             }
+
+            likeIconView.setOnClickListener {
+                postInteractionContract.onLikeClick(post)
+                val likesCount = if (post.isLikedByMe) post.likesCount - 1 else post.likesCount + 1
+                post.likesCount = likesCount
+                post.isLikedByMe = !post.isLikedByMe
+                notifyItemChanged(position, post)
+            }
+
+            likeCountView.setOnClickListener {
+                likeIconView.callOnClick()
+            }
+
+            authorDescriptionView.text =
+                getAuthorDescriptionSpannable(
+                    itemView.context,
+                    post.userName.toString(),
+                    post.description
+                )
         }
+    }
+
+    private fun getAuthorDescriptionSpannable(
+        context: Context,
+        author: String,
+        description: String
+    ): Spannable {
+        val itemText = String.format(
+            context.getString(R.string.post_author_description), author, description
+        )
+        val itemSpannable = SpannableString(itemText)
+
+        val authorEnd = author.length + 1
+        itemSpannable.setSpan(StyleSpan(BOLD), 0, authorEnd, 0)
+
+        return itemSpannable
     }
 
     override fun paginationOnCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -36,19 +78,15 @@ class PostsRecyclerViewAdapter(private val postInteractionContract: PostInteract
         return PostViewHolder(view)
     }
 
-    inner class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
-        val imageView: ImageView
-        val descriptionView: TextView
-
-        init {
-            if (currentUserId == -1) currentUserId = SharedPreferences(view.context).getUserId()
-
-            imageView = view.findViewById(R.id.imageView)
-            descriptionView = view.findViewById(R.id.descriptionView)
-        }
+    class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
+        val imageView: ImageView = view.findViewById(R.id.imageView)
+        val likeIconView: ImageView = view.findViewById(R.id.likeIconView)
+        val likeCountView: TextView = view.findViewById(R.id.likeCountView)
+        val authorDescriptionView: TextView = view.findViewById(R.id.authorDescriptionView)
     }
 
     interface PostInteractionContract : PaginationContract<UserPost> {
         fun onPostClick(userPost: UserPost)
+        fun onLikeClick(userPost: UserPost)
     }
 }

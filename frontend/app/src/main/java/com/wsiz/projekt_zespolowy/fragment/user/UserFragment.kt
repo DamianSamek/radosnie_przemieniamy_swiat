@@ -58,8 +58,13 @@ class UserFragment : Fragment(), PostsRecyclerViewAdapter.PostAdapterContract {
 
     override fun onPostClick(post: UserPost) {
         if (post.userId == sp.getUserId()) {
-            val direction = UserFragmentDirections.actionUserFragmentToEditPostFragment(Post.map(post))
+            val direction =
+                UserFragmentDirections.actionUserFragmentToEditPostFragment(Post.map(post))
             (activity as MainActivity).navigateTo(direction)
         }
+    }
+
+    override fun onLikeClick(post: UserPost) {
+        viewModel.like(post.id)
     }
 }

@@ -6,6 +6,7 @@ import com.wsiz.projekt_zespolowy.data.network.service.PostService
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class PostRepository @Inject constructor(private val postService: PostService) {
@@ -32,5 +33,9 @@ class PostRepository @Inject constructor(private val postService: PostService) {
                 UserPost.map(userPostResponse)
             }.toList()
         }
+    }
+
+    fun like(postId: Int) {
+        postService.like(postId).subscribeOn(Schedulers.io()).onErrorComplete().subscribe()
     }
 }

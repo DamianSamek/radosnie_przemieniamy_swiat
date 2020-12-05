@@ -51,4 +51,8 @@ class HomeFragment : Fragment(), PostsRecyclerViewAdapter.PostInteractionContrac
             )
         )
     }
+
+    override fun onLikeClick(userPost: UserPost) {
+        viewModel.like(userPost.id)
+    }
 }

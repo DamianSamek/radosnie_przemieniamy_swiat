@@ -9,9 +9,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCardView"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        app:cardCornerRadius="24dp"
+        android:layout_height="320dp"
         android:layout_margin="12dp"
+        app:cardCornerRadius="24dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -24,24 +24,49 @@
             tools:src="@drawable/ic_launcher_background" />
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/descriptionView"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/likeIconView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="3"
+        android:adjustViewBounds="true"
+        android:paddingStart="12dp"
+        android:paddingEnd="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageCardView"
+        tools:src="@drawable/ic_like_filled" />
+
+    <TextView
+        android:id="@+id/likeCountView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/imageCardView"
-        tools:text="Title" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/likeIconView"
+        app:layout_constraintStart_toEndOf="@+id/likeIconView"
+        app:layout_constraintTop_toTopOf="@+id/likeIconView"
+        tools:text="24" />
+
+    <TextView
+        android:id="@+id/authorDescriptionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/likeIconView"
+        tools:text="@string/post_author_description" />
 
     <View
         android:id="@+id/separatorView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginTop="24dp"
         android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/descriptionView" />
+        app:layout_constraintTop_toBottomOf="@id/authorDescriptionView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

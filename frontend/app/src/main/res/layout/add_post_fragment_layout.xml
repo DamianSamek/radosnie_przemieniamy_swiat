@@ -9,123 +9,142 @@
             type="com.wsiz.projekt_zespolowy.fragment.add_post.AddPostViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/addImageCardView"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:enabled="@{viewModel.postState != viewModel.PostState.LOADING &amp;&amp; viewModel.postImage == null}"
+            android:foreground="?selectableItemBackground"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/glHorizontal20">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:padding="18dp"
+                android:src="@drawable/ic_add" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/imageCardView"
+            bitmap="@{viewModel.postImage}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:layout_marginTop="48dp"
+            app:cardCornerRadius="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/glHorizontal60"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/addImageCardView"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:foreground="?selectableItemBackground"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="60dp"
-                app:cardElevation="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/glHorizontal20">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:padding="18dp"
-                    android:src="@drawable/ic_add" />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/imageCardView"
-                bitmap="@{viewModel.postImage}"
+            <ImageView
+                android:id="@+id/postImageView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="12dp"
-                android:layout_marginTop="48dp"
-                app:cardCornerRadius="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/glHorizontal60"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
 
-                <ImageView
-                    android:id="@+id/postImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
-            </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:enabled="@{viewModel.postState != viewModel.PostState.LOADING}"
+            android:onClick="@{() -> viewModel.removeImage()}"
+            android:visibility="@{viewModel.postImage == null ? android.view.View.GONE : android.view.View.VISIBLE}"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/imageCardView"
+            app:layout_constraintTop_toTopOf="@+id/imageCardView">
 
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/imageBarrier"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="addImageCardView, imageCardView" />
+                android:layout_height="match_parent"
+                android:elevation="6dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_like_filled" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/descriptionView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:ellipsize="end"
-                android:hint="@string/add_post_fragment_post_description_hint"
-                android:maxLines="3"
-                app:layout_constraintTop_toBottomOf="@+id/imageBarrier" />
+        </androidx.cardview.widget.CardView>
 
-            <Button
-                android:id="@+id/addPostView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:onClick="@{() -> viewModel.addPost(descriptionView.getText().toString())}"
-                android:text="@string/add_post_fragment_add_post"
-                android:enabled="@{viewModel.postState != viewModel.PostState.LOADING}"
-                app:layout_constraintEnd_toEndOf="@+id/glVertical70"
-                app:layout_constraintStart_toStartOf="@+id/glVertical30"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionView" />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/imageBarrier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="addImageCardView, imageCardView" />
 
-            <!--Bottom margin-->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                app:layout_constraintTop_toBottomOf="@+id/addPostView" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/descriptionView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="12dp"
+            android:ellipsize="end"
+            android:enabled="@{viewModel.postState != viewModel.PostState.LOADING}"
+            android:hint="@string/add_post_fragment_post_description_hint"
+            android:maxLines="3"
+            app:layout_constraintTop_toBottomOf="@+id/imageBarrier" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glHorizontal20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.1" />
+        <Button
+            android:id="@+id/addPostView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:enabled="@{viewModel.postState != viewModel.PostState.LOADING}"
+            android:onClick="@{() -> viewModel.addPost(descriptionView.getText().toString())}"
+            android:text="@string/add_post_fragment_add_post"
+            app:layout_constraintEnd_toEndOf="@+id/glVertical70"
+            app:layout_constraintStart_toStartOf="@+id/glVertical30"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionView" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glHorizontal25"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.25" />
+        <!--Bottom margin-->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintTop_toBottomOf="@+id/addPostView" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glHorizontal60"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.6" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glHorizontal20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glVertical30"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.3" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glHorizontal25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glVertical70"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.7" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glHorizontal60"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.6" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glVertical30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glVertical70"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
