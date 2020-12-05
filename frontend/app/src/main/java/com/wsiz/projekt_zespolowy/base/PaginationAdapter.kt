@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.wsiz.projekt_zespolowy.R
 import io.reactivex.Single
@@ -25,6 +26,8 @@ abstract class PaginationAdapter<VH : PaginationAdapter.BasePaginationViewHolder
         private const val LOADING_VIEW_TYPE = 1000
         private const val ITEM_VIEW_TYPE = 1001
     }
+
+    val isNoItems = MutableLiveData<Boolean>().apply { postValue(false) }
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -60,8 +63,11 @@ abstract class PaginationAdapter<VH : PaginationAdapter.BasePaginationViewHolder
         if (newItems.isEmpty() && pageNumber == 0) onEmpty()
 
         loadingStatus = if (newItems.isEmpty()) {
+            // last page was loaded
+
             notifyItemChanged(itemCount - 1)
 
+            isNoItems.postValue(items.size == 0)
             LoadingStatus.LAST_PAGE_LOADED
         } else {
             items.addAll(newItems)

@@ -1,6 +1,7 @@
 package com.wsiz.projekt_zespolowy.base
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
@@ -11,15 +12,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
+import com.wsiz.projekt_zespolowy.utils.ImageUtils
 
 open class BasePostsAdapter(
     private val postInteractionContract: PostInteractionContract
 ) : PaginationAdapter<BasePostsAdapter.PostViewHolder, UserPost>(postInteractionContract) {
 
-    override fun paginationGetItemCount() = items.size
+    private val loadedBitmaps = mutableMapOf<Int, Bitmap>()
+    private val picassoTargets = mutableMapOf<Int, Target>()
 
+    override fun paginationGetItemCount() = items.size
 
     override fun paginationOnBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = items[position]
@@ -28,7 +33,22 @@ open class BasePostsAdapter(
             likeIconView.setImageResource(if (post.isLikedByMe) R.drawable.ic_like_filled else R.drawable.ic_like_empty)
             likeCountView.text = post.likesCount.toString()
 
-            Picasso.get().load(post.imageURL).noFade().into(imageView)
+            val loadedBitmap = loadedBitmaps[position]
+            if (loadedBitmap == null) {
+                imageView.setImageResource(R.color.white)
+
+                val target = ImageUtils.generatePicassoTarget {
+                    it?.let {
+                        loadedBitmaps[position] = it
+                        imageView.setImageBitmap(it)
+                        picassoTargets.remove(position)
+                    }
+                }
+                picassoTargets[position] = target
+                Picasso.get().load(post.imageURL).noFade().into(target)
+            } else {
+                imageView.setImageBitmap(loadedBitmap)
+            }
 
             itemView.setOnClickListener {
                 postInteractionContract.onPostClick(post)

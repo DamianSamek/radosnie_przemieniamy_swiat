@@ -34,6 +34,13 @@
             app:exitAnim="@anim/disappearing_alpha"
             app:popEnterAnim="@anim/appearing_alpha"
             app:popExitAnim="@anim/disappearing_alpha" />
+        <action
+            android:id="@+id/action_thisUserFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment"
+            app:enterAnim="@anim/appearing_alpha"
+            app:exitAnim="@anim/disappearing_alpha"
+            app:popEnterAnim="@anim/appearing_alpha"
+            app:popExitAnim="@anim/disappearing_alpha"/>
     </fragment>
 
     <fragment

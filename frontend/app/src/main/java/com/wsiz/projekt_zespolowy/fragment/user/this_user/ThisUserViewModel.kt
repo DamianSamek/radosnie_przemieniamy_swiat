@@ -3,6 +3,7 @@ package com.wsiz.projekt_zespolowy.fragment.user.this_user
 import android.content.Intent
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
 import com.wsiz.projekt_zespolowy.activity.login.LoginActivity
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
@@ -12,6 +13,12 @@ class ThisUserViewModel @ViewModelInject constructor(
     private val sharedPreferences: SharedPreferences,
     postRepository: PostRepository
 ) : UserViewModel(postRepository) {
+
+    enum class State {
+        ADD_POST
+    }
+
+    val state = MutableLiveData<State>()
 
     fun logout(view: View) {
         val context = view.context ?: return
@@ -26,5 +33,9 @@ class ThisUserViewModel @ViewModelInject constructor(
                 Intent.FLAG_ACTIVITY_CLEAR_TASK or
                 Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
+    }
+
+    fun openAddPostFragment() {
+        state.postValue(State.ADD_POST)
     }
 }

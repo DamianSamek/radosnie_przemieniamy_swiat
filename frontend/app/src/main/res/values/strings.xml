@@ -9,6 +9,10 @@
     <string name="add_post_fragment_no_description">Opis nie może być pusty</string>
     <string name="add_post_fragment_success">Post został dodany</string>
 
+    <!--    UserFragment-->
+    <string name="user_fragment_empty_posts">W tym miejscu będą Twoje posty, kiedy ich dodasz</string>
+    <string name="user_fragment_add_first_post">Dodaj pierwszy post</string>
+
     <!--    EditPostFragment-->
     <string name="edit_post_fragment_edit">Edytuj</string>
     <string name="edit_post_fragment_success">Post został zedytowany</string>

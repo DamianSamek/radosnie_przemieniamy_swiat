@@ -16,17 +16,18 @@ import java.io.IOException
 import java.lang.Exception
 
 object ImageUtils {
-    fun getChosenImage(activity: Activity?, result: Intent?): Bitmap? {
+    fun getChosenImage(activity: Activity, result: Intent?): Bitmap? {
         val imageData = result?.data
         return if (imageData != null) {
-            val input = activity?.contentResolver?.openInputStream(imageData)
-            BitmapFactory.decodeStream(input)
+            val input = activity.contentResolver?.openInputStream(imageData)
+            val bitmap = BitmapFactory.decodeStream(input)
+            scaleToFileSize(activity, bitmap, 1 * 1000 * 1000)
         } else {
             null
         }
     }
 
-    fun scaleToFileSize(context: Context, bitmap: Bitmap, maxFileSize: Long): Bitmap {
+    private fun scaleToFileSize(context: Context, bitmap: Bitmap, maxFileSize: Long): Bitmap {
         var scaledBitmap = bitmap
         val file = scaledBitmap.toFile(context)
         val size = file.length()
@@ -49,7 +50,7 @@ object ImageUtils {
         compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val file = File(
             context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                .toString() + File.separator + "temp_totem_rap_battle.jpg"
+                .toString() + File.separator + "temp_radosnie_przemieniamy_swiat.jpg"
         )
         try {
             val fo = FileOutputStream(file)
@@ -67,6 +68,7 @@ object ImageUtils {
         bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream)
         return stream.toByteArray()
     }
+
 
     fun generatePicassoTarget(onLoaded: (Bitmap?) -> Unit): Target {
         return object : Target {

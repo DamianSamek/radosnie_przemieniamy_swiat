@@ -1,6 +1,9 @@
 package com.wsiz.projekt_zespolowy.fragment.user.this_user
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.activity.MainActivity
 import com.wsiz.projekt_zespolowy.data.dto.Post
@@ -29,4 +32,17 @@ class ThisUserFragment : UserFragment<ThisUserFragmentLayoutBinding, ThisUserVie
     }
 
     override fun getUserId() = sharedPreferences.getUserId()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        vm.state.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                null -> return@Observer
+                ThisUserViewModel.State.ADD_POST -> {
+                    (activity as MainActivity).navigateTo(ThisUserFragmentDirections.actionThisUserFragmentToAddPostFragment())
+                }
+            }
+        })
+    }
 }
