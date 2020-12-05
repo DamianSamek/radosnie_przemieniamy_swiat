@@ -11,8 +11,8 @@ import com.wsiz.projekt_zespolowy.base.PaginationAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 
-class PostsRecyclerViewAdapter(paginationContract: PaginationContract<UserPost>) :
-    PaginationAdapter<PostsRecyclerViewAdapter.PostViewHolder, UserPost>(paginationContract) {
+class PostsRecyclerViewAdapter(private val postInteractionContract: PostInteractionContract) :
+    PaginationAdapter<PostsRecyclerViewAdapter.PostViewHolder, UserPost>(postInteractionContract) {
 
     private var currentUserId = -1
 
@@ -26,11 +26,7 @@ class PostsRecyclerViewAdapter(paginationContract: PaginationContract<UserPost>)
             Picasso.get().load(post.imageURL).into(imageView)
 
             itemView.setOnClickListener {
-                if(post.userId == currentUserId) {
-                    // Go to 4th tab
-                } else {
-                    // Go to user tab
-                }
+                postInteractionContract.onPostClick(post)
             }
         }
     }
@@ -50,5 +46,9 @@ class PostsRecyclerViewAdapter(paginationContract: PaginationContract<UserPost>)
             imageView = view.findViewById(R.id.imageView)
             descriptionView = view.findViewById(R.id.descriptionView)
         }
+    }
+
+    interface PostInteractionContract : PaginationContract<UserPost> {
+        fun onPostClick(userPost: UserPost)
     }
 }

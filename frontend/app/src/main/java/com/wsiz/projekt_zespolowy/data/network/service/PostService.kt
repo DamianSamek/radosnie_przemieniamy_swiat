@@ -12,6 +12,9 @@ interface PostService {
     @POST(Endpoints.CREATE_POST)
     fun create(@Body post: Post): Completable
 
+    @PUT(Endpoints.UPDATE_POST)
+    fun update(@Body post: Post): Completable
+
     @GET(Endpoints.GET_ALL_POSTS)
     fun getAll(@Query(Endpoints.PAGE_NUMBER_PARAM) pageNumber: Int): Single<List<UserPostResponse>>
 

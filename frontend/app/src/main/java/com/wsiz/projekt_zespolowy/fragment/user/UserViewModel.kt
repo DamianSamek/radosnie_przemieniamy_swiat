@@ -8,10 +8,10 @@ import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import io.reactivex.Single
 
-class UserViewModel @ViewModelInject constructor(private val sharedPreferences: SharedPreferences, private val postRepository: PostRepository) :
+class UserViewModel @ViewModelInject constructor(private val postRepository: PostRepository) :
     BaseViewModel() {
 
-    fun loadPosts(pageNumber: Int): Single<List<UserPost>> {
-        return postRepository.getByUser(sharedPreferences.getUserId(), pageNumber)
+    fun loadPosts(userId: Int, pageNumber: Int): Single<List<UserPost>> {
+        return postRepository.getByUser(userId, pageNumber)
     }
 }

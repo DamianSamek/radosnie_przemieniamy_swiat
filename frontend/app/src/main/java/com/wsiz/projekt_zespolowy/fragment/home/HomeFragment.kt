@@ -10,15 +10,14 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.base.PaginationAdapter
-import com.wsiz.projekt_zespolowy.data.dto.Post
+import com.wsiz.projekt_zespolowy.activity.MainActivity
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.databinding.HomeFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Single
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), PaginationAdapter.PaginationContract<UserPost> {
+class HomeFragment : Fragment(), PostsRecyclerViewAdapter.PostInteractionContract {
 
     private lateinit var binding: HomeFragmentLayoutBinding
     private val viewModel: HomeViewModel by viewModels()
@@ -43,5 +42,13 @@ class HomeFragment : Fragment(), PaginationAdapter.PaginationContract<UserPost> 
     override fun onErrorLoading(error: Throwable) {
         val context = context ?: return
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onPostClick(userPost: UserPost) {
+        (activity as MainActivity).navigateTo(
+            HomeFragmentDirections.actionHomeFragmentToUserFragment(
+                userPost.userId
+            )
+        )
     }
 }

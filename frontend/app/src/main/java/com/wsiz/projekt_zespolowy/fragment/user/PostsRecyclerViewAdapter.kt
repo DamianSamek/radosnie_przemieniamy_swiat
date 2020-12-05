@@ -10,14 +10,11 @@ import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.PaginationAdapter
 import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
-import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 
 class PostsRecyclerViewAdapter(
-    private val postAdapterContract: PostAdapterContract<UserPost>
+    private val postAdapterContract: PostAdapterContract
 ) :
     PaginationAdapter<PostsRecyclerViewAdapter.PostViewHolder, UserPost>(postAdapterContract) {
-
-    private var currentUserId = -1
 
     override fun paginationGetItemCount() = items.size
 
@@ -29,9 +26,7 @@ class PostsRecyclerViewAdapter(
             Picasso.get().load(userPost.imageURL).into(imageView)
 
             itemView.setOnClickListener {
-                if (userPost.userId == currentUserId) {
-                    postAdapterContract.editPost(Post.map(userPost))
-                }
+                postAdapterContract.onPostClick(userPost)
             }
         }
     }
@@ -41,19 +36,13 @@ class PostsRecyclerViewAdapter(
         return PostViewHolder(view)
     }
 
-    inner class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
-        val imageView: ImageView
-        val descriptionView: TextView
+    class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
+        val imageView: ImageView = view.findViewById(R.id.imageView)
+        val descriptionView: TextView = view.findViewById(R.id.descriptionView)
 
-        init {
-            if (currentUserId == -1) currentUserId = SharedPreferences(view.context).getUserId()
-
-            imageView = view.findViewById(R.id.imageView)
-            descriptionView = view.findViewById(R.id.descriptionView)
-        }
     }
 
-    interface PostAdapterContract<ItemsType> : PaginationContract<ItemsType> {
-        fun editPost(post: Post)
+    interface PostAdapterContract : PaginationContract<UserPost> {
+        fun onPostClick(post: UserPost)
     }
 }

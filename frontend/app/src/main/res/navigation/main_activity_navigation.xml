@@ -22,10 +22,19 @@
     <fragment
         android:id="@+id/userFragment"
         android:name="com.wsiz.projekt_zespolowy.fragment.user.UserFragment"
-        tools:layout="@layout/user_fragment_layout" >
+        tools:layout="@layout/user_fragment_layout">
+
+        <argument
+            android:name="userId"
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
-            android:id="@+id/action_userFragment_to_addPostFragment"
-            app:destination="@id/addPostFragment" />
+            android:id="@+id/action_userFragment_to_editPostFragment"
+            app:destination="@id/editPostFragment"
+            app:enterAnim="@anim/appearing_alpha"
+            app:exitAnim="@anim/disappearing_alpha"
+            app:popEnterAnim="@anim/appearing_alpha"
+            app:popExitAnim="@anim/disappearing_alpha" />
     </fragment>
 
     <fragment
@@ -51,6 +60,7 @@
         android:id="@+id/addPostFragment"
         android:name="com.wsiz.projekt_zespolowy.fragment.add_post.AddPostFragment"
         tools:layout="@layout/add_post_fragment_layout">
+
         <action
             android:id="@+id/action_addPostFragment_to_userFragment"
             app:destination="@id/userFragment"
@@ -58,5 +68,16 @@
             app:exitAnim="@anim/disappearing_alpha"
             app:popEnterAnim="@anim/appearing_alpha"
             app:popExitAnim="@anim/disappearing_alpha" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editPostFragment"
+        android:name="com.wsiz.projekt_zespolowy.fragment.edit_post.EditPostFragment"
+        tools:layout="@layout/edit_post_fragment_layout">
+
+        <argument
+            android:name="post"
+            app:argType="com.wsiz.projekt_zespolowy.data.dto.Post"
+            app:nullable="false" />
     </fragment>
 </navigation>

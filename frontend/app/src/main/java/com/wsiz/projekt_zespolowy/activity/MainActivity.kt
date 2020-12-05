@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.wsiz.projekt_zespolowy.R
@@ -27,6 +28,14 @@ class MainActivity : AppCompatActivity() {
 
     fun navigateTo(destinationId: Int) {
         getNavController().navigate(destinationId)
+    }
+
+    fun navigateTo(navDirections: NavDirections) {
+        getNavController().navigate(navDirections)
+    }
+
+    fun navigateUp() {
+        getNavController().navigateUp()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

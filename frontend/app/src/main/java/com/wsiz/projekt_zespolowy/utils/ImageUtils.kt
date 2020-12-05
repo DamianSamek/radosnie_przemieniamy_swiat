@@ -5,11 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Environment
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.lang.Exception
 
 object ImageUtils {
     fun getChosenImage(activity: Activity?, result: Intent?): Bitmap? {
@@ -62,5 +66,17 @@ object ImageUtils {
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream)
         return stream.toByteArray()
+    }
+
+    fun generatePicassoTarget(onLoaded: (Bitmap?) -> Unit): Target {
+        return object : Target {
+            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+
+            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {}
+
+            override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                onLoaded(bitmap)
+            }
+        }
     }
 }

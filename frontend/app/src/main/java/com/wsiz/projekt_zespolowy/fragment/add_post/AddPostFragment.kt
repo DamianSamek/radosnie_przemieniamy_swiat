@@ -15,6 +15,8 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
+import com.squareup.picasso.Picasso
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.activity.MainActivity
 import com.wsiz.projekt_zespolowy.databinding.AddPostFragmentLayoutBinding

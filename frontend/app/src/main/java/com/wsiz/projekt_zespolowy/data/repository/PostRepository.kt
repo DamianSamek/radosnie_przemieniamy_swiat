@@ -14,6 +14,10 @@ class PostRepository @Inject constructor(private val postService: PostService) {
         return postService.create(post)
     }
 
+    fun update(post: Post): Completable {
+        return postService.update(post)
+    }
+
     fun getAll(pageNumber: Int): Single<List<UserPost>> {
         return postService.getAll(pageNumber).flatMap { userPostResponseList ->
             Observable.fromIterable(userPostResponseList).map { userPostResponse ->

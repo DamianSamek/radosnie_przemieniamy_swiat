@@ -1,10 +1,14 @@
 package com.wsiz.projekt_zespolowy.data.dto
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Post(
-    val description: String,
+    var description: String,
     val imageURL: String,
     val id: Int = -1
-) {
+): Parcelable {
 
     companion object {
 
