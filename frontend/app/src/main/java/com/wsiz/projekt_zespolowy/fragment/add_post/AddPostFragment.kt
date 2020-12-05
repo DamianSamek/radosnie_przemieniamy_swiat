@@ -20,6 +20,7 @@ import com.wsiz.projekt_zespolowy.activity.MainActivity
 import com.wsiz.projekt_zespolowy.databinding.AddPostFragmentLayoutBinding
 import com.wsiz.projekt_zespolowy.utils.ImageUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.add_post_fragment_layout.*
 
 @AndroidEntryPoint
 class AddPostFragment : Fragment() {
@@ -67,16 +68,23 @@ class AddPostFragment : Fragment() {
                 ).show()
                 AddPostViewModel.PostState.ERROR -> Toast.makeText(
                     context,
-                    R.string.add_post_fragment_error,
+                    R.string.error,
                     Toast.LENGTH_LONG
                 ).show()
                 AddPostViewModel.PostState.SUCCESS -> {
                     Toast.makeText(context, R.string.add_post_fragment_success, Toast.LENGTH_LONG)
                         .show()
                     (activity as MainActivity).navigateTo(R.id.action_addPostFragment_to_userFragment)
+
+                    forgetData()
                 }
             }
         })
+    }
+
+    private fun forgetData() {
+        descriptionView.setText("")
+        viewModel.forgetData()
     }
 
     private fun openGallery() {

@@ -1,13 +1,11 @@
 package com.wsiz.projekt_zespolowy.data.network
 
-import android.content.Context
 import com.wsiz.projekt_zespolowy.data.network.service.PostService
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -66,14 +64,12 @@ class ApiModule {
         return interceptor
     }
 
-    class TokenAuthenticationInterceptor @Inject constructor(
-        @ApplicationContext private val context: Context,
-        private val sharedPreferences: SharedPreferences
-    ) : Interceptor {
+    class TokenAuthenticationInterceptor @Inject constructor(private val sharedPreferences: SharedPreferences) :
+        Interceptor {
 
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request().newBuilder()
-                .header("Authorization", "Bearer ${sharedPreferences.getToken(context)}")
+                .header("Authorization", "Bearer ${sharedPreferences.getToken()}")
                 .build()
 
             return chain.proceed(request)

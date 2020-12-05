@@ -55,6 +55,4 @@
         android:layout_marginTop="6dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintTop_toBottomOf="@id/subtitleArticle" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

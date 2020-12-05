@@ -6,6 +6,7 @@ object Endpoints {
 
     // Params
     const val ID_PARAM = "id"
+    const val PAGE_NUMBER_PARAM = "page_number"
 
     // Endpoints
     private const val POST = "post"

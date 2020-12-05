@@ -6,13 +6,14 @@ import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 
 object BindingAdapter {
 
     @BindingAdapter("bitmap")
     @JvmStatic
     fun setBitmap(view: ImageView, bitmap: Bitmap?) {
-        if(bitmap == null) {
+        if (bitmap == null) {
             view.visibility = View.GONE
         } else {
             view.setImageBitmap(bitmap)
@@ -23,15 +24,21 @@ object BindingAdapter {
     @BindingAdapter("bitmap")
     @JvmStatic
     fun setBitmap(view: CardView, bitmap: Bitmap?) {
-        if(bitmap == null) {
+        if (bitmap == null) {
             view.visibility = View.GONE
         } else {
-            for(child in view.children) {
-                if(child is ImageView) {
+            for (child in view.children) {
+                if (child is ImageView) {
                     child.setImageBitmap(bitmap)
                 }
             }
             view.visibility = View.VISIBLE
         }
+    }
+
+    @BindingAdapter("adapter")
+    @JvmStatic
+    fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>) {
+        recyclerView.adapter = adapter
     }
 }

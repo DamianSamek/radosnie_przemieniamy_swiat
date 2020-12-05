@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/userFragment"
-        android:name="com.wsiz.projekt_zespolowy.fragment.UserFragment"
+        android:name="com.wsiz.projekt_zespolowy.fragment.user.UserFragment"
         tools:layout="@layout/user_fragment_layout" />
 
     <fragment

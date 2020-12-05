@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "319148450513",
+    "project_id": "radosnie-przemieniamy-swiat",
+    "storage_bucket": "radosnie-przemieniamy-swiat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319148450513:android:2a2452f0981ca7a7eb9bf0",
+        "android_client_info": {
+          "package_name": "com.wsiz.projekt_zespolowy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319148450513-dk8dhp0d3j3674j3omrsesv30umug120.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wsiz.projekt_zespolowy",
+            "certificate_hash": "6e85489f3ee66192653d92efea0fcb4f7e9da057"
+          }
+        },
+        {
+          "client_id": "319148450513-aml336beg0cbpi7scsrt8jfi6bt48ibs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC91ARRecNobgnEVCE1u_v757Xgv7hPhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319148450513-aml336beg0cbpi7scsrt8jfi6bt48ibs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

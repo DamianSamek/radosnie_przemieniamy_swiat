@@ -12,8 +12,8 @@ class PostRepository @Inject constructor(private val postService: PostService) {
         return postService.create(post)
     }
 
-    fun getAll(): Single<Post> {
-        return postService.getAll()
+    fun getAll(pageNumber: Int): Single<List<Post>> {
+        return postService.getAll(pageNumber)
     }
 
     fun getByUser(userId: Int): Single<Post> {
