@@ -3,25 +3,25 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_launcher_background"
-        android:menuCategory="secondary"
-        android:title="Home" />
+        android:menuCategory="container"
+        android:title="@string/bottom_menu_home" />
 
     <item
         android:id="@+id/articlesFragment"
         android:icon="@drawable/ic_launcher_background"
-        android:menuCategory="secondary"
-        android:title="News" />
+        android:menuCategory="container"
+        android:title="@string/bottom_menu_news" />
 
     <item
         android:id="@+id/addPostFragment"
         android:icon="@drawable/ic_launcher_background"
-        android:menuCategory="secondary"
-        android:title="Add post" />
+        android:menuCategory="container"
+        android:title="@string/bottom_menu_add_post" />
 
     <item
         android:id="@+id/thisUserFragment"
         android:icon="@drawable/ic_launcher_background"
-        android:menuCategory="secondary"
-        android:title="Account" />
+        android:menuCategory="container"
+        android:title="@string/bottom_menu_user" />
 
 </menu>

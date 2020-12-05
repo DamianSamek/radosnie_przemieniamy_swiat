@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         bottomNavigationView.setupWithNavController(getNavController())
+        bottomNavigationView.setOnNavigationItemReselectedListener { }
     }
 
     private fun getNavController(): NavController {
