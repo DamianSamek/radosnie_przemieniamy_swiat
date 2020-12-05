@@ -12,7 +12,6 @@ import androidx.navigation.fragment.navArgs
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.databinding.OneArticleFragmentLayoutBinding
-import com.wsiz.projekt_zespolowy.fragment.user.UserFragmentArgs
 import javax.inject.Inject
 
 class OneArticleFragment : Fragment() {

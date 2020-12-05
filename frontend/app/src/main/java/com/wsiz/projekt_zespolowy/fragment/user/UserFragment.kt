@@ -5,33 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.MainActivity
-import com.wsiz.projekt_zespolowy.data.dto.Post
+import com.wsiz.projekt_zespolowy.base.BasePostsAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
-import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
-import com.wsiz.projekt_zespolowy.databinding.UserFragmentLayoutBinding
-import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Single
-import javax.inject.Inject
 
-@AndroidEntryPoint
-class UserFragment : Fragment(), PostsRecyclerViewAdapter.PostAdapterContract {
+abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : Fragment(),
+    BasePostsAdapter.PostInteractionContract {
 
-    @Inject
-    lateinit var sp: SharedPreferences
+    private lateinit var binding: Binding
 
-    private lateinit var binding: UserFragmentLayoutBinding
-    private val viewModel: UserViewModel by viewModels()
+    abstract fun getViewModel(): VM
 
-    private val navArguments: UserFragmentArgs by navArgs()
-    private val userId
-        get() = if (navArguments.userId == -1) sp.getUserId() else navArguments.userId
+    @LayoutRes
+    abstract fun getLayoutId(): Int
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,32 +31,26 @@ class UserFragment : Fragment(), PostsRecyclerViewAdapter.PostAdapterContract {
         savedInstanceState: Bundle?
     ): View? {
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.user_fragment_layout, container, false)
+            DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
         binding.lifecycleOwner = this
-        binding.setVariable(BR.viewModel, viewModel)
-        binding.setVariable(BR.adapter, PostsRecyclerViewAdapter(this))
+        binding.setVariable(BR.viewModel, getViewModel())
+        binding.setVariable(BR.adapter, BasePostsAdapter(this))
         return binding.root
     }
 
     //    PostRecyclerViewAdapter callbacks
     override fun loadMoreData(pageNumber: Int): Single<List<UserPost>> {
-        return viewModel.loadPosts(userId, pageNumber)
+        return getViewModel().loadPosts(getUserId(), pageNumber)
     }
+
+    abstract fun getUserId(): Int
 
     override fun onErrorLoading(error: Throwable) {
         val context = context ?: return
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onPostClick(post: UserPost) {
-        if (post.userId == sp.getUserId()) {
-            val direction =
-                UserFragmentDirections.actionUserFragmentToEditPostFragment(Post.map(post))
-            (activity as MainActivity).navigateTo(direction)
-        }
-    }
-
-    override fun onLikeClick(post: UserPost) {
-        viewModel.like(post.id)
+    override fun onLikeClick(userPost: UserPost) {
+        getViewModel().like(userPost.id)
     }
 }

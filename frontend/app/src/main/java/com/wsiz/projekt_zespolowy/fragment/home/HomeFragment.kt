@@ -11,13 +11,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.activity.MainActivity
+import com.wsiz.projekt_zespolowy.base.BasePostsAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
+import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.databinding.HomeFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Single
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), PostsRecyclerViewAdapter.PostInteractionContract {
+class HomeFragment : Fragment(), BasePostsAdapter.PostInteractionContract {
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var binding: HomeFragmentLayoutBinding
     private val viewModel: HomeViewModel by viewModels()
@@ -31,7 +37,7 @@ class HomeFragment : Fragment(), PostsRecyclerViewAdapter.PostInteractionContrac
             DataBindingUtil.inflate(inflater, R.layout.home_fragment_layout, container, false)
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, viewModel)
-        binding.setVariable(BR.adapter, PostsRecyclerViewAdapter(this))
+        binding.setVariable(BR.adapter, BasePostsAdapter(this))
         return binding.root
     }
 
@@ -45,11 +51,15 @@ class HomeFragment : Fragment(), PostsRecyclerViewAdapter.PostInteractionContrac
     }
 
     override fun onPostClick(userPost: UserPost) {
-        (activity as MainActivity).navigateTo(
-            HomeFragmentDirections.actionHomeFragmentToUserFragment(
-                userPost.userId
+        if (sharedPreferences.getUserId() == userPost.userId) {
+            (activity as MainActivity).navigateTo(
+                HomeFragmentDirections.actionHomeFragmentToThisUserFragment()
             )
-        )
+        } else {
+            (activity as MainActivity).navigateTo(
+                HomeFragmentDirections.actionHomeFragmentToOtherUserFragment(userPost.userId)
+            )
+        }
     }
 
     override fun onLikeClick(userPost: UserPost) {

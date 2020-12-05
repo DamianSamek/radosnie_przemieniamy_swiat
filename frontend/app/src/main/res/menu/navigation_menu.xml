@@ -19,7 +19,7 @@
         android:title="Add post" />
 
     <item
-        android:id="@+id/userFragment"
+        android:id="@+id/thisUserFragment"
         android:icon="@drawable/ic_launcher_background"
         android:menuCategory="secondary"
         android:title="Account" />

@@ -50,11 +50,10 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/imageCardView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="320dp"
                 android:layout_margin="12dp"
                 android:layout_marginTop="48dp"
                 app:cardCornerRadius="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/glHorizontal60"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
                 <ProgressBar
@@ -103,13 +102,6 @@
                 android:layout_height="48dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editPostView" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glHorizontal60"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.6" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/glVertical30"

@@ -1,4 +1,4 @@
-package com.wsiz.projekt_zespolowy.fragment.user
+package com.wsiz.projekt_zespolowy.base
 
 import android.content.Context
 import android.graphics.Typeface
@@ -12,15 +12,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.base.PaginationAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 
-class PostsRecyclerViewAdapter(
-    private val postInteractionContract: PostAdapterContract
-) :
-    PaginationAdapter<PostsRecyclerViewAdapter.PostViewHolder, UserPost>(postInteractionContract) {
+open class BasePostsAdapter(
+    private val postInteractionContract: PostInteractionContract
+) : PaginationAdapter<BasePostsAdapter.PostViewHolder, UserPost>(postInteractionContract) {
 
     override fun paginationGetItemCount() = items.size
+
 
     override fun paginationOnBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = items[position]
@@ -47,11 +46,12 @@ class PostsRecyclerViewAdapter(
                 likeIconView.callOnClick()
             }
 
-            authorDescriptionView.text = getAuthorDescriptionSpannable(
-                itemView.context,
-                post.userName.toString(),
-                post.description
-            )
+            authorDescriptionView.text =
+                getAuthorDescriptionSpannable(
+                    itemView.context,
+                    post.userName.toString(),
+                    post.description
+                )
         }
     }
 
@@ -78,13 +78,13 @@ class PostsRecyclerViewAdapter(
 
     class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
-        val authorDescriptionView: TextView = view.findViewById(R.id.authorDescriptionView)
         val likeIconView: ImageView = view.findViewById(R.id.likeIconView)
         val likeCountView: TextView = view.findViewById(R.id.likeCountView)
+        val authorDescriptionView: TextView = view.findViewById(R.id.authorDescriptionView)
     }
 
-    interface PostAdapterContract : PaginationContract<UserPost> {
-        fun onPostClick(post: UserPost)
-        fun onLikeClick(post: UserPost)
+    interface PostInteractionContract : PaginationContract<UserPost> {
+        fun onPostClick(userPost: UserPost)
+        fun onLikeClick(userPost: UserPost)
     }
 }

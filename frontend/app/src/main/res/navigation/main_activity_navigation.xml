@@ -11,8 +11,25 @@
         tools:layout="@layout/home_fragment_layout">
 
         <action
-            android:id="@+id/action_homeFragment_to_userFragment"
-            app:destination="@id/userFragment"
+            android:id="@+id/action_homeFragment_to_thisUserFragment"
+            app:destination="@id/thisUserFragment"
+            app:enterAnim="@anim/appearing_alpha"
+            app:exitAnim="@anim/disappearing_alpha"
+            app:popEnterAnim="@anim/appearing_alpha"
+            app:popExitAnim="@anim/disappearing_alpha" />
+        <action
+            android:id="@+id/action_homeFragment_to_otherUserFragment"
+            app:destination="@id/otherUserFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/thisUserFragment"
+        android:name="com.wsiz.projekt_zespolowy.fragment.user.this_user.ThisUserFragment"
+        tools:layout="@layout/this_user_fragment_layout">
+
+        <action
+            android:id="@+id/action_thisUserFragment_to_editPostFragment"
+            app:destination="@id/editPostFragment"
             app:enterAnim="@anim/appearing_alpha"
             app:exitAnim="@anim/disappearing_alpha"
             app:popEnterAnim="@anim/appearing_alpha"
@@ -20,21 +37,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/userFragment"
-        android:name="com.wsiz.projekt_zespolowy.fragment.user.UserFragment"
-        tools:layout="@layout/user_fragment_layout">
+        android:id="@+id/otherUserFragment"
+        android:name="com.wsiz.projekt_zespolowy.fragment.user.other_user.OtherUserFragment"
+        tools:layout="@layout/other_user_fragment_layout">
 
         <argument
             android:name="userId"
-            android:defaultValue="-1"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_userFragment_to_editPostFragment"
-            app:destination="@id/editPostFragment"
-            app:enterAnim="@anim/appearing_alpha"
-            app:exitAnim="@anim/disappearing_alpha"
-            app:popEnterAnim="@anim/appearing_alpha"
-            app:popExitAnim="@anim/disappearing_alpha" />
     </fragment>
 
     <fragment
@@ -55,7 +64,7 @@
     <fragment
         android:id="@+id/oneArticleFragment"
         android:name="com.wsiz.projekt_zespolowy.fragment.one_article.OneArticleFragment"
-        tools:layout="@layout/user_fragment_layout">
+        tools:layout="@layout/this_user_fragment_layout">
 
         <argument
             android:name="article"
@@ -69,8 +78,8 @@
         tools:layout="@layout/add_post_fragment_layout">
 
         <action
-            android:id="@+id/action_addPostFragment_to_userFragment"
-            app:destination="@id/userFragment"
+            android:id="@+id/action_addPostFragment_to_thisUserFragment"
+            app:destination="@id/thisUserFragment"
             app:enterAnim="@anim/appearing_alpha"
             app:exitAnim="@anim/disappearing_alpha"
             app:popEnterAnim="@anim/appearing_alpha"
