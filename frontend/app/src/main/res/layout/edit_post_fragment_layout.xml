@@ -41,6 +41,7 @@
 
                 <ImageView
                     android:id="@+id/postImageView"
+                    imageURL="@{post.imageURL}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop" />
@@ -54,6 +55,7 @@
                 android:ellipsize="end"
                 android:hint="@string/add_post_fragment_post_description_hint"
                 android:maxLines="3"
+                android:text="@{post.description}"
                 app:layout_constraintTop_toBottomOf="@+id/imageCardView" />
 
             <Button

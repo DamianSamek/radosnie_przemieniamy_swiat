@@ -10,14 +10,14 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.base.PaginationAdapter
+import com.wsiz.projekt_zespolowy.activity.MainActivity
 import com.wsiz.projekt_zespolowy.data.dto.Article
 import com.wsiz.projekt_zespolowy.databinding.ArticlesFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Single
 
 @AndroidEntryPoint
-class ArticlesFragment : Fragment(), PaginationAdapter.PaginationContract<Article> {
+class ArticlesFragment : Fragment(), ArticlesRecyclerViewAdapter.ArticleInteractionContract {
 
     private lateinit var binding: ArticlesFragmentLayoutBinding
     private val viewModel: ArticlesViewModel by viewModels()
@@ -42,5 +42,11 @@ class ArticlesFragment : Fragment(), PaginationAdapter.PaginationContract<Articl
     override fun onErrorLoading(error: Throwable) {
         val context = context ?: return
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onClick(article: Article) {
+        val direction =
+            ArticlesFragmentDirections.actionArticlesFragmentToOneArticleFragment(article)
+        (activity as MainActivity).navigateTo(direction)
     }
 }

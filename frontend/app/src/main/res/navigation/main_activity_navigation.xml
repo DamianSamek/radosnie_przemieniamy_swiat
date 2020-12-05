@@ -42,8 +42,9 @@
         android:name="com.wsiz.projekt_zespolowy.fragment.articles.ArticlesFragment"
         tools:layout="@layout/home_fragment_layout">
 
+
         <action
-            android:id="@+id/action_homeFragment_to_userFragment"
+            android:id="@+id/action_articlesFragment_to_oneArticleFragment"
             app:destination="@id/oneArticleFragment"
             app:enterAnim="@anim/appearing_alpha"
             app:exitAnim="@anim/disappearing_alpha"
@@ -53,8 +54,14 @@
 
     <fragment
         android:id="@+id/oneArticleFragment"
-        android:name="com.wsiz.projekt_zespolowy.fragment.OneArticleFragment"
-        tools:layout="@layout/user_fragment_layout" />
+        android:name="com.wsiz.projekt_zespolowy.fragment.one_article.OneArticleFragment"
+        tools:layout="@layout/user_fragment_layout">
+
+        <argument
+            android:name="article"
+            app:argType="com.wsiz.projekt_zespolowy.data.dto.Article"
+            app:nullable="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/addPostFragment"

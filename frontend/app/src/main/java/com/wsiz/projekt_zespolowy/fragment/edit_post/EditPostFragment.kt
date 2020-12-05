@@ -40,11 +40,6 @@ class EditPostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        navArguments.post.apply {
-            binding.descriptionView.setText(description)
-            Picasso.get().load(imageURL).into(binding.postImageView)
-        }
-
         viewModel.postState.observe(viewLifecycleOwner, Observer { postState ->
             val context = context ?: return@Observer
             when (postState) {

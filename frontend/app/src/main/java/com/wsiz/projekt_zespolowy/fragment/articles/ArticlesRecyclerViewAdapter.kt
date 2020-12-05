@@ -10,8 +10,8 @@ import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.PaginationAdapter
 import com.wsiz.projekt_zespolowy.data.dto.Article
 
-class ArticlesRecyclerViewAdapter(paginationContract: PaginationContract<Article>) :
-    PaginationAdapter<ArticlesRecyclerViewAdapter.PostViewHolder, Article>(paginationContract) {
+class ArticlesRecyclerViewAdapter(private val articleInteractionContract: ArticleInteractionContract) :
+    PaginationAdapter<ArticlesRecyclerViewAdapter.PostViewHolder, Article>(articleInteractionContract) {
 
     override fun paginationGetItemCount() = items.size
 
@@ -22,6 +22,10 @@ class ArticlesRecyclerViewAdapter(paginationContract: PaginationContract<Article
             descriptionView.text = article.content
             titleView.text = article.title
             Picasso.get().load(article.imageURL).into(imageView)
+
+            itemView.setOnClickListener {
+                articleInteractionContract.onClick(article)
+            }
         }
     }
 
@@ -34,5 +38,9 @@ class ArticlesRecyclerViewAdapter(paginationContract: PaginationContract<Article
         val imageView: ImageView = view.findViewById(R.id.imageView)
         val descriptionView: TextView = view.findViewById(R.id.descriptionView)
         val titleView: TextView = view.findViewById(R.id.titleView)
+    }
+
+    interface ArticleInteractionContract : PaginationContract<Article> {
+        fun onClick(article: Article)
     }
 }
