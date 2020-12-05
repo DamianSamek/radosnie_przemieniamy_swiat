@@ -1,5 +1,6 @@
 package com.wsiz.projekt_zespolowy.data.network
 
+import com.wsiz.projekt_zespolowy.data.network.service.ArticleService
 import com.wsiz.projekt_zespolowy.data.network.service.PostService
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import dagger.Module
@@ -28,6 +29,11 @@ class ApiModule {
     @Provides
     fun providesPostService(retrofit: Retrofit): PostService {
         return retrofit.create(PostService::class.java)
+    }
+
+    @Provides
+    fun providesArticleService(retrofit: Retrofit): ArticleService {
+        return retrofit.create(ArticleService::class.java)
     }
 
     @Provides

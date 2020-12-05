@@ -1,4 +1,4 @@
-package com.wsiz.projekt_zespolowy.fragment.user
+package com.wsiz.projekt_zespolowy.fragment.home
 
 import android.view.LayoutInflater
 import android.view.View

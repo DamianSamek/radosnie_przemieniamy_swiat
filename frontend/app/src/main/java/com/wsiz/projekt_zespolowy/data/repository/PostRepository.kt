@@ -1,7 +1,7 @@
 package com.wsiz.projekt_zespolowy.data.repository
 
 import com.wsiz.projekt_zespolowy.data.network.service.PostService
-import com.wsiz.projekt_zespolowy.data.services.Post
+import com.wsiz.projekt_zespolowy.data.dto.Post
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -16,7 +16,7 @@ class PostRepository @Inject constructor(private val postService: PostService) {
         return postService.getAll(pageNumber)
     }
 
-    fun getByUser(userId: Int): Single<Post> {
-        return postService.getByUser(userId)
+    fun getByUser(userId: Int, pageNumber: Int): Single<List<Post>> {
+        return postService.getByUser(userId, pageNumber)
     }
 }

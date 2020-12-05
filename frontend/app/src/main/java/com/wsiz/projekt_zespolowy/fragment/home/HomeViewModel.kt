@@ -1,17 +1,15 @@
 package com.wsiz.projekt_zespolowy.fragment.home
 
-import android.os.Handler
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.hilt.lifecycle.ViewModelInject
+import com.wsiz.projekt_zespolowy.base.BaseViewModel
+import com.wsiz.projekt_zespolowy.data.dto.Post
+import com.wsiz.projekt_zespolowy.data.repository.PostRepository
+import io.reactivex.Single
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel @ViewModelInject constructor(private val postRepository: PostRepository) :
+    BaseViewModel() {
 
-    val dominikaParaText = MutableLiveData<String>()
-
-    init {
-        dominikaParaText.postValue("Dominika")
-        Handler().postDelayed({
-            dominikaParaText.postValue("Para")
-        }, 3000)
+    fun loadPosts(pageNumber: Int): Single<List<Post>> {
+        return postRepository.getAll(pageNumber)
     }
 }

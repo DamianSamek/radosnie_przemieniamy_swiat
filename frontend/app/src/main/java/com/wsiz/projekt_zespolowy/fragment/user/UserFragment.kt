@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.PaginationAdapter
-import com.wsiz.projekt_zespolowy.data.services.Post
+import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.databinding.UserFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Single

@@ -1,7 +1,7 @@
 package com.wsiz.projekt_zespolowy.data.network.service
 
 import com.wsiz.projekt_zespolowy.data.network.Endpoints
-import com.wsiz.projekt_zespolowy.data.services.Post
+import com.wsiz.projekt_zespolowy.data.dto.Post
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -15,5 +15,8 @@ interface PostService {
     fun getAll(@Query(Endpoints.PAGE_NUMBER_PARAM) pageNumber: Int): Single<List<Post>>
 
     @GET(Endpoints.GET_USER_POSTS)
-    fun getByUser(@Path(Endpoints.ID_PARAM) userId: Int): Single<Post>
+    fun getByUser(
+        @Path(Endpoints.ID_PARAM) userId: Int,
+        @Query(Endpoints.PAGE_NUMBER_PARAM) pageNumber: Int
+    ): Single<List<Post>>
 }

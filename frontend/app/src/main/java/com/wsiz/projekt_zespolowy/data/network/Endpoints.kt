@@ -9,8 +9,12 @@ object Endpoints {
     const val PAGE_NUMBER_PARAM = "page_number"
 
     // Endpoints
+
     private const val POST = "post"
     const val CREATE_POST = "$POST/create"
     const val GET_ALL_POSTS = "$POST/list"
     const val GET_USER_POSTS = "$POST/get-by-user/{$ID_PARAM}"
+
+    private const val ARTICLE = "article"
+    const val GET_ALL_ARTICLES = "$ARTICLE/list"
 }

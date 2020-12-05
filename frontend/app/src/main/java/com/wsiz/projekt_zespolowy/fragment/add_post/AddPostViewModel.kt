@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.wsiz.projekt_zespolowy.base.BaseViewModel
 import com.wsiz.projekt_zespolowy.data.network.FirebaseStorageService
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
-import com.wsiz.projekt_zespolowy.data.services.Post
+import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 
 class AddPostViewModel @ViewModelInject constructor(
