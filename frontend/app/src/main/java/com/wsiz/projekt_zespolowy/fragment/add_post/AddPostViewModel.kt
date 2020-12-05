@@ -11,7 +11,7 @@ class AddPostViewModel @ViewModelInject constructor(private val postRepository: 
     BaseViewModel() {
 
     enum class PostState {
-        INIT, NO_IMAGE, NO_DESCRIPTION, ERROR, SUCCESS
+        INIT, NO_IMAGE, NO_DESCRIPTION, LOADING, ERROR, SUCCESS
     }
 
     val postState = MutableLiveData<PostState>().apply { postValue(PostState.INIT) }
@@ -30,6 +30,8 @@ class AddPostViewModel @ViewModelInject constructor(private val postRepository: 
                 postState.postValue(PostState.NO_DESCRIPTION)
             }
             else -> {
+                postState.postValue(PostState.LOADING)
+
                 // add image to firebase
                 val post = Post(description, "")
                 postRepository.create(post).io({

@@ -81,6 +81,7 @@
                 android:layout_marginTop="36dp"
                 android:onClick="@{() -> viewModel.addPost(descriptionView.getText().toString())}"
                 android:text="@string/add_post_fragment_add_post"
+                android:enabled="@{viewModel.postState != viewModel.PostState.LOADING}"
                 app:layout_constraintEnd_toEndOf="@+id/glVertical70"
                 app:layout_constraintStart_toStartOf="@+id/glVertical30"
                 app:layout_constraintTop_toBottomOf="@+id/descriptionView" />

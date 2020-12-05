@@ -53,8 +53,8 @@ class AddPostFragment : Fragment() {
 
         viewModel.postState.observe(viewLifecycleOwner, Observer { postState ->
             val context = context ?: return@Observer
-            when (postState ?: return@Observer) {
-                AddPostViewModel.PostState.INIT -> return@Observer
+            when (postState) {
+                null, AddPostViewModel.PostState.INIT, AddPostViewModel.PostState.LOADING -> return@Observer
                 AddPostViewModel.PostState.NO_IMAGE -> Toast.makeText(
                     context,
                     R.string.add_post_fragment_no_image,
