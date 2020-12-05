@@ -12,6 +12,9 @@ interface PostService {
     @POST(Endpoints.CREATE_POST)
     fun create(@Body post: Post): Completable
 
+    @DELETE(Endpoints.DELETE_POST)
+    fun delete(@Path(Endpoints.ID_PARAM) postId: Int): Completable
+
     @PUT(Endpoints.UPDATE_POST)
     fun update(@Body post: Post): Completable
 

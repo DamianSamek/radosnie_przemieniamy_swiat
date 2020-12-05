@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import com.squareup.picasso.Picasso
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.activity.MainActivity
 import com.wsiz.projekt_zespolowy.databinding.EditPostFragmentLayoutBinding
@@ -56,6 +55,11 @@ class EditPostFragment : Fragment() {
                 ).show()
                 EditPostViewModel.PostState.SUCCESS -> {
                     Toast.makeText(context, R.string.edit_post_fragment_success, Toast.LENGTH_LONG)
+                        .show()
+                    (activity as MainActivity).navigateUp()
+                }
+                EditPostViewModel.PostState.REMOVED -> {
+                    Toast.makeText(context, R.string.edit_post_fragment_removed, Toast.LENGTH_LONG)
                         .show()
                     (activity as MainActivity).navigateUp()
                 }

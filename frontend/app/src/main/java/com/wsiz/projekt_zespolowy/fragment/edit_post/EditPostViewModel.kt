@@ -12,7 +12,7 @@ class EditPostViewModel @ViewModelInject constructor(
     BaseViewModel() {
 
     enum class PostState {
-        INIT, NO_DESCRIPTION, LOADING, ERROR, SUCCESS
+        INIT, NO_DESCRIPTION, LOADING, ERROR, SUCCESS, REMOVED
     }
 
     val postState = MutableLiveData<PostState>()
@@ -27,6 +27,12 @@ class EditPostViewModel @ViewModelInject constructor(
                 editPost(post.apply { this.description = description })
             }
         }
+    }
+
+    fun removePost(post: Post) {
+        // remove image from Firebase
+        postState.postValue(PostState.LOADING)
+        postRepository.delete(post.id).io({ postState.postValue(PostState.REMOVED) }, { postState.postValue(PostState.ERROR) })
     }
 
     private fun editPost(post: Post) {

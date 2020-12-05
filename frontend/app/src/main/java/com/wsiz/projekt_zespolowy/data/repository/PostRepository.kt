@@ -15,6 +15,10 @@ class PostRepository @Inject constructor(private val postService: PostService) {
         return postService.create(post)
     }
 
+    fun delete(postId: Int): Completable {
+        return postService.delete(postId)
+    }
+
     fun update(post: Post): Completable {
         return postService.update(post)
     }

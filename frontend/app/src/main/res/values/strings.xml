@@ -12,6 +12,8 @@
     <!--    EditPostFragment-->
     <string name="edit_post_fragment_edit">Edytuj</string>
     <string name="edit_post_fragment_success">Post został zedytowany</string>
+    <string name="edit_post_fragment_removed">Post został usunięty</string>
+    <string name="edit_post_fragment_remove">Usuń post</string>
 
     <!--    Post-->
     <string name="post_author_description">%1$s:     %2$s</string>
