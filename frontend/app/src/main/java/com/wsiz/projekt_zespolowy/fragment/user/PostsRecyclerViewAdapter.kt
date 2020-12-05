@@ -9,18 +9,30 @@ import com.squareup.picasso.Picasso
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.PaginationAdapter
 import com.wsiz.projekt_zespolowy.data.dto.Post
+import com.wsiz.projekt_zespolowy.data.dto.UserPost
+import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 
-class PostsRecyclerViewAdapter(paginationContract: PaginationContract<Post>) :
-    PaginationAdapter<PostsRecyclerViewAdapter.PostViewHolder, Post>(paginationContract) {
+class PostsRecyclerViewAdapter(
+    private val postAdapterContract: PostAdapterContract<UserPost>
+) :
+    PaginationAdapter<PostsRecyclerViewAdapter.PostViewHolder, UserPost>(postAdapterContract) {
+
+    private var currentUserId = -1
 
     override fun paginationGetItemCount() = items.size
 
     override fun paginationOnBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = items[position]
+        val userPost = items[position]
 
         holder.apply {
-            descriptionView.text = post.description
-            Picasso.get().load(post.imageURL).into(imageView)
+            descriptionView.text = userPost.description
+            Picasso.get().load(userPost.imageURL).into(imageView)
+
+            itemView.setOnClickListener {
+                if (userPost.userId == currentUserId) {
+                    postAdapterContract.editPost(Post.map(userPost))
+                }
+            }
         }
     }
 
@@ -29,8 +41,19 @@ class PostsRecyclerViewAdapter(paginationContract: PaginationContract<Post>) :
         return PostViewHolder(view)
     }
 
-    class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.imageView)
-        val descriptionView: TextView = view.findViewById(R.id.descriptionView)
+    inner class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
+        val imageView: ImageView
+        val descriptionView: TextView
+
+        init {
+            if (currentUserId == -1) currentUserId = SharedPreferences(view.context).getUserId()
+
+            imageView = view.findViewById(R.id.imageView)
+            descriptionView = view.findViewById(R.id.descriptionView)
+        }
+    }
+
+    interface PostAdapterContract<ItemsType> : PaginationContract<ItemsType> {
+        fun editPost(post: Post)
     }
 }

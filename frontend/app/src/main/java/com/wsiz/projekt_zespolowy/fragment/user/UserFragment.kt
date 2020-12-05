@@ -10,14 +10,15 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.base.PaginationAdapter
+import com.wsiz.projekt_zespolowy.activity.MainActivity
 import com.wsiz.projekt_zespolowy.data.dto.Post
+import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.databinding.UserFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Single
 
 @AndroidEntryPoint
-class UserFragment : Fragment(), PaginationAdapter.PaginationContract<Post> {
+class UserFragment : Fragment(), PostsRecyclerViewAdapter.PostAdapterContract<UserPost> {
 
     private lateinit var binding: UserFragmentLayoutBinding
     private val viewModel: UserViewModel by viewModels()
@@ -35,12 +36,17 @@ class UserFragment : Fragment(), PaginationAdapter.PaginationContract<Post> {
         return binding.root
     }
 
-    override fun loadMoreData(pageNumber: Int): Single<List<Post>> {
+    //    PostRecyclerViewAdapter callbacks
+    override fun loadMoreData(pageNumber: Int): Single<List<UserPost>> {
         return viewModel.loadPosts(pageNumber)
     }
 
     override fun onErrorLoading(error: Throwable) {
         val context = context ?: return
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun editPost(post: Post) {
+        (activity as MainActivity).navigateTo(R.id.action_userFragment_to_addPostFragment)
     }
 }

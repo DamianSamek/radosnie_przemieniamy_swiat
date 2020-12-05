@@ -8,10 +8,13 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.PaginationAdapter
-import com.wsiz.projekt_zespolowy.data.dto.Post
+import com.wsiz.projekt_zespolowy.data.dto.UserPost
+import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 
-class PostsRecyclerViewAdapter(paginationContract: PaginationContract<Post>) :
-    PaginationAdapter<PostsRecyclerViewAdapter.PostViewHolder, Post>(paginationContract) {
+class PostsRecyclerViewAdapter(paginationContract: PaginationContract<UserPost>) :
+    PaginationAdapter<PostsRecyclerViewAdapter.PostViewHolder, UserPost>(paginationContract) {
+
+    private var currentUserId = -1
 
     override fun paginationGetItemCount() = items.size
 
@@ -21,6 +24,14 @@ class PostsRecyclerViewAdapter(paginationContract: PaginationContract<Post>) :
         holder.apply {
             descriptionView.text = post.description
             Picasso.get().load(post.imageURL).into(imageView)
+
+            itemView.setOnClickListener {
+                if(post.userId == currentUserId) {
+                    // Go to 4th tab
+                } else {
+                    // Go to user tab
+                }
+            }
         }
     }
 
@@ -29,8 +40,15 @@ class PostsRecyclerViewAdapter(paginationContract: PaginationContract<Post>) :
         return PostViewHolder(view)
     }
 
-    class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.imageView)
-        val descriptionView: TextView = view.findViewById(R.id.descriptionView)
+    inner class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
+        val imageView: ImageView
+        val descriptionView: TextView
+
+        init {
+            if (currentUserId == -1) currentUserId = SharedPreferences(view.context).getUserId()
+
+            imageView = view.findViewById(R.id.imageView)
+            descriptionView = view.findViewById(R.id.descriptionView)
+        }
     }
 }

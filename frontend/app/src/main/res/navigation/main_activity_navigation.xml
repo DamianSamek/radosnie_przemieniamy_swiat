@@ -22,7 +22,11 @@
     <fragment
         android:id="@+id/userFragment"
         android:name="com.wsiz.projekt_zespolowy.fragment.user.UserFragment"
-        tools:layout="@layout/user_fragment_layout" />
+        tools:layout="@layout/user_fragment_layout" >
+        <action
+            android:id="@+id/action_userFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/articlesFragment"

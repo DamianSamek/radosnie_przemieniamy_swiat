@@ -12,12 +12,13 @@ import androidx.fragment.app.viewModels
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.PaginationAdapter
 import com.wsiz.projekt_zespolowy.data.dto.Post
+import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.databinding.HomeFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Single
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), PaginationAdapter.PaginationContract<Post> {
+class HomeFragment : Fragment(), PaginationAdapter.PaginationContract<UserPost> {
 
     private lateinit var binding: HomeFragmentLayoutBinding
     private val viewModel: HomeViewModel by viewModels()
@@ -35,7 +36,7 @@ class HomeFragment : Fragment(), PaginationAdapter.PaginationContract<Post> {
         return binding.root
     }
 
-    override fun loadMoreData(pageNumber: Int): Single<List<Post>> {
+    override fun loadMoreData(pageNumber: Int): Single<List<UserPost>> {
         return viewModel.loadPosts(pageNumber)
     }
 
