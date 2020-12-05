@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -11,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.wsiz.projekt_zespolowy"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -52,10 +53,30 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
     // Navigation
-    def navigationVer = '2.3.1'
+    def navigationVer = '2.3.2'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVer"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVer"
 
-    // MVVM
+    //Network
+    def retrofitVer = '2.9.0'
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVer"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVer"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVer"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Hilt DI
+    def hiltVer = '2.28-alpha'
+    def hiltAndroidVer = '1.0.0-alpha02'
+
+    implementation "com.google.dagger:hilt-android:$hiltVer"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVer"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidVer"
+    kapt "androidx.hilt:hilt-compiler:$hiltAndroidVer"
+
+    // RxJava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
 }

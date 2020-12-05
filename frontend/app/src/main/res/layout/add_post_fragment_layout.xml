@@ -9,85 +9,122 @@
             type="com.wsiz.projekt_zespolowy.fragment.add_post.AddPostViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
 
-        <ImageView
-            android:id="@+id/addImageView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_add"
-            app:layout_constraintBottom_toBottomOf="@+id/glHorizontal50"
-            app:layout_constraintTop_toTopOf="@+id/glHorizontal20" />
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            android:scaleType="centerCrop"
-            bitmap="@{viewModel.postImage}"
-            app:layout_constraintBottom_toBottomOf="@+id/glHorizontal60"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/addImageCardView"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:foreground="?selectableItemBackground"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="60dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/glHorizontal20">
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/imageBarrier"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="addImageView, imageView" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:padding="18dp"
+                    android:src="@drawable/ic_add" />
+            </androidx.cardview.widget.CardView>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/descriptionView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/add_post_fragment_post_description_hint"
-            app:layout_constraintTop_toBottomOf="@+id/imageBarrier" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageCardView"
+                bitmap="@{viewModel.postImage}"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="12dp"
+                android:layout_marginTop="48dp"
+                app:cardCornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/glHorizontal60"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/addPostView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/add_post_fragment_add_post"
-            app:layout_constraintEnd_toEndOf="@+id/glVertical70"
-            app:layout_constraintStart_toStartOf="@+id/glVertical30"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionView" />
+                <ImageView
+                    android:id="@+id/postImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glHorizontal20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/imageBarrier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="addImageCardView, imageCardView" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glHorizontal50"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/descriptionView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:ellipsize="end"
+                android:hint="@string/add_post_fragment_post_description_hint"
+                android:maxLines="3"
+                app:layout_constraintTop_toBottomOf="@+id/imageBarrier" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glHorizontal60"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.6" />
+            <Button
+                android:id="@+id/addPostView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:onClick="@{() -> viewModel.addPost(descriptionView.getText().toString())}"
+                android:text="@string/add_post_fragment_add_post"
+                app:layout_constraintEnd_toEndOf="@+id/glVertical70"
+                app:layout_constraintStart_toStartOf="@+id/glVertical30"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionView" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glVertical30"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.3" />
+            <!--Bottom margin-->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                app:layout_constraintTop_toBottomOf="@+id/addPostView" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glVertical70"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.7" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glHorizontal20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.1" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glHorizontal25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.25" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glHorizontal60"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.6" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glVertical30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.3" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glVertical70"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.7" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

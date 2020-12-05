@@ -7,8 +7,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.wsiz.projekt_zespolowy.R
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,10 +19,14 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(getNavController())
     }
 
-    fun getNavController(): NavController {
+    private fun getNavController(): NavController {
         val navigationHost: NavHostFragment =
                 supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         return navigationHost.navController
+    }
+
+    fun navigateTo(destinationId: Int) {
+        getNavController().navigate(destinationId)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
