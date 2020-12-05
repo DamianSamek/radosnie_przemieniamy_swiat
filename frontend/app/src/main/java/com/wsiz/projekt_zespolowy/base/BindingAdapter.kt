@@ -46,6 +46,6 @@ object BindingAdapter {
     @BindingAdapter("adapter")
     @JvmStatic
     fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>) {
-        recyclerView.adapter = adapter
+        if(recyclerView.adapter == null) recyclerView.adapter = adapter
     }
 }

@@ -2,8 +2,11 @@ package com.wsiz.projekt_zespolowy.fragment.user.this_user
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.activity.MainActivity
 import com.wsiz.projekt_zespolowy.data.dto.Post
@@ -25,10 +28,14 @@ class ThisUserFragment : UserFragment<ThisUserFragmentLayoutBinding, ThisUserVie
     override fun getViewModel() = vm
     override fun getLayoutId() = R.layout.this_user_fragment_layout
 
-    override fun onPostClick(userPost: UserPost) {
+    override fun onPostClick(cardView: CardView, userPost: UserPost) {
+        val extras = FragmentNavigatorExtras(
+            cardView to "postTransition"
+        )
+
         val direction =
             ThisUserFragmentDirections.actionThisUserFragmentToEditPostFragment(Post.map(userPost))
-        (activity as MainActivity).navigateTo(direction)
+        (activity as MainActivity).navigateTo(direction, extras)
     }
 
     override fun getUserId() = sharedPreferences.getUserId()

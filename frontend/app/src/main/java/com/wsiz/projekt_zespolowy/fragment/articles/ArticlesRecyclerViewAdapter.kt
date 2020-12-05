@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.view.ViewCompat
 import com.squareup.picasso.Picasso
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.PaginationAdapter
@@ -24,7 +26,8 @@ class ArticlesRecyclerViewAdapter(private val articleInteractionContract: Articl
             Picasso.get().load(article.imageURL).into(imageView)
 
             itemView.setOnClickListener {
-                articleInteractionContract.onClick(article)
+                ViewCompat.setTransitionName(imageCardView, "articleTransition")
+                articleInteractionContract.onClick(imageCardView, article)
             }
         }
     }
@@ -36,11 +39,12 @@ class ArticlesRecyclerViewAdapter(private val articleInteractionContract: Articl
 
     class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
+        val imageCardView: CardView = view.findViewById(R.id.imageCardView)
         val descriptionView: TextView = view.findViewById(R.id.descriptionView)
         val titleView: TextView = view.findViewById(R.id.titleView)
     }
 
     interface ArticleInteractionContract : PaginationContract<Article> {
-        fun onClick(article: Article)
+        fun onClick(cardView: CardView, article: Article)
     }
 }

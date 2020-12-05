@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.view.ViewCompat
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import com.wsiz.projekt_zespolowy.R
@@ -40,8 +42,8 @@ open class BasePostsAdapter(
                 val target = ImageUtils.generatePicassoTarget {
                     it?.let {
                         loadedBitmaps[position] = it
-                        imageView.setImageBitmap(it)
                         picassoTargets.remove(position)
+                        imageView.setImageBitmap(it)
                     }
                 }
                 picassoTargets[position] = target
@@ -51,7 +53,8 @@ open class BasePostsAdapter(
             }
 
             itemView.setOnClickListener {
-                postInteractionContract.onPostClick(post)
+                ViewCompat.setTransitionName(imageCardView, "postTransition")
+                postInteractionContract.onPostClick(imageCardView, post)
             }
 
             likeIconView.setOnClickListener {
@@ -98,13 +101,14 @@ open class BasePostsAdapter(
 
     class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
+        val imageCardView: CardView = view.findViewById(R.id.imageCardView)
         val likeIconView: ImageView = view.findViewById(R.id.likeIconView)
         val likeCountView: TextView = view.findViewById(R.id.likeCountView)
         val authorDescriptionView: TextView = view.findViewById(R.id.authorDescriptionView)
     }
 
     interface PostInteractionContract : PaginationContract<UserPost> {
-        fun onPostClick(userPost: UserPost)
+        fun onPostClick(cardView: CardView, userPost: UserPost)
         fun onLikeClick(userPost: UserPost)
     }
 }

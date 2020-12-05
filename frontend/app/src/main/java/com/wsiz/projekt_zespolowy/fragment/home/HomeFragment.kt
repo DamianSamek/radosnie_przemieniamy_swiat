@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
@@ -50,7 +52,7 @@ class HomeFragment : Fragment(), BasePostsAdapter.PostInteractionContract {
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onPostClick(userPost: UserPost) {
+    override fun onPostClick(cardView: CardView, userPost: UserPost) {
         if (sharedPreferences.getUserId() == userPost.userId) {
             (activity as MainActivity).navigateTo(
                 HomeFragmentDirections.actionHomeFragmentToThisUserFragment()

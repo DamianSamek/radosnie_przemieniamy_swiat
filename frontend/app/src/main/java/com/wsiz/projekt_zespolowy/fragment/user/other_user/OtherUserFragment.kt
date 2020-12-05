@@ -1,5 +1,7 @@
 package com.wsiz.projekt_zespolowy.fragment.user.other_user
 
+import android.widget.ImageView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.wsiz.projekt_zespolowy.R
@@ -21,6 +23,5 @@ class OtherUserFragment : UserFragment<OtherUserFragmentLayoutBinding, OtherUser
 
     override fun getUserId() = navArguments.userId
 
-    override fun onPostClick(userPost: UserPost) {
-    }
+    override fun onPostClick(cardView: CardView, userPost: UserPost) {}
 }

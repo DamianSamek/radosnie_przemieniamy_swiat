@@ -30,6 +30,7 @@
                 android:layout_height="320dp"
                 android:layout_margin="12dp"
                 app:cardCornerRadius="24dp"
+                android:transitionName="articleTransition"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 

@@ -53,6 +53,7 @@
                 android:layout_height="320dp"
                 android:layout_margin="12dp"
                 android:layout_marginTop="48dp"
+                android:transitionName="postTransition"
                 app:cardCornerRadius="24dp"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
@@ -60,10 +61,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:visibility="@{postImageView.getDrawable() == null ? android.view.View.VISIBLE : android.view.View.GONE}" />
+                    android:visibility="@{imageView.getDrawable() == null ? android.view.View.VISIBLE : android.view.View.GONE}" />
 
                 <ImageView
-                    android:id="@+id/postImageView"
+                    android:id="@+id/imageView"
                     imageURL="@{post.imageURL}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

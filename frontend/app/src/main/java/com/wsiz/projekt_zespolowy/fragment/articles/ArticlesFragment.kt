@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.activity.MainActivity
 import com.wsiz.projekt_zespolowy.data.dto.Article
@@ -44,9 +46,12 @@ class ArticlesFragment : Fragment(), ArticlesRecyclerViewAdapter.ArticleInteract
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onClick(article: Article) {
+    override fun onClick(cardView: CardView, article: Article) {
+        val extras = FragmentNavigatorExtras(
+            cardView to "articleTransition"
+        )
         val direction =
             ArticlesFragmentDirections.actionArticlesFragmentToOneArticleFragment(article)
-        (activity as MainActivity).navigateTo(direction)
+        (activity as MainActivity).navigateTo(direction, extras)
     }
 }

@@ -31,4 +31,7 @@
 
     <!--    Default-->
     <string name="error">Pomyłka</string>
+
+    <!--    No translate-->
+    <string name="post_transition">post_transition</string>
 </resources>

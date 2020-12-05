@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.wsiz.projekt_zespolowy.R
@@ -26,12 +27,12 @@ class MainActivity : AppCompatActivity() {
         return navigationHost.navController
     }
 
-    fun navigateTo(destinationId: Int) {
-        getNavController().navigate(destinationId)
-    }
-
     fun navigateTo(navDirections: NavDirections) {
         getNavController().navigate(navDirections)
+    }
+
+    fun navigateTo(navDirections: NavDirections, extras: FragmentNavigator.Extras) {
+        getNavController().navigate(navDirections, extras)
     }
 
     fun navigateUp() {

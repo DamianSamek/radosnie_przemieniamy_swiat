@@ -29,18 +29,14 @@
 
         <action
             android:id="@+id/action_thisUserFragment_to_editPostFragment"
-            app:destination="@id/editPostFragment"
-            app:enterAnim="@anim/appearing_alpha"
-            app:exitAnim="@anim/disappearing_alpha"
-            app:popEnterAnim="@anim/appearing_alpha"
-            app:popExitAnim="@anim/disappearing_alpha" />
+            app:destination="@id/editPostFragment" />
         <action
             android:id="@+id/action_thisUserFragment_to_addPostFragment"
             app:destination="@id/addPostFragment"
             app:enterAnim="@anim/appearing_alpha"
             app:exitAnim="@anim/disappearing_alpha"
             app:popEnterAnim="@anim/appearing_alpha"
-            app:popExitAnim="@anim/disappearing_alpha"/>
+            app:popExitAnim="@anim/disappearing_alpha" />
     </fragment>
 
     <fragment
@@ -58,14 +54,9 @@
         android:name="com.wsiz.projekt_zespolowy.fragment.articles.ArticlesFragment"
         tools:layout="@layout/home_fragment_layout">
 
-
         <action
             android:id="@+id/action_articlesFragment_to_oneArticleFragment"
-            app:destination="@id/oneArticleFragment"
-            app:enterAnim="@anim/appearing_alpha"
-            app:exitAnim="@anim/disappearing_alpha"
-            app:popEnterAnim="@anim/appearing_alpha"
-            app:popExitAnim="@anim/disappearing_alpha" />
+            app:destination="@id/oneArticleFragment" />
     </fragment>
 
     <fragment

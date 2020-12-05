@@ -1,6 +1,8 @@
 package com.wsiz.projekt_zespolowy.fragment.edit_post
 
 import android.os.Bundle
+import android.transition.Transition
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +36,13 @@ class EditPostFragment : Fragment() {
         binding.setVariable(BR.viewModel, viewModel)
         binding.setVariable(BR.post, navArguments.post)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

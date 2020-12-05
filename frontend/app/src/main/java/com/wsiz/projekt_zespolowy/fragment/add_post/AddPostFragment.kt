@@ -74,7 +74,7 @@ class AddPostFragment : Fragment() {
                 AddPostViewModel.PostState.SUCCESS -> {
                     Toast.makeText(context, R.string.add_post_fragment_success, Toast.LENGTH_LONG)
                         .show()
-                    (activity as MainActivity).navigateTo(R.id.action_addPostFragment_to_thisUserFragment)
+                    (activity as MainActivity).navigateTo(AddPostFragmentDirections.actionAddPostFragmentToThisUserFragment())
 
                     forgetData()
                 }

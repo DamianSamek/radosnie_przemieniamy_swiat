@@ -1,6 +1,7 @@
 package com.wsiz.projekt_zespolowy.fragment.one_article
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,5 +36,12 @@ class OneArticleFragment : Fragment() {
         binding.setVariable(BR.viewModel, viewModel)
         binding.setVariable(BR.article, navArguments.article)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 }
