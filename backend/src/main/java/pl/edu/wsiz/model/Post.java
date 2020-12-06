@@ -44,6 +44,10 @@ public class Post extends BaseEntity {
 
 	@Column(columnDefinition = "TEXT")
 	private String description;
+	
+	@Column(nullable = false)
+	@NotNull
+	private String uuid;
 
 	@Column(name = "create_date", nullable = false)
 	@NotNull
@@ -117,6 +121,14 @@ public class Post extends BaseEntity {
 
 	public void setUsersWhoLike(Set<User> usersWhoLike) {
 		this.usersWhoLike = usersWhoLike;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 }

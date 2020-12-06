@@ -45,7 +45,6 @@ public class PostService extends CrudServiceImpl<Post> {
 	@Override
 	protected void preUpdate(Post entityToUpdate, Post newEntity) {
 		entityToUpdate.setDescription(newEntity.getDescription());
-		entityToUpdate.setImageURL(newEntity.getImageURL());
 	}
 
 	@Override
