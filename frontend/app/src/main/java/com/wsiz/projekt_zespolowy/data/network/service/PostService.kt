@@ -1,5 +1,6 @@
 package com.wsiz.projekt_zespolowy.data.network.service
 
+import com.wsiz.projekt_zespolowy.data.dto.EditPost
 import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.dto.UserPostResponse
 import com.wsiz.projekt_zespolowy.data.network.Endpoints
@@ -16,7 +17,7 @@ interface PostService {
     fun delete(@Path(Endpoints.ID_PARAM) postId: Int): Completable
 
     @PUT(Endpoints.UPDATE_POST)
-    fun update(@Body post: Post): Completable
+    fun update(@Body post: EditPost): Completable
 
     @GET(Endpoints.GET_ALL_POSTS)
     fun getAll(@Query(Endpoints.PAGE_NUMBER_PARAM) pageNumber: Int): Single<List<UserPostResponse>>

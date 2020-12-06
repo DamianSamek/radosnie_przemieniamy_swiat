@@ -26,6 +26,8 @@ abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : Bas
     @LayoutRes
     abstract fun getLayoutId(): Int
 
+    abstract fun showRecyclerViewHeaderView(): Boolean
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,7 +37,7 @@ abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : Bas
             DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, getViewModel())
-        binding.setVariable(BR.adapter, BasePostsAdapter(this))
+        binding.setVariable(BR.adapter, BasePostsAdapter(this, showRecyclerViewHeaderView()))
         return binding.root
     }
 

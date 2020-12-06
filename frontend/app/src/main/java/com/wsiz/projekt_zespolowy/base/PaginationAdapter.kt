@@ -12,7 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class PaginationAdapter<VH : PaginationAdapter.BasePaginationViewHolder, ItemsType>(
+abstract class PaginationAdapter<ItemsType>(
     private val paginationContract: PaginationContract<ItemsType>
 ) : RecyclerView.Adapter<PaginationAdapter.BasePaginationViewHolder>() {
 
@@ -24,7 +24,6 @@ abstract class PaginationAdapter<VH : PaginationAdapter.BasePaginationViewHolder
         const val PAGE_NOT_SET = -1
         const val FIRST_PAGE = 0
         private const val LOADING_VIEW_TYPE = 1000
-        private const val ITEM_VIEW_TYPE = 1001
     }
 
     val isNoItems = MutableLiveData<Boolean>().apply { postValue(false) }
@@ -101,8 +100,6 @@ abstract class PaginationAdapter<VH : PaginationAdapter.BasePaginationViewHolder
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
-    /** proper cast is guaranteed by paginationOnCreateViewHolder(parent: ViewGroup, viewType: Int): VH function return type **/
     override fun onBindViewHolder(holder: BasePaginationViewHolder, position: Int) {
         if (getItemViewType(position) == LOADING_VIEW_TYPE) {
             holder as PaginationLoadingViewHolder
@@ -113,7 +110,6 @@ abstract class PaginationAdapter<VH : PaginationAdapter.BasePaginationViewHolder
 
             loadMoreDataIfShould()
         } else {
-            holder as VH
             paginationOnBindViewHolder(holder, position)
         }
     }
@@ -124,12 +120,12 @@ abstract class PaginationAdapter<VH : PaginationAdapter.BasePaginationViewHolder
     override fun getItemCount() = paginationGetItemCount() + 1
 
     protected open fun paginationGetItemViewType(position: Int): Int {
-        return ITEM_VIEW_TYPE
+        return -1
     }
 
     abstract fun paginationGetItemCount(): Int
-    abstract fun paginationOnBindViewHolder(holder: VH, position: Int)
-    abstract fun paginationOnCreateViewHolder(parent: ViewGroup, viewType: Int): VH
+    abstract fun paginationOnBindViewHolder(holder: BasePaginationViewHolder, position: Int)
+    abstract fun paginationOnCreateViewHolder(parent: ViewGroup, viewType: Int): BasePaginationViewHolder
 
 
     open class BasePaginationViewHolder(view: View) : RecyclerView.ViewHolder(view)

@@ -14,7 +14,7 @@ class OtherUserFragment : UserFragment<OtherUserFragmentLayoutBinding, OtherUser
 
     private val navArguments: OtherUserFragmentArgs by navArgs()
     private val vm: OtherUserViewModel by viewModels()
-
+    override fun showRecyclerViewHeaderView() = true
 
     override fun getViewModel() = vm
 

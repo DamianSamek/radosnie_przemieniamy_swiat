@@ -7,13 +7,14 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
+import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.utils.ImageUtils
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
-class FirebaseStorageService @Inject constructor() {
+class FirebaseStorageService @Inject constructor(private val sharedPreferences: SharedPreferences) {
 
     private val firebaseStorage
         get() = Firebase.storage
@@ -23,13 +24,12 @@ class FirebaseStorageService @Inject constructor() {
 
     @SuppressLint("CheckResult")
     fun uploadPostImage(
-        userId: Int,
         bitmap: Bitmap,
         onSuccess: (url: String, uuid: String) -> Unit,
         onError: (Throwable) -> Unit
     ) {
         val uuid = uuid()
-        val ref = getPostImageRef(userId, uuid)
+        val ref = getPostImageRef(sharedPreferences.getUserId(), uuid)
 
         bitmap.toByteArray().subscribeOn(Schedulers.computation()).subscribe({
             upload(ref, it).addOnCompleteListener { task ->
@@ -43,12 +43,11 @@ class FirebaseStorageService @Inject constructor() {
     }
 
     fun removePostImage(
-        userId: Int,
-        postUUID: String?,
+        imageUUID: String?,
         onSuccess: () -> Unit
     ) {
-        if (postUUID != null) {
-            val ref = getPostImageRef(userId, postUUID)
+        if (imageUUID != null) {
+            val ref = getPostImageRef(sharedPreferences.getUserId(), imageUUID)
             delete(ref).addOnCompleteListener {
                 onSuccess()
             }

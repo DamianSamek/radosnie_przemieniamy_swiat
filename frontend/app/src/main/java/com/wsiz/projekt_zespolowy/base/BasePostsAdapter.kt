@@ -20,61 +20,77 @@ import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.utils.ImageUtils
 
 open class BasePostsAdapter(
-    private val postInteractionContract: PostInteractionContract
-) : PaginationAdapter<BasePostsAdapter.PostViewHolder, UserPost>(postInteractionContract) {
+    private val postInteractionContract: PostInteractionContract,
+    private val showHeader: Boolean = true
+) : PaginationAdapter<UserPost>(postInteractionContract) {
+
+    companion object {
+        private const val HEADER_VIEW_TYPE = 1
+        private const val POST_VIEW_TYPE = 2
+    }
 
     private val loadedBitmaps = mutableMapOf<Int, Bitmap>()
     private val picassoTargets = mutableMapOf<Int, Target>()
 
     override fun paginationGetItemCount() = items.size
 
-    override fun paginationOnBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = items[position]
+    override fun paginationOnBindViewHolder(holder: BasePaginationViewHolder, position: Int) {
+        when (paginationGetItemViewType(position)) {
+            POST_VIEW_TYPE -> {
+                holder as PostViewHolder
 
-        holder.apply {
-            likeIconView.setImageResource(if (post.isLikedByMe) R.drawable.ic_like_filled else R.drawable.ic_like_empty)
-            likeCountView.text = post.likesCount.toString()
+                val post = items[position]
 
-            val loadedBitmap = loadedBitmaps[position]
-            if (loadedBitmap == null) {
-                imageView.setImageResource(R.color.white)
+                holder.apply {
+                    likeIconView.setImageResource(if (post.isLikedByMe) R.drawable.ic_like_filled else R.drawable.ic_like_empty)
+                    likeCountView.text = post.likesCount.toString()
 
-                val target = ImageUtils.generatePicassoTarget {
-                    it?.let {
-                        loadedBitmaps[position] = it
-                        picassoTargets.remove(position)
-                        imageView.setImageBitmap(it)
+                    val loadedBitmap = loadedBitmaps[position]
+                    if (loadedBitmap == null) {
+                        imageView.setImageResource(R.color.white)
+
+                        val target = ImageUtils.generatePicassoTarget {
+                            it?.let {
+                                loadedBitmaps[position] = it
+                                picassoTargets.remove(position)
+                                imageView.setImageBitmap(it)
+                            }
+                        }
+                        picassoTargets[position] = target
+                        Picasso.get().load(post.imageURL).noFade().into(target)
+                    } else {
+                        imageView.setImageBitmap(loadedBitmap)
                     }
+
+                    itemView.setOnClickListener {
+                        ViewCompat.setTransitionName(imageCardView, "postTransition")
+                        postInteractionContract.onPostClick(imageCardView, post)
+                    }
+
+                    likeIconView.setOnClickListener {
+                        postInteractionContract.onLikeClick(post)
+                        val likesCount =
+                            if (post.isLikedByMe) post.likesCount - 1 else post.likesCount + 1
+                        post.likesCount = likesCount
+                        post.isLikedByMe = !post.isLikedByMe
+                        notifyItemChanged(position, post)
+                    }
+
+                    likeCountView.setOnClickListener {
+                        likeIconView.callOnClick()
+                    }
+
+                    authorDescriptionView.text =
+                        getAuthorDescriptionSpannable(
+                            itemView.context,
+                            post.userName.toString(),
+                            post.description
+                        )
                 }
-                picassoTargets[position] = target
-                Picasso.get().load(post.imageURL).noFade().into(target)
-            } else {
-                imageView.setImageBitmap(loadedBitmap)
             }
-
-            itemView.setOnClickListener {
-                ViewCompat.setTransitionName(imageCardView, "postTransition")
-                postInteractionContract.onPostClick(imageCardView, post)
+            HEADER_VIEW_TYPE -> {
+                holder as HeaderViewHolder
             }
-
-            likeIconView.setOnClickListener {
-                postInteractionContract.onLikeClick(post)
-                val likesCount = if (post.isLikedByMe) post.likesCount - 1 else post.likesCount + 1
-                post.likesCount = likesCount
-                post.isLikedByMe = !post.isLikedByMe
-                notifyItemChanged(position, post)
-            }
-
-            likeCountView.setOnClickListener {
-                likeIconView.callOnClick()
-            }
-
-            authorDescriptionView.text =
-                getAuthorDescriptionSpannable(
-                    itemView.context,
-                    post.userName.toString(),
-                    post.description
-                )
         }
     }
 
@@ -94,9 +110,27 @@ open class BasePostsAdapter(
         return itemSpannable
     }
 
-    override fun paginationOnCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.post_item, parent, false)
-        return PostViewHolder(view)
+    override fun paginationGetItemViewType(position: Int): Int {
+        return if (position == 0 && showHeader) HEADER_VIEW_TYPE
+        else POST_VIEW_TYPE
+    }
+
+    override fun paginationOnCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): BasePaginationViewHolder {
+        return when (viewType) {
+            POST_VIEW_TYPE -> {
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.post_item, parent, false)
+                PostViewHolder(view)
+            }
+            else -> {
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.header_item, parent, false)
+                HeaderViewHolder(view)
+            }
+        }
     }
 
     class PostViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view) {
@@ -106,6 +140,8 @@ open class BasePostsAdapter(
         val likeCountView: TextView = view.findViewById(R.id.likeCountView)
         val authorDescriptionView: TextView = view.findViewById(R.id.authorDescriptionView)
     }
+
+    class HeaderViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view)
 
     interface PostInteractionContract : PaginationContract<UserPost> {
         fun onPostClick(cardView: CardView, userPost: UserPost)

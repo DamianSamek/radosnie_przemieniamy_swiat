@@ -7,5 +7,6 @@ data class UserPostResponse(
     val user: User,
     val likesCount: Int,
     val isLikedByMe: Boolean,
+    val uuid: String,
     val id: Int = -1
 )

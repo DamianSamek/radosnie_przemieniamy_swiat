@@ -7,13 +7,14 @@ import kotlinx.android.parcel.Parcelize
 data class Post(
     var description: String,
     val imageURL: String,
+    val uuid: String,
     val id: Int = -1
-): Parcelable {
+) : Parcelable {
 
     companion object {
 
         fun map(userPost: UserPost): Post {
-            return Post(userPost.description, userPost.imageURL, userPost.id)
+            return Post(userPost.description, userPost.imageURL, userPost.uuid, userPost.id)
         }
     }
 }

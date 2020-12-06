@@ -26,6 +26,7 @@ class ThisUserFragment : UserFragment<ThisUserFragmentLayoutBinding, ThisUserVie
 
     override fun getViewModel() = vm
     override fun getLayoutId() = R.layout.this_user_fragment_layout
+    override fun showRecyclerViewHeaderView() = false
 
     override fun onPostClick(cardView: CardView, userPost: UserPost) {
         val extras = FragmentNavigatorExtras(
@@ -46,6 +47,7 @@ class ThisUserFragment : UserFragment<ThisUserFragmentLayoutBinding, ThisUserVie
             when (it) {
                 null -> return@Observer
                 ThisUserViewModel.State.ADD_POST -> {
+                    vm.state.postValue(null)
                     (activity as MainActivity).navigateTo(ThisUserFragmentDirections.actionThisUserFragmentToAddPostFragment())
                 }
             }

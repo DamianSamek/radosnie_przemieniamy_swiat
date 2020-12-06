@@ -3,11 +3,14 @@ package com.wsiz.projekt_zespolowy.fragment.edit_post
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.wsiz.projekt_zespolowy.base.BaseViewModel
+import com.wsiz.projekt_zespolowy.data.dto.EditPost
 import com.wsiz.projekt_zespolowy.data.dto.Post
+import com.wsiz.projekt_zespolowy.data.network.FirebaseStorageService
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
 
 class EditPostViewModel @ViewModelInject constructor(
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val firebaseStorageService: FirebaseStorageService
 ) :
     BaseViewModel() {
 
@@ -30,13 +33,18 @@ class EditPostViewModel @ViewModelInject constructor(
     }
 
     fun removePost(post: Post) {
-        // remove image from Firebase
         postState.postValue(PostState.LOADING)
-        postRepository.delete(post.id).io({ postState.postValue(PostState.REMOVED) }, { postState.postValue(PostState.ERROR) })
+
+        firebaseStorageService.removePostImage(post.uuid) {
+            postRepository.delete(post.id).io(
+                { postState.postValue(PostState.REMOVED) },
+                { postState.postValue(PostState.ERROR) }
+            )
+        }
     }
 
     private fun editPost(post: Post) {
-        postRepository.update(post).io({
+        postRepository.update(EditPost.map(post)).io({
             postState.postValue(PostState.SUCCESS)
         }, {
             postState.postValue(PostState.ERROR)

@@ -1,5 +1,6 @@
 package com.wsiz.projekt_zespolowy.data.repository
 
+import com.wsiz.projekt_zespolowy.data.dto.EditPost
 import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.network.service.PostService
@@ -19,7 +20,7 @@ class PostRepository @Inject constructor(private val postService: PostService) {
         return postService.delete(postId)
     }
 
-    fun update(post: Post): Completable {
+    fun update(post: EditPost): Completable {
         return postService.update(post)
     }
 

@@ -6,6 +6,7 @@ data class UserPost(
     val userId: Int,
     val userName: String?,
     var likesCount: Int,
+    var uuid: String,
     var isLikedByMe: Boolean,
     val id: Int = -1
 ) {
@@ -19,6 +20,7 @@ data class UserPost(
                 userPostResponse.userId,
                 userPostResponse.user.name,
                 userPostResponse.likesCount,
+                userPostResponse.uuid,
                 userPostResponse.isLikedByMe,
                 userPostResponse.id
             )
