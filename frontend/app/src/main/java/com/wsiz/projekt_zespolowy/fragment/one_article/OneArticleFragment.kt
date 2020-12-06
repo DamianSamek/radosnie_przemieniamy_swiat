@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.wsiz.projekt_zespolowy.R
+import com.wsiz.projekt_zespolowy.base.BaseFragment
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.databinding.OneArticleFragmentLayoutBinding
 import javax.inject.Inject
 
-class OneArticleFragment : Fragment() {
+class OneArticleFragment : BaseFragment() {
 
     @Inject
     lateinit var sp: SharedPreferences

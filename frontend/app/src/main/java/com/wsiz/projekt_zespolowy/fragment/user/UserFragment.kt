@@ -11,11 +11,12 @@ import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
 import com.wsiz.projekt_zespolowy.R
+import com.wsiz.projekt_zespolowy.base.BaseFragment
 import com.wsiz.projekt_zespolowy.base.BasePostsAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import io.reactivex.Single
 
-abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : Fragment(),
+abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : BaseFragment(),
     BasePostsAdapter.PostInteractionContract {
 
     private lateinit var binding: Binding

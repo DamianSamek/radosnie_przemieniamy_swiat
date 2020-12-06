@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.view.View
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
+import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +47,7 @@ object BindingAdapter {
     @BindingAdapter("adapter")
     @JvmStatic
     fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>) {
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false)
         if(recyclerView.adapter == null) recyclerView.adapter = adapter
     }
 }

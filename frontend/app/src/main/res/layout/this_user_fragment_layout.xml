@@ -14,7 +14,7 @@
             type="com.wsiz.projekt_zespolowy.base.BasePostsAdapter" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,64 +25,76 @@
             android:elevation="12dp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:onClick="@{(view) -> viewModel.logout(view)}"
-                    android:src="@drawable/ic_like_filled"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_collapseMode="pin">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:onClick="@{(view) -> viewModel.logout(view)}"
+                        android:src="@drawable/ic_like_filled"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            adapter="@{adapter}"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:listitem="@layout/post_item" />
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <TextView
-            android:id="@+id/emptyView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:text="@string/user_fragment_empty_posts"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:visibility="@{adapter.isNoItems ? android.view.View.VISIBLE : android.view.View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            <androidx.recyclerview.widget.RecyclerView
+                adapter="@{adapter}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/post_item" />
 
-        <Button
-            android:id="@+id/addPostView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:onClick="@{() -> viewModel.openAddPostFragment()}"
-            android:text="@string/user_fragment_add_first_post"
-            android:visibility="@{adapter.isNoItems ? android.view.View.VISIBLE : android.view.View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emptyView" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/emptyView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/user_fragment_empty_posts"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:visibility="@{adapter.isNoItems ? android.view.View.VISIBLE : android.view.View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/addPostView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:onClick="@{() -> viewModel.openAddPostFragment()}"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="@string/user_fragment_add_first_post"
+                android:visibility="@{adapter.isNoItems ? android.view.View.VISIBLE : android.view.View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emptyView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -12,18 +12,18 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.activity.MainActivity
+import com.wsiz.projekt_zespolowy.base.BaseFragment
 import com.wsiz.projekt_zespolowy.databinding.AddPostFragmentLayoutBinding
 import com.wsiz.projekt_zespolowy.utils.ImageUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.add_post_fragment_layout.*
 
 @AndroidEntryPoint
-class AddPostFragment : Fragment() {
+class AddPostFragment : BaseFragment() {
 
     companion object {
         const val READ_STORAGE_PERMISSION_CODE = 1

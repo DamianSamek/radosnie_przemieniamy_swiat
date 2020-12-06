@@ -8,18 +8,18 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.activity.MainActivity
+import com.wsiz.projekt_zespolowy.base.BaseFragment
 import com.wsiz.projekt_zespolowy.data.dto.Article
 import com.wsiz.projekt_zespolowy.databinding.ArticlesFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Single
 
 @AndroidEntryPoint
-class ArticlesFragment : Fragment(), ArticlesRecyclerViewAdapter.ArticleInteractionContract {
+class ArticlesFragment : BaseFragment(), ArticlesRecyclerViewAdapter.ArticleInteractionContract {
 
     private lateinit var binding: ArticlesFragmentLayoutBinding
     private val viewModel: ArticlesViewModel by viewModels()

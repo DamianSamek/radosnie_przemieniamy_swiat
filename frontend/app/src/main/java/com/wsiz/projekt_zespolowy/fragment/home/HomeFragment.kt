@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.activity.MainActivity
+import com.wsiz.projekt_zespolowy.base.BaseFragment
 import com.wsiz.projekt_zespolowy.base.BasePostsAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
@@ -22,7 +21,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), BasePostsAdapter.PostInteractionContract {
+class HomeFragment : BaseFragment(), BasePostsAdapter.PostInteractionContract {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences

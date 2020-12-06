@@ -2,7 +2,6 @@ package com.wsiz.projekt_zespolowy.fragment.user.this_user
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer

@@ -1,6 +1,5 @@
 package com.wsiz.projekt_zespolowy.fragment.user.other_user
 
-import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
