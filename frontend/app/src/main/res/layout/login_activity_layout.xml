@@ -13,6 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/headerView"
+            layout="@layout/header_item" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/headerBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="glHorizontal50, headerView" />
+
         <EditText
             android:id="@+id/loginView"
             android:layout_width="match_parent"
@@ -23,21 +34,22 @@
             android:enabled="@{viewModel.state != viewModel.State.LOADING}"
             android:hint="@string/login_username_hint"
             android:inputType="text"
+            android:layout_marginTop="12dp"
             android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@+id/glHorizontal50" />
+            app:layout_constraintTop_toBottomOf="@+id/headerBarrier" />
 
         <EditText
             android:id="@+id/passwordView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="6dp"
             android:layout_marginEnd="36dp"
             android:enabled="@{viewModel.state != viewModel.State.LOADING}"
             android:hint="@string/login_password_hint"
             android:inputType="textPassword"
             android:textColor="@android:color/black"
-            app:layout_constraintTop_toBottomOf="@+id/glHorizontal50" />
+            app:layout_constraintTop_toBottomOf="@+id/loginView" />
 
         <Button
             android:layout_width="wrap_content"

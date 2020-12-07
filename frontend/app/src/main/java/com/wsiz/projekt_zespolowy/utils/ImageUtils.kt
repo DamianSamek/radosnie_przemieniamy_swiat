@@ -21,7 +21,9 @@ object ImageUtils {
         return if (imageData != null) {
             val input = activity.contentResolver?.openInputStream(imageData)
             val bitmap = BitmapFactory.decodeStream(input)
-            scaleToFileSize(activity, bitmap, 1 * 1000 * 1000)
+
+            // 200 kB
+            scaleToFileSize(activity, bitmap, 1 * 1000 * 200)
         } else {
             null
         }
@@ -70,11 +72,13 @@ object ImageUtils {
     }
 
 
-    fun generatePicassoTarget(onLoaded: (Bitmap?) -> Unit): Target {
+    fun generatePicassoTarget(onError: (Exception?) -> Unit = {}, onLoaded: (Bitmap?) -> Unit): Target {
         return object : Target {
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
 
-            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {}
+            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                onError(e)
+            }
 
             override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
                 onLoaded(bitmap)
