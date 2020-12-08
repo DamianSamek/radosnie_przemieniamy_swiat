@@ -1,26 +1,33 @@
-package com.wsiz.projekt_zespolowy.activity
+package com.wsiz.projekt_zespolowy.activity.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.wsiz.projekt_zespolowy.R
+import com.wsiz.projekt_zespolowy.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainActivityViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.setVariable(BR.viewModel, viewModel)
 
-        bottomNavigationView.setupWithNavController(getNavController())
-        bottomNavigationView.setOnNavigationItemReselectedListener { }
+        binding.bottomNavigationView.setupWithNavController(getNavController())
+        binding.bottomNavigationView.setOnNavigationItemReselectedListener { }
     }
 
     private fun getNavController(): NavController {

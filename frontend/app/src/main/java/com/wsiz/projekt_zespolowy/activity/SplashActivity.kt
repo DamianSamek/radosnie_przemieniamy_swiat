@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.wsiz.projekt_zespolowy.activity.login.LoginActivity
+import com.wsiz.projekt_zespolowy.activity.main.MainActivity
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

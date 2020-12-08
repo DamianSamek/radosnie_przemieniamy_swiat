@@ -8,10 +8,6 @@
         <variable
             name="viewModel"
             type="com.wsiz.projekt_zespolowy.fragment.user.this_user.ThisUserViewModel" />
-
-        <variable
-            name="adapter"
-            type="com.wsiz.projekt_zespolowy.base.BasePostsAdapter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -53,7 +49,7 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.recyclerview.widget.RecyclerView
-                adapter="@{adapter}"
+                adapter="@{viewModel.getRecycleViewAdapter()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
@@ -75,7 +71,7 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
-                android:visibility="@{adapter.isNoItems ? android.view.View.VISIBLE : android.view.View.GONE}"
+                android:visibility="@{viewModel.getRecycleViewAdapter().isNoItems ? android.view.View.VISIBLE : android.view.View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -91,7 +87,7 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="@string/user_fragment_add_first_post"
-                android:visibility="@{adapter.isNoItems ? android.view.View.VISIBLE : android.view.View.GONE}"
+                android:visibility="@{viewModel.getRecycleViewAdapter().isNoItems ? android.view.View.VISIBLE : android.view.View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emptyView" />

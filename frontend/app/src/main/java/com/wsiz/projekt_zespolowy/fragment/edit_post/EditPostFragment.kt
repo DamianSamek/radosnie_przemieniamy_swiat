@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.MainActivity
+import com.wsiz.projekt_zespolowy.activity.main.MainActivity
 import com.wsiz.projekt_zespolowy.base.BaseFragment
 import com.wsiz.projekt_zespolowy.databinding.EditPostFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint

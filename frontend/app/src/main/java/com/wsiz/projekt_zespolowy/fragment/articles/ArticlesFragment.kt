@@ -9,17 +9,17 @@ import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.MainActivity
+import com.wsiz.projekt_zespolowy.activity.main.MainActivity
 import com.wsiz.projekt_zespolowy.base.BaseFragment
 import com.wsiz.projekt_zespolowy.data.dto.Article
 import com.wsiz.projekt_zespolowy.databinding.ArticlesFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.Single
 
 @AndroidEntryPoint
-class ArticlesFragment : BaseFragment(), ArticlesRecyclerViewAdapter.ArticleInteractionContract {
+class ArticlesFragment : BaseFragment() {
 
     private lateinit var binding: ArticlesFragmentLayoutBinding
     private val viewModel: ArticlesViewModel by viewModels()
@@ -33,20 +33,31 @@ class ArticlesFragment : BaseFragment(), ArticlesRecyclerViewAdapter.ArticleInte
             DataBindingUtil.inflate(inflater, R.layout.articles_fragment_layout, container, false)
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, viewModel)
-        binding.setVariable(BR.adapter, ArticlesRecyclerViewAdapter(this))
         return binding.root
     }
 
-    override fun loadMoreData(pageNumber: Int): Single<List<Article>> {
-        return viewModel.loadArticles(pageNumber)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.state.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                null -> return@Observer
+                is ArticlesViewModel.ArticleRecyclerViewAdapterEvent.Error -> {
+                    onErrorLoading(it.error)
+                }
+                is ArticlesViewModel.ArticleRecyclerViewAdapterEvent.Click -> {
+                    onArticleClick(it.cardView, it.article)
+                }
+            }
+        })
     }
 
-    override fun onErrorLoading(error: Throwable) {
+    private fun onErrorLoading(error: Throwable) {
         val context = context ?: return
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onClick(cardView: CardView, article: Article) {
+    private fun onArticleClick(cardView: CardView, article: Article) {
         val extras = FragmentNavigatorExtras(
             cardView to "articleTransition"
         )

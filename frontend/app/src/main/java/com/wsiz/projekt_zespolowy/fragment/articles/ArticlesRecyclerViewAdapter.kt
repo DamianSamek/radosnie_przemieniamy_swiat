@@ -9,11 +9,13 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import com.squareup.picasso.Picasso
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.base.PaginationAdapter
+import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.PaginationAdapter
 import com.wsiz.projekt_zespolowy.data.dto.Article
 
 class ArticlesRecyclerViewAdapter(private val articleInteractionContract: ArticleInteractionContract) :
-    PaginationAdapter<Article>(articleInteractionContract) {
+    PaginationAdapter<ArticlesRecyclerViewAdapter.ArticleViewHolder, Article>(
+        articleInteractionContract
+    ) {
 
     companion object {
         private const val HEADER_VIEW_TYPE = 1
@@ -22,25 +24,17 @@ class ArticlesRecyclerViewAdapter(private val articleInteractionContract: Articl
 
     override fun paginationGetItemCount() = items.size
 
-    override fun paginationOnBindViewHolder(holder: BasePaginationViewHolder, position: Int) {
-        when (paginationGetItemViewType(position)) {
-            ARTICLE_VIEW_TYPE -> {
-                holder as ArticleViewHolder
-                val article = items[position]
+    override fun paginationOnBindViewHolder(holder: ArticleViewHolder, position: Int) {
+        val article = items[position]
 
-                holder.apply {
-                    descriptionView.text = article.content
-                    titleView.text = article.title
-                    Picasso.get().load(article.imageURL).into(imageView)
+        holder.apply {
+            descriptionView.text = article.content
+            titleView.text = article.title
+            Picasso.get().load(article.imageURL).into(imageView)
 
-                    itemView.setOnClickListener {
-                        ViewCompat.setTransitionName(imageCardView, "articleTransition")
-                        articleInteractionContract.onClick(imageCardView, article)
-                    }
-                }
-            }
-            HEADER_VIEW_TYPE -> {
-                holder as HeaderViewHolder
+            itemView.setOnClickListener {
+                ViewCompat.setTransitionName(imageCardView, "articleTransition")
+                articleInteractionContract.onClick(imageCardView, article)
             }
         }
     }
@@ -48,20 +42,9 @@ class ArticlesRecyclerViewAdapter(private val articleInteractionContract: Articl
     override fun paginationOnCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BasePaginationViewHolder {
-        return when (viewType) {
-            ARTICLE_VIEW_TYPE -> {
-                val view =
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.article_item, parent, false)
-                ArticleViewHolder(view)
-            }
-            else -> {
-                val view =
-                    LayoutInflater.from(parent.context).inflate(R.layout.header_item, parent, false)
-                HeaderViewHolder(view)
-            }
-        }
+    ): ArticleViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.article_item, parent, false)
+        return ArticleViewHolder(view)
     }
 
     override fun paginationGetItemViewType(position: Int): Int {
@@ -75,8 +58,6 @@ class ArticlesRecyclerViewAdapter(private val articleInteractionContract: Articl
         val descriptionView: TextView = view.findViewById(R.id.descriptionView)
         val titleView: TextView = view.findViewById(R.id.titleView)
     }
-
-    class HeaderViewHolder(view: View) : PaginationAdapter.BasePaginationViewHolder(view)
 
     interface ArticleInteractionContract : PaginationContract<Article> {
         fun onClick(cardView: CardView, article: Article)

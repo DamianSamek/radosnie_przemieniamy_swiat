@@ -9,10 +9,12 @@ import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ConcatAdapter
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.MainActivity
+import com.wsiz.projekt_zespolowy.activity.main.MainActivity
 import com.wsiz.projekt_zespolowy.base.BaseFragment
-import com.wsiz.projekt_zespolowy.base.BasePostsAdapter
+import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
+import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.HeaderRecycleViewAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.databinding.HomeFragmentLayoutBinding
@@ -33,13 +35,20 @@ class HomeFragment : BaseFragment(), BasePostsAdapter.PostInteractionContract {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.home_fragment_layout, container, false)
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, viewModel)
         binding.setVariable(BR.adapter, BasePostsAdapter(this))
         return binding.root
+    }
+
+    private fun getAdapter(): ConcatAdapter {
+        val postsAdapter = BasePostsAdapter(this)
+        val headerAdapter = HeaderRecycleViewAdapter()
+
+        return ConcatAdapter(headerAdapter, postsAdapter)
     }
 
     override fun loadMoreData(pageNumber: Int): Single<List<UserPost>> {

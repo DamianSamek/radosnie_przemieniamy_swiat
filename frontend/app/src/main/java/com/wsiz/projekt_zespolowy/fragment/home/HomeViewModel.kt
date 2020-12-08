@@ -1,7 +1,7 @@
 package com.wsiz.projekt_zespolowy.fragment.home
 
 import androidx.hilt.lifecycle.ViewModelInject
-import com.wsiz.projekt_zespolowy.base.BaseViewModel
+import com.wsiz.projekt_zespolowy.base.view_model.BaseViewModel
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
 import io.reactivex.Single

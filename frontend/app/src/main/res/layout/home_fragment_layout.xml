@@ -11,7 +11,7 @@
 
         <variable
             name="adapter"
-            type="com.wsiz.projekt_zespolowy.base.BasePostsAdapter" />
+            type="com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter" />
     </data>
 
 

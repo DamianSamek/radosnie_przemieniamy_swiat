@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.MainActivity
+import com.wsiz.projekt_zespolowy.activity.main.MainActivity
 import com.wsiz.projekt_zespolowy.databinding.LoginActivityLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
     private fun observeLoginState() {
         viewModel.state.observe(this, Observer { state ->
             when (state) {
-                null, LoginViewModel.State.INIT -> return@Observer
+                null, LoginViewModel.State.INIT, LoginViewModel.State.LOADING -> return@Observer
                 LoginViewModel.State.NO_LOGIN -> {
                     Toast.makeText(
                         applicationContext,

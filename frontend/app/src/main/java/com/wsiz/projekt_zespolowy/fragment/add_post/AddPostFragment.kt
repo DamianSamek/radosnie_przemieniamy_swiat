@@ -15,12 +15,11 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.MainActivity
+import com.wsiz.projekt_zespolowy.activity.main.MainActivity
 import com.wsiz.projekt_zespolowy.base.BaseFragment
 import com.wsiz.projekt_zespolowy.databinding.AddPostFragmentLayoutBinding
 import com.wsiz.projekt_zespolowy.utils.ImageUtils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.add_post_fragment_layout.*
 
 @AndroidEntryPoint
 class AddPostFragment : BaseFragment() {
@@ -37,7 +36,7 @@ class AddPostFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.add_post_fragment_layout, container, false)
         binding.lifecycleOwner = this
@@ -83,7 +82,7 @@ class AddPostFragment : BaseFragment() {
     }
 
     private fun forgetData() {
-        descriptionView.setText("")
+        binding.descriptionView.setText("")
         viewModel.forgetData()
     }
 

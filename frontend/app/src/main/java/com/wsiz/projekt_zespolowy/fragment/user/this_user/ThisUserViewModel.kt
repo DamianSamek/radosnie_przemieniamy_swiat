@@ -3,8 +3,8 @@ package com.wsiz.projekt_zespolowy.fragment.user.this_user
 import android.content.Intent
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
 import com.wsiz.projekt_zespolowy.activity.login.LoginActivity
+import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.fragment.user.UserViewModel
@@ -12,13 +12,9 @@ import com.wsiz.projekt_zespolowy.fragment.user.UserViewModel
 class ThisUserViewModel @ViewModelInject constructor(
     private val sharedPreferences: SharedPreferences,
     postRepository: PostRepository
-) : UserViewModel(postRepository) {
+) : UserViewModel(sharedPreferences.getUserId(), postRepository) {
 
-    enum class State {
-        ADD_POST
-    }
-
-    val state = MutableLiveData<State>()
+    class OpenAddPost : State()
 
     fun logout(view: View) {
         val context = view.context ?: return
@@ -36,6 +32,8 @@ class ThisUserViewModel @ViewModelInject constructor(
     }
 
     fun openAddPostFragment() {
-        state.postValue(State.ADD_POST)
+        state.postValue(OpenAddPost())
     }
+
+    override fun getRecycleViewAdapter() = BasePostsAdapter(this)
 }

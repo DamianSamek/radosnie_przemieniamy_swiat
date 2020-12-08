@@ -1,4 +1,4 @@
-package com.wsiz.projekt_zespolowy.base
+package com.wsiz.projekt_zespolowy.base.view_model
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel

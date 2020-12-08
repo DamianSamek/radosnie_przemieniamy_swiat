@@ -1,4 +1,4 @@
-package com.wsiz.projekt_zespolowy.base
+package com.wsiz.projekt_zespolowy.base.recycler_view_adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +12,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class PaginationAdapter<ItemsType>(
+abstract class PaginationAdapter<VH: PaginationAdapter.BasePaginationViewHolder, ItemsType>(
     private val paginationContract: PaginationContract<ItemsType>
-) : RecyclerView.Adapter<PaginationAdapter.BasePaginationViewHolder>() {
+) : BaseAdapter<PaginationAdapter.BasePaginationViewHolder>() {
 
     private enum class LoadingStatus {
         READY, LOADING, LAST_PAGE_LOADED
@@ -32,9 +32,11 @@ abstract class PaginationAdapter<ItemsType>(
 
     protected val items = mutableListOf<ItemsType>()
 
-    private var pageNumber: Int = PAGE_NOT_SET
+    private var pageNumber: Int =
+        PAGE_NOT_SET
 
-    private var loadingStatus: LoadingStatus = LoadingStatus.READY
+    private var loadingStatus: LoadingStatus =
+        LoadingStatus.READY
 
     private fun loadMoreDataIfShould() {
         if (loadingStatus == LoadingStatus.READY) {
@@ -48,8 +50,10 @@ abstract class PaginationAdapter<ItemsType>(
     }
 
     private fun loadMoreData() {
-        if (pageNumber == PAGE_NOT_SET) pageNumber = FIRST_PAGE else pageNumber++
-        loadingStatus = LoadingStatus.LOADING
+        if (pageNumber == PAGE_NOT_SET) pageNumber =
+            FIRST_PAGE else pageNumber++
+        loadingStatus =
+            LoadingStatus.LOADING
         compositeDisposable.add(
             paginationContract.loadMoreData(pageNumber)
                 .subscribeOn(Schedulers.io())
@@ -87,7 +91,9 @@ abstract class PaginationAdapter<ItemsType>(
                     parent,
                     false
                 )
-                PaginationLoadingViewHolder(view)
+                PaginationLoadingViewHolder(
+                    view
+                )
             }
             else -> paginationOnCreateViewHolder(parent, viewType)
         }
@@ -110,7 +116,8 @@ abstract class PaginationAdapter<ItemsType>(
 
             loadMoreDataIfShould()
         } else {
-            paginationOnBindViewHolder(holder, position)
+            @Suppress("UNCHECKED_CAST")
+            paginationOnBindViewHolder(holder as VH, position)
         }
     }
 
@@ -124,8 +131,8 @@ abstract class PaginationAdapter<ItemsType>(
     }
 
     abstract fun paginationGetItemCount(): Int
-    abstract fun paginationOnBindViewHolder(holder: BasePaginationViewHolder, position: Int)
-    abstract fun paginationOnCreateViewHolder(parent: ViewGroup, viewType: Int): BasePaginationViewHolder
+    abstract fun paginationOnBindViewHolder(holder: VH, position: Int)
+    abstract fun paginationOnCreateViewHolder(parent: ViewGroup, viewType: Int): VH
 
 
     open class BasePaginationViewHolder(view: View) : RecyclerView.ViewHolder(view)

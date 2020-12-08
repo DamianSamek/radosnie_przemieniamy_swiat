@@ -7,12 +7,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.MainActivity
+import com.wsiz.projekt_zespolowy.activity.main.MainActivity
 import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.databinding.ThisUserFragmentLayoutBinding
 import com.wsiz.projekt_zespolowy.fragment.user.UserFragment
+import com.wsiz.projekt_zespolowy.fragment.user.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -26,9 +27,8 @@ class ThisUserFragment : UserFragment<ThisUserFragmentLayoutBinding, ThisUserVie
 
     override fun getViewModel() = vm
     override fun getLayoutId() = R.layout.this_user_fragment_layout
-    override fun showRecyclerViewHeaderView() = false
 
-    override fun onPostClick(cardView: CardView, userPost: UserPost) {
+    private fun onPostClick(cardView: CardView, userPost: UserPost) {
         val extras = FragmentNavigatorExtras(
             cardView to "postTransition"
         )
@@ -38,19 +38,13 @@ class ThisUserFragment : UserFragment<ThisUserFragmentLayoutBinding, ThisUserVie
         (activity as MainActivity).navigateTo(direction, extras)
     }
 
-    override fun getUserId() = sharedPreferences.getUserId()
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        vm.state.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                null -> return@Observer
-                ThisUserViewModel.State.ADD_POST -> {
-                    vm.state.postValue(null)
-                    (activity as MainActivity).navigateTo(ThisUserFragmentDirections.actionThisUserFragmentToAddPostFragment())
-                }
+    override fun onViewModelStateChanged(state: UserViewModel.State) {
+        when (state) {
+            is ThisUserViewModel.OpenAddPost -> {
+                vm.state.postValue(null)
+                (activity as MainActivity).navigateTo(ThisUserFragmentDirections.actionThisUserFragmentToAddPostFragment())
             }
-        })
+            is UserViewModel.State.PostClick -> onPostClick(state.cardView, state.userPost)
+        }
     }
 }

@@ -9,15 +9,14 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.BaseFragment
-import com.wsiz.projekt_zespolowy.base.BasePostsAdapter
+import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import io.reactivex.Single
 
-abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : BaseFragment(),
-    BasePostsAdapter.PostInteractionContract {
+abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : BaseFragment() {
 
     private lateinit var binding: Binding
 
@@ -25,8 +24,6 @@ abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : Bas
 
     @LayoutRes
     abstract fun getLayoutId(): Int
-
-    abstract fun showRecyclerViewHeaderView(): Boolean
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,23 +34,29 @@ abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : Bas
             DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, getViewModel())
-        binding.setVariable(BR.adapter, BasePostsAdapter(this, showRecyclerViewHeaderView()))
+
         return binding.root
     }
 
-    //    PostRecyclerViewAdapter callbacks
-    override fun loadMoreData(pageNumber: Int): Single<List<UserPost>> {
-        return getViewModel().loadPosts(getUserId(), pageNumber)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        observeViewModelState()
     }
 
-    abstract fun getUserId(): Int
-
-    override fun onErrorLoading(error: Throwable) {
-        val context = context ?: return
-        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
+    private fun observeViewModelState() {
+        getViewModel().state.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                null -> return@Observer
+                is UserViewModel.State.ErrorLoading -> {
+                    val context = context ?: return@Observer
+                    Toast.makeText(context, R.string.error, Toast.LENGTH_LONG).show()
+                }
+                else -> onViewModelStateChanged(it)
+            }
+        })
     }
 
-    override fun onLikeClick(userPost: UserPost) {
-        getViewModel().like(userPost.id)
+    protected open fun onViewModelStateChanged(state: UserViewModel.State) {
     }
 }
