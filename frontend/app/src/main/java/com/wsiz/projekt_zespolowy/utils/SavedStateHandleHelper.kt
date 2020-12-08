@@ -12,18 +12,18 @@ object SavedStateHandleHelper {
             .invoke(null, toBundle(savedStateHandleHelper)) as T
     }
 
-    fun toBundle(savedStateHandleHelper: SavedStateHandle): Bundle {
+    fun toBundle(savedStateHandle: SavedStateHandle): Bundle {
         val bundle = bundleOf()
-        for (key in savedStateHandleHelper.keys()) {
+        for (key in savedStateHandle.keys()) {
             when {
-                savedStateHandleHelper.get<Int>(key) != null -> {
-                    bundle.putInt(key, savedStateHandleHelper.get<Int>(key) as Int)
+                savedStateHandle.get<Int>(key) != null -> {
+                    bundle.putInt(key, savedStateHandle.get<Int>(key) as Int)
                 }
-                savedStateHandleHelper.get<String>(key) != null -> {
-                    bundle.putString(key, savedStateHandleHelper.get<String>(key) as String)
+                savedStateHandle.get<String>(key) != null -> {
+                    bundle.putString(key, savedStateHandle.get<String>(key) as String)
                 }
-                savedStateHandleHelper.get<Boolean>(key) != null -> {
-                    bundle.putBoolean(key, savedStateHandleHelper.get<Boolean>(key) as Boolean)
+                savedStateHandle.get<Boolean>(key) != null -> {
+                    bundle.putBoolean(key, savedStateHandle.get<Boolean>(key) as Boolean)
                 }
                 else -> Log.e("SavedStateHandleHelper", "Not known object class for $key")
             }
