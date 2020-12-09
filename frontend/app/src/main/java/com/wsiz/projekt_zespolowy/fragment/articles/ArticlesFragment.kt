@@ -46,7 +46,7 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
                     onErrorLoading(it.error)
                 }
                 is ArticlesViewModel.State.PostClick -> {
-                    onArticleClick(it.cardView, it.titleView, it.contentView, it.article)
+                    onArticleClick(it.cardView, it.titleView, it.contentView, it.separatorView, it.article)
                 }
             }
         })
@@ -57,11 +57,12 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
     }
 
-    private fun onArticleClick(cardView: CardView, titleView: TextView, contentView: TextView, article: Article) {
+    private fun onArticleClick(cardView: CardView, titleView: TextView, contentView: TextView, separatorView: View, article: Article) {
         val extras = FragmentNavigatorExtras(
             cardView to "articleTransition",
             titleView to "articleTransitionTitle",
-            contentView to "articleTransitionContent"
+            contentView to "articleTransitionContent",
+            separatorView to "articleTransitionSeparator"
         )
         val direction =
             ArticlesFragmentDirections.actionArticlesFragmentToOneArticleFragment(article)

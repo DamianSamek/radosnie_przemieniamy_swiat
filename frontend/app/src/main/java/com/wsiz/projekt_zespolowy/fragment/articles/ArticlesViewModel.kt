@@ -1,5 +1,6 @@
 package com.wsiz.projekt_zespolowy.fragment.articles
 
+import android.view.View
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.hilt.lifecycle.ViewModelInject
@@ -21,7 +22,7 @@ class ArticlesViewModel @ViewModelInject constructor(private val articleReposito
 
     sealed class State {
         class LoadingError(val error: Throwable) : State()
-        class PostClick(val cardView: CardView, val titleView: TextView, val contentView: TextView, val article: Article) :
+        class PostClick(val cardView: CardView, val titleView: TextView, val contentView: TextView, val separatorView: View, val article: Article) :
             State()
     }
 
@@ -42,8 +43,8 @@ class ArticlesViewModel @ViewModelInject constructor(private val articleReposito
         return recyclerViewAdapter!!
     }
 
-    override fun onClick(cardView: CardView, titleView: TextView, contentView: TextView, article: Article) {
-        state.postValue(State.PostClick(cardView, titleView, contentView, article))
+    override fun onClick(cardView: CardView, titleView: TextView, contentView: TextView, separatorView: View, article: Article) {
+        state.postValue(State.PostClick(cardView, titleView, contentView, separatorView, article))
     }
 
     override fun loadMoreData(pageNumber: Int): Single<List<Article>> {

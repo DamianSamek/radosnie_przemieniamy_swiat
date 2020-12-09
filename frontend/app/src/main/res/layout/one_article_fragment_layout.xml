@@ -61,11 +61,14 @@
                 tools:text="Title" />
 
             <View
-                android:id="@+id/viewArticle"
+                android:id="@+id/separatorView"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="12dp"
-                android:background="@android:color/darker_gray"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:transitionName="articleTransitionSeparator"
+                android:background="@android:color/black"
                 app:layout_constraintTop_toBottomOf="@id/titleArticle" />
 
             <TextView
@@ -80,16 +83,8 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:transitionName="articleTransitionContent"
-                app:layout_constraintTop_toBottomOf="@id/viewArticle"
+                app:layout_constraintTop_toBottomOf="@id/separatorView"
                 tools:text="Subtitle" />
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="6dp"
-                android:background="@android:color/darker_gray"
-                app:layout_constraintTop_toBottomOf="@id/subtitleArticle" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

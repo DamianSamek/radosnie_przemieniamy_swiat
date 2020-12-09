@@ -36,7 +36,8 @@ class ArticlesRecyclerViewAdapter(private val articleInteractionContract: Articl
                 ViewCompat.setTransitionName(imageCardView, "articleTransition")
                 ViewCompat.setTransitionName(titleView, "articleTransitionTitle")
                 ViewCompat.setTransitionName(descriptionView, "articleTransitionContent")
-                articleInteractionContract.onClick(imageCardView, titleView, descriptionView, article)
+                ViewCompat.setTransitionName(separatorView, "articleTransitionSeparator")
+                articleInteractionContract.onClick(imageCardView, titleView, descriptionView, separatorView, article)
             }
         }
     }
@@ -59,9 +60,10 @@ class ArticlesRecyclerViewAdapter(private val articleInteractionContract: Articl
         val imageCardView: CardView = view.findViewById(R.id.imageCardView)
         val descriptionView: TextView = view.findViewById(R.id.descriptionView)
         val titleView: TextView = view.findViewById(R.id.titleView)
+        val separatorView: View = view.findViewById(R.id.separatorView)
     }
 
     interface ArticleInteractionContract : PaginationContract<Article> {
-        fun onClick(cardView: CardView, titleView: TextView, contentView: TextView, article: Article)
+        fun onClick(cardView: CardView, titleView: TextView, contentView: TextView, separatorView: View, article: Article)
     }
 }
