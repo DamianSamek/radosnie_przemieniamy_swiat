@@ -11,16 +11,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.base.BaseFragment
-import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
-import com.wsiz.projekt_zespolowy.data.dto.UserPost
-import io.reactivex.Single
+import com.wsiz.projekt_zespolowy.base.fragment.BaseFragment
 
-abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : BaseFragment() {
+abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : BaseFragment<VM>() {
 
     private lateinit var binding: Binding
-
-    abstract fun getViewModel(): VM
 
     @LayoutRes
     abstract fun getLayoutId(): Int
@@ -33,7 +28,7 @@ abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : Bas
         binding =
             DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
         binding.lifecycleOwner = this
-        binding.setVariable(BR.viewModel, getViewModel())
+        binding.setVariable(BR.viewModel, viewModel)
 
         return binding.root
     }
@@ -45,7 +40,7 @@ abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : Bas
     }
 
     private fun observeViewModelState() {
-        getViewModel().state.observe(viewLifecycleOwner, Observer {
+        viewModel.state.observe(viewLifecycleOwner, Observer {
             when(it) {
                 null -> return@Observer
                 is UserViewModel.State.ErrorLoading -> {

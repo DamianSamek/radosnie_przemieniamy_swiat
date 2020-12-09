@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            adapter="@{viewModel.getRecycleViewAdapter()}"
+            adapter="@{viewModel.getPostsAdapter()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"

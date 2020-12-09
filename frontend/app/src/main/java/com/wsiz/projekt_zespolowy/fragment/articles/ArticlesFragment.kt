@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
@@ -12,23 +13,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.main.MainActivity
-import com.wsiz.projekt_zespolowy.base.BaseFragment
+import com.wsiz.projekt_zespolowy.base.fragment.BaseFragment
 import com.wsiz.projekt_zespolowy.data.dto.Article
 import com.wsiz.projekt_zespolowy.databinding.ArticlesFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ArticlesFragment : BaseFragment() {
+class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
 
     private lateinit var binding: ArticlesFragmentLayoutBinding
-    private val viewModel: ArticlesViewModel by viewModels()
+    override val viewModel: ArticlesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.articles_fragment_layout, container, false)
         binding.lifecycleOwner = this
@@ -42,11 +42,11 @@ class ArticlesFragment : BaseFragment() {
         viewModel.state.observe(viewLifecycleOwner, Observer {
             when (it) {
                 null -> return@Observer
-                is ArticlesViewModel.ArticleRecyclerViewAdapterEvent.Error -> {
+                is ArticlesViewModel.State.LoadingError -> {
                     onErrorLoading(it.error)
                 }
-                is ArticlesViewModel.ArticleRecyclerViewAdapterEvent.Click -> {
-                    onArticleClick(it.cardView, it.article)
+                is ArticlesViewModel.State.PostClick -> {
+                    onArticleClick(it.cardView, it.titleView, it.contentView, it.article)
                 }
             }
         })
@@ -57,12 +57,14 @@ class ArticlesFragment : BaseFragment() {
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
     }
 
-    private fun onArticleClick(cardView: CardView, article: Article) {
+    private fun onArticleClick(cardView: CardView, titleView: TextView, contentView: TextView, article: Article) {
         val extras = FragmentNavigatorExtras(
-            cardView to "articleTransition"
+            cardView to "articleTransition",
+            titleView to "articleTransitionTitle",
+            contentView to "articleTransitionContent"
         )
         val direction =
             ArticlesFragmentDirections.actionArticlesFragmentToOneArticleFragment(article)
-        (activity as MainActivity).navigateTo(direction, extras)
+        mainActivity().navigateTo(direction, extras)
     }
 }

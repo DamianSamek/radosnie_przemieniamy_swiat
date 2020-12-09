@@ -34,7 +34,9 @@ class ArticlesRecyclerViewAdapter(private val articleInteractionContract: Articl
 
             itemView.setOnClickListener {
                 ViewCompat.setTransitionName(imageCardView, "articleTransition")
-                articleInteractionContract.onClick(imageCardView, article)
+                ViewCompat.setTransitionName(titleView, "articleTransitionTitle")
+                ViewCompat.setTransitionName(descriptionView, "articleTransitionContent")
+                articleInteractionContract.onClick(imageCardView, titleView, descriptionView, article)
             }
         }
     }
@@ -60,6 +62,6 @@ class ArticlesRecyclerViewAdapter(private val articleInteractionContract: Articl
     }
 
     interface ArticleInteractionContract : PaginationContract<Article> {
-        fun onClick(cardView: CardView, article: Article)
+        fun onClick(cardView: CardView, titleView: TextView, contentView: TextView, article: Article)
     }
 }

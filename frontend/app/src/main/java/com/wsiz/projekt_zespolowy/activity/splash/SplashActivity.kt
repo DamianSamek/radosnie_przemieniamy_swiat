@@ -1,4 +1,4 @@
-package com.wsiz.projekt_zespolowy.activity
+package com.wsiz.projekt_zespolowy.activity.splash
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.wsiz.projekt_zespolowy.base
+package com.wsiz.projekt_zespolowy.base.fragment.view_model.binding_adapter
 
 import android.graphics.Bitmap
 import android.view.View
@@ -7,7 +7,11 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.EdgeTreatment
+import com.google.android.material.shape.MaterialShapeDrawable
 import com.squareup.picasso.Picasso
+import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BaseAdapter
 
 object BindingAdapter {

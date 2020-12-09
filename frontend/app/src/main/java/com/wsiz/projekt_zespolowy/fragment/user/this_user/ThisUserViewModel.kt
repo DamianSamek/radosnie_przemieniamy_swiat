@@ -35,5 +35,9 @@ class ThisUserViewModel @ViewModelInject constructor(
         state.postValue(OpenAddPost())
     }
 
-    override fun getRecycleViewAdapter() = BasePostsAdapter(this)
+    override fun buildRecycleViewAdapter() = BasePostsAdapter(this)
+
+    fun getPostsAdapter() = getRecyclerViewAdapter() as BasePostsAdapter
+
+    fun getUsername() = sharedPreferences.getUserName()
 }

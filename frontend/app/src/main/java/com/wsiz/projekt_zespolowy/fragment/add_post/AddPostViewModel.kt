@@ -3,7 +3,7 @@ package com.wsiz.projekt_zespolowy.fragment.add_post
 import android.graphics.Bitmap
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import com.wsiz.projekt_zespolowy.base.view_model.BaseViewModel
+import com.wsiz.projekt_zespolowy.base.fragment.view_model.BaseViewModel
 import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.network.FirebaseStorageService
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
@@ -11,14 +11,13 @@ import com.wsiz.projekt_zespolowy.data.repository.PostRepository
 class AddPostViewModel @ViewModelInject constructor(
     private val postRepository: PostRepository,
     private val firebaseStorageService: FirebaseStorageService
-) :
-    BaseViewModel() {
+) : BaseViewModel<AddPostViewModel.State>() {
 
-    enum class PostState {
-        INIT, NO_IMAGE, NO_DESCRIPTION, LOADING, ERROR, SUCCESS
+    enum class State {
+        NO_IMAGE, NO_DESCRIPTION, LOADING, ERROR, SUCCESS
     }
 
-    val postState = MutableLiveData<PostState>()
+    override val state = MutableLiveData<State>()
     val postImage = MutableLiveData<Bitmap>()
 
     fun setPostImage(newPostImage: Bitmap?) {
@@ -34,32 +33,27 @@ class AddPostViewModel @ViewModelInject constructor(
 
         when {
             bitmap == null -> {
-                postState.postValue(PostState.NO_IMAGE)
+                state.postValue(State.NO_IMAGE)
             }
             description.isEmpty() -> {
-                postState.postValue(PostState.NO_DESCRIPTION)
+                state.postValue(State.NO_DESCRIPTION)
             }
             else -> {
-                postState.postValue(PostState.LOADING)
+                state.postValue(State.LOADING)
 
                 firebaseStorageService.uploadPostImage(
                     bitmap,
                     { url, uuid -> addPost(Post(description, url, uuid)) },
-                    { postState.postValue(PostState.ERROR) })
+                    { state.postValue(State.ERROR) })
             }
         }
     }
 
     private fun addPost(post: Post) {
         postRepository.create(post).io({
-            postState.postValue(PostState.SUCCESS)
+            state.postValue(State.SUCCESS)
         }, {
-            postState.postValue(PostState.ERROR)
+            state.postValue(State.ERROR)
         })
-    }
-
-    fun forgetData() {
-        postState.postValue(PostState.INIT)
-        postImage.postValue(null)
     }
 }

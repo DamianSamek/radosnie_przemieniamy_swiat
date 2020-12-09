@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RadośniePrzemieniamyŚwiat">
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".activity.splash.SplashActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

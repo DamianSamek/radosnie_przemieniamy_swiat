@@ -18,7 +18,7 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_marginTop="92dp"
-            android:enabled="@{viewModel.postState != viewModel.PostState.LOADING &amp;&amp; viewModel.postImage == null}"
+            android:enabled="@{viewModel.state != viewModel.State.LOADING &amp;&amp; viewModel.postImage == null}"
             android:foreground="?selectableItemBackground"
             app:cardBackgroundColor="@android:color/transparent"
             app:cardCornerRadius="60dp"
@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:padding="18dp"
-                android:src="@drawable/ic_add" />
+                android:src="@drawable/ic_add_photo" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -57,7 +57,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
-            android:enabled="@{viewModel.postState != viewModel.PostState.LOADING}"
+            android:enabled="@{viewModel.state != viewModel.State.LOADING}"
             android:onClick="@{() -> viewModel.removeImage()}"
             android:visibility="@{viewModel.postImage == null ? android.view.View.GONE : android.view.View.VISIBLE}"
             app:cardBackgroundColor="@android:color/transparent"
@@ -89,22 +89,23 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="12dp"
             android:ellipsize="end"
-            android:enabled="@{viewModel.postState != viewModel.PostState.LOADING}"
+            android:enabled="@{viewModel.state != viewModel.State.LOADING}"
             android:hint="@string/add_post_fragment_post_description_hint"
             android:maxLines="3"
             app:layout_constraintTop_toBottomOf="@+id/imageBarrier" />
 
         <!--Bottom margin-->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/addPostView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:enabled="@{viewModel.postState != viewModel.PostState.LOADING}"
+            android:enabled="@{viewModel.state != viewModel.State.LOADING}"
             android:onClick="@{() -> viewModel.addPost(descriptionView.getText().toString())}"
             android:paddingStart="48dp"
             android:paddingEnd="48dp"
             android:text="@string/add_post_fragment_add_post"
+            app:shapeAppearance="@style/ShapeAppearance.Button.CutCorners"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descriptionView" />

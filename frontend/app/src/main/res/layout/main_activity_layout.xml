@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wsiz.projekt_zespolowy.activity.main.MainActivityViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.main.MainActivity">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainer"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/main_activity_navigation" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/navigation_menu" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="12dp"
+            android:adjustViewBounds="true"
+            android:elevation="8dp"
+            android:src="@drawable/illu_menu_butterfly"
+            app:layout_constraintBottom_toTopOf="@+id/butterflyViewGuidelineView"
+            app:layout_constraintEnd_toEndOf="@+id/butterflyViewGuidelineView" />
+
+        <View
+            android:id="@+id/butterflyViewGuidelineView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="18dp"
+            app:layout_constraintEnd_toEndOf="@+id/bottomNavigationView"
+            app:layout_constraintTop_toTopOf="@+id/bottomNavigationView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

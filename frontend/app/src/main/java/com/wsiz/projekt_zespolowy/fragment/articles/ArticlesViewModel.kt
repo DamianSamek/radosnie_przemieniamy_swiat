@@ -1,26 +1,28 @@
 package com.wsiz.projekt_zespolowy.fragment.articles
 
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ConcatAdapter
 import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.HeaderRecycleViewAdapter
-import com.wsiz.projekt_zespolowy.base.view_model.BaseViewModel
+import com.wsiz.projekt_zespolowy.base.fragment.view_model.BaseViewModel
 import com.wsiz.projekt_zespolowy.data.dto.Article
 import com.wsiz.projekt_zespolowy.data.repository.ArticleRepository
 import io.reactivex.Single
 
 class ArticlesViewModel @ViewModelInject constructor(private val articleRepository: ArticleRepository) :
-    BaseViewModel(), ArticlesRecyclerViewAdapter.ArticleInteractionContract {
+    BaseViewModel<ArticlesViewModel.State>(),
+    ArticlesRecyclerViewAdapter.ArticleInteractionContract {
 
     private var recyclerViewAdapter: ConcatAdapter? = null
 
-    val state = MutableLiveData<ArticleRecyclerViewAdapterEvent>()
+    override val state = MutableLiveData<State>()
 
-    sealed class ArticleRecyclerViewAdapterEvent {
-        class Error(val error: Throwable) : ArticleRecyclerViewAdapterEvent()
-        class Click(val cardView: CardView, val article: Article) :
-            ArticleRecyclerViewAdapterEvent()
+    sealed class State {
+        class LoadingError(val error: Throwable) : State()
+        class PostClick(val cardView: CardView, val titleView: TextView, val contentView: TextView, val article: Article) :
+            State()
     }
 
     override fun onCleared() {
@@ -40,8 +42,8 @@ class ArticlesViewModel @ViewModelInject constructor(private val articleReposito
         return recyclerViewAdapter!!
     }
 
-    override fun onClick(cardView: CardView, article: Article) {
-        state.postValue(ArticleRecyclerViewAdapterEvent.Click(cardView, article))
+    override fun onClick(cardView: CardView, titleView: TextView, contentView: TextView, article: Article) {
+        state.postValue(State.PostClick(cardView, titleView, contentView, article))
     }
 
     override fun loadMoreData(pageNumber: Int): Single<List<Article>> {
@@ -49,7 +51,7 @@ class ArticlesViewModel @ViewModelInject constructor(private val articleReposito
     }
 
     override fun onErrorLoading(error: Throwable) {
-        state.postValue(ArticleRecyclerViewAdapterEvent.Error(error))
+        state.postValue(State.LoadingError(error))
     }
 
     private fun loadArticles(pageNumber: Int): Single<List<Article>> {

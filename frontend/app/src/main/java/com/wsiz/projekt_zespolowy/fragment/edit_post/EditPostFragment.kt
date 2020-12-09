@@ -12,16 +12,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.main.MainActivity
-import com.wsiz.projekt_zespolowy.base.BaseFragment
+import com.wsiz.projekt_zespolowy.base.fragment.BaseFragment
 import com.wsiz.projekt_zespolowy.databinding.EditPostFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditPostFragment : BaseFragment() {
+class EditPostFragment : BaseFragment<EditPostViewModel>() {
 
     private lateinit var binding: EditPostFragmentLayoutBinding
-    private val viewModel: EditPostViewModel by viewModels()
+    override val viewModel: EditPostViewModel by viewModels()
 
     private val navArguments: EditPostFragmentArgs by navArgs()
 
@@ -48,29 +47,29 @@ class EditPostFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.postState.observe(viewLifecycleOwner, Observer { postState ->
+        viewModel.state.observe(viewLifecycleOwner, Observer { postState ->
             val context = context ?: return@Observer
             when (postState) {
-                null, EditPostViewModel.PostState.INIT, EditPostViewModel.PostState.LOADING -> return@Observer
-                EditPostViewModel.PostState.NO_DESCRIPTION -> Toast.makeText(
+                null, EditPostViewModel.State.INIT, EditPostViewModel.State.LOADING -> return@Observer
+                EditPostViewModel.State.NO_DESCRIPTION -> Toast.makeText(
                     context,
                     R.string.add_post_fragment_no_description,
                     Toast.LENGTH_LONG
                 ).show()
-                EditPostViewModel.PostState.ERROR -> Toast.makeText(
+                EditPostViewModel.State.ERROR -> Toast.makeText(
                     context,
                     R.string.error,
                     Toast.LENGTH_LONG
                 ).show()
-                EditPostViewModel.PostState.SUCCESS -> {
+                EditPostViewModel.State.SUCCESS -> {
                     Toast.makeText(context, R.string.edit_post_fragment_success, Toast.LENGTH_LONG)
                         .show()
-                    (activity as MainActivity).navigateUp()
+                    mainActivity().navigateUp()
                 }
-                EditPostViewModel.PostState.REMOVED -> {
+                EditPostViewModel.State.REMOVED -> {
                     Toast.makeText(context, R.string.edit_post_fragment_removed, Toast.LENGTH_LONG)
                         .show()
-                    (activity as MainActivity).navigateUp()
+                    mainActivity().navigateUp()
                 }
             }
         })

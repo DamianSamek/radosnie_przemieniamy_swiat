@@ -3,7 +3,6 @@ package com.wsiz.projekt_zespolowy.activity.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.NavController
@@ -12,18 +11,19 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.databinding.ActivityMainBinding
+import com.wsiz.projekt_zespolowy.base.activity.BaseActivity
+import com.wsiz.projekt_zespolowy.databinding.MainActivityLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<MainActivityViewModel>() {
 
-    private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainActivityViewModel by viewModels()
+    private lateinit var binding: MainActivityLayoutBinding
+    override val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.main_activity_layout)
         binding.setVariable(BR.viewModel, viewModel)
 
         binding.bottomNavigationView.setupWithNavController(getNavController())
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getNavController(): NavController {
         val navigationHost: NavHostFragment =
-                supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         return navigationHost.navController
     }
 
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         val hostFragment = supportFragmentManager.fragments[0] as NavHostFragment
-        for(fragment in hostFragment.childFragmentManager.fragments) {
+        for (fragment in hostFragment.childFragmentManager.fragments) {
             fragment.onActivityResult(requestCode, resultCode, data)
         }
     }
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         val hostFragment = supportFragmentManager.fragments[0] as NavHostFragment
-        for(fragment in hostFragment.childFragmentManager.fragments) {
+        for (fragment in hostFragment.childFragmentManager.fragments) {
             fragment.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }

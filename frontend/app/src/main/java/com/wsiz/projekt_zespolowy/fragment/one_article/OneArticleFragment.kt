@@ -10,18 +10,18 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.base.BaseFragment
+import com.wsiz.projekt_zespolowy.base.fragment.BaseFragment
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.databinding.OneArticleFragmentLayoutBinding
 import javax.inject.Inject
 
-class OneArticleFragment : BaseFragment() {
+class OneArticleFragment : BaseFragment<OneArticleViewModel>() {
 
     @Inject
     lateinit var sp: SharedPreferences
 
     private lateinit var binding: OneArticleFragmentLayoutBinding
-    private val viewModel: OneArticleViewModel by viewModels()
+    override val viewModel: OneArticleViewModel by viewModels()
 
     private val navArguments: OneArticleFragmentArgs by navArgs()
 

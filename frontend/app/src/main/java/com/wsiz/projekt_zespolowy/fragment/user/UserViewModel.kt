@@ -3,8 +3,9 @@ package com.wsiz.projekt_zespolowy.fragment.user
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.wsiz.projekt_zespolowy.base.view_model.BaseViewModel
 import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
+import com.wsiz.projekt_zespolowy.base.fragment.view_model.BaseViewModel
+import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.PaginationAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
 import io.reactivex.Single
@@ -12,17 +13,19 @@ import io.reactivex.Single
 abstract class UserViewModel(
     private val userId: Int,
     private val postRepository: PostRepository
-) : BaseViewModel(), BasePostsAdapter.PostInteractionContract {
+) : BaseViewModel<UserViewModel.State>(), BasePostsAdapter.PostInteractionContract {
 
     // Cannot use sealed class because need additional <OpenAddPost out State> class in ThisUserViewModel. Issue: https://youtrack.jetbrains.com/issue/KT-13495
     open class State {
-        class PostClick(val cardView: CardView, val userPost: UserPost): State()
-        class ErrorLoading(error: Throwable): State()
+        class PostClick(val cardView: CardView, val userPost: UserPost) : State()
+        class ErrorLoading(error: Throwable) : State()
     }
 
-    val state = MutableLiveData<State>()
+    var adapter: RecyclerView.Adapter<*>? = null
 
-    fun loadPosts(userId: Int, pageNumber: Int): Single<List<UserPost>> {
+    override val state = MutableLiveData<State>()
+
+    private fun loadPosts(userId: Int, pageNumber: Int): Single<List<UserPost>> {
         return postRepository.getByUser(userId, pageNumber)
     }
 
@@ -30,7 +33,15 @@ abstract class UserViewModel(
         postRepository.like(postId)
     }
 
-    abstract fun getRecycleViewAdapter(): RecyclerView.Adapter<*>
+    fun getRecyclerViewAdapter(): RecyclerView.Adapter<*> {
+        if(adapter == null) {
+            adapter = buildRecycleViewAdapter()
+        }
+
+        return adapter!!
+    }
+
+    protected abstract fun buildRecycleViewAdapter(): RecyclerView.Adapter<*>
 
     override fun onPostClick(cardView: CardView, userPost: UserPost) {
         state.postValue(State.PostClick(cardView, userPost))
@@ -45,6 +56,6 @@ abstract class UserViewModel(
     }
 
     override fun loadMoreData(pageNumber: Int): Single<List<UserPost>> {
-        return postRepository.getByUser(userId, pageNumber)
+        return loadPosts(userId, pageNumber)
     }
 }

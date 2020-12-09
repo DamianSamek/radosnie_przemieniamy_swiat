@@ -15,14 +15,13 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.main.MainActivity
-import com.wsiz.projekt_zespolowy.base.BaseFragment
+import com.wsiz.projekt_zespolowy.base.fragment.BaseFragment
 import com.wsiz.projekt_zespolowy.databinding.AddPostFragmentLayoutBinding
 import com.wsiz.projekt_zespolowy.utils.ImageUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddPostFragment : BaseFragment() {
+class AddPostFragment : BaseFragment<AddPostViewModel>() {
 
     companion object {
         const val READ_STORAGE_PERMISSION_CODE = 1
@@ -30,7 +29,7 @@ class AddPostFragment : BaseFragment() {
     }
 
     private lateinit var binding: AddPostFragmentLayoutBinding
-    private val viewModel: AddPostViewModel by viewModels()
+    override val viewModel: AddPostViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,29 +50,29 @@ class AddPostFragment : BaseFragment() {
             checkGalleryPermission()
         }
 
-        viewModel.postState.observe(viewLifecycleOwner, Observer { postState ->
+        viewModel.state.observe(viewLifecycleOwner, Observer { postState ->
             val context = context ?: return@Observer
             when (postState) {
-                null, AddPostViewModel.PostState.INIT, AddPostViewModel.PostState.LOADING -> return@Observer
-                AddPostViewModel.PostState.NO_IMAGE -> Toast.makeText(
+                null, AddPostViewModel.State.LOADING -> return@Observer
+                AddPostViewModel.State.NO_IMAGE -> Toast.makeText(
                     context,
                     R.string.add_post_fragment_no_image,
                     Toast.LENGTH_LONG
                 ).show()
-                AddPostViewModel.PostState.NO_DESCRIPTION -> Toast.makeText(
+                AddPostViewModel.State.NO_DESCRIPTION -> Toast.makeText(
                     context,
                     R.string.add_post_fragment_no_description,
                     Toast.LENGTH_LONG
                 ).show()
-                AddPostViewModel.PostState.ERROR -> Toast.makeText(
+                AddPostViewModel.State.ERROR -> Toast.makeText(
                     context,
                     R.string.error,
                     Toast.LENGTH_LONG
                 ).show()
-                AddPostViewModel.PostState.SUCCESS -> {
+                AddPostViewModel.State.SUCCESS -> {
                     Toast.makeText(context, R.string.add_post_fragment_success, Toast.LENGTH_LONG)
                         .show()
-                    (activity as MainActivity).navigateTo(AddPostFragmentDirections.actionAddPostFragmentToThisUserFragment())
+                    mainActivity().navigateTo(AddPostFragmentDirections.actionAddPostFragmentToThisUserFragment())
 
                     forgetData()
                 }
@@ -83,7 +82,6 @@ class AddPostFragment : BaseFragment() {
 
     private fun forgetData() {
         binding.descriptionView.setText("")
-        viewModel.forgetData()
     }
 
     private fun openGallery() {

@@ -9,9 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class OtherUserFragment : UserFragment<OtherUserFragmentLayoutBinding, OtherUserViewModel>() {
 
-    private val vm: OtherUserViewModel by viewModels()
-
-    override fun getViewModel() = vm
+    override val viewModel: OtherUserViewModel by viewModels()
 
     override fun getLayoutId() = R.layout.other_user_fragment_layout
 }

@@ -26,7 +26,7 @@ abstract class PaginationAdapter<VH: PaginationAdapter.BasePaginationViewHolder,
         private const val LOADING_VIEW_TYPE = 1000
     }
 
-    val isNoItems = MutableLiveData<Boolean>().apply { postValue(false) }
+    val isNoItems = MutableLiveData<Boolean>()
 
     private val compositeDisposable = CompositeDisposable()
 

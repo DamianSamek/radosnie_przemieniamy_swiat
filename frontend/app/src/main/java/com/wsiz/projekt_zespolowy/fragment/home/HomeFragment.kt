@@ -9,27 +9,23 @@ import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.ConcatAdapter
+import androidx.lifecycle.Observer
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.activity.main.MainActivity
-import com.wsiz.projekt_zespolowy.base.BaseFragment
-import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
-import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.HeaderRecycleViewAdapter
+import com.wsiz.projekt_zespolowy.base.fragment.BaseFragment
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.databinding.HomeFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.Single
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment(), BasePostsAdapter.PostInteractionContract {
+class HomeFragment : BaseFragment<HomeViewModel>() {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var binding: HomeFragmentLayoutBinding
-    private val viewModel: HomeViewModel by viewModels()
+    override val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,39 +36,40 @@ class HomeFragment : BaseFragment(), BasePostsAdapter.PostInteractionContract {
             DataBindingUtil.inflate(inflater, R.layout.home_fragment_layout, container, false)
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, viewModel)
-        binding.setVariable(BR.adapter, BasePostsAdapter(this))
         return binding.root
     }
 
-    private fun getAdapter(): ConcatAdapter {
-        val postsAdapter = BasePostsAdapter(this)
-        val headerAdapter = HeaderRecycleViewAdapter()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        return ConcatAdapter(headerAdapter, postsAdapter)
+        viewModel.state.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                null -> return@Observer
+                is HomeViewModel.State.OnPostClick -> {
+                    onPostClick(it.cardView, it.userPost)
+
+                }
+                is HomeViewModel.State.ErrorLoading -> {
+                    onErrorLoading(it.error)
+                }
+            }
+        })
     }
 
-    override fun loadMoreData(pageNumber: Int): Single<List<UserPost>> {
-        return viewModel.loadPosts(pageNumber)
-    }
-
-    override fun onErrorLoading(error: Throwable) {
+    private fun onErrorLoading(error: Throwable) {
         val context = context ?: return
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onPostClick(cardView: CardView, userPost: UserPost) {
+    private fun onPostClick(cardView: CardView, userPost: UserPost) {
         if (sharedPreferences.getUserId() == userPost.userId) {
-            (activity as MainActivity).navigateTo(
+            mainActivity().navigateTo(
                 HomeFragmentDirections.actionHomeFragmentToThisUserFragment()
             )
         } else {
-            (activity as MainActivity).navigateTo(
+            mainActivity().navigateTo(
                 HomeFragmentDirections.actionHomeFragmentToOtherUserFragment(userPost.userId)
             )
         }
-    }
-
-    override fun onLikeClick(userPost: UserPost) {
-        viewModel.like(userPost.id)
     }
 }

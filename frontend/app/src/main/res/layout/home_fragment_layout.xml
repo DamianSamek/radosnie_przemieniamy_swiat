@@ -8,10 +8,6 @@
         <variable
             name="viewModel"
             type="com.wsiz.projekt_zespolowy.fragment.home.HomeViewModel" />
-
-        <variable
-            name="adapter"
-            type="com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter" />
     </data>
 
 
@@ -20,7 +16,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            adapter="@{adapter}"
+            adapter="@{viewModel.getAdapter()}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"

@@ -4,20 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import com.wsiz.projekt_zespolowy.R
+import com.wsiz.projekt_zespolowy.base.activity.BaseActivity
 import com.wsiz.projekt_zespolowy.activity.main.MainActivity
 import com.wsiz.projekt_zespolowy.databinding.LoginActivityLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<LoginViewModel>() {
 
     lateinit var binding: LoginActivityLayoutBinding
-    private val viewModel: LoginViewModel by viewModels()
+    override val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
     private fun observeLoginState() {
         viewModel.state.observe(this, Observer { state ->
             when (state) {
-                null, LoginViewModel.State.INIT, LoginViewModel.State.LOADING -> return@Observer
+                null, LoginViewModel.State.LOADING -> return@Observer
                 LoginViewModel.State.NO_LOGIN -> {
                     Toast.makeText(
                         applicationContext,

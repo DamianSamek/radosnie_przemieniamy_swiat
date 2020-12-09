@@ -2,8 +2,6 @@ package com.wsiz.projekt_zespolowy.data.shared_preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -13,6 +11,7 @@ class SharedPreferences @Inject constructor(@ApplicationContext private val cont
         private const val SHARED_PREFERENCES_NAME = "RadosniePrzemieniamySwiatSharedPreferences"
         private const val TOKEN_KEY = "token"
         private const val USER_ID_KEY = "user_id"
+        private const val USER_NAME_KEY = "username"
 
         const val MISSING_VALUE = -1
     }
@@ -53,5 +52,13 @@ class SharedPreferences @Inject constructor(@ApplicationContext private val cont
 
     fun getUserId(): Int {
         return getInt(USER_ID_KEY)
+    }
+
+    fun putUserName(name: String) {
+        putString(USER_NAME_KEY, name)
+    }
+
+    fun getUserName(): String {
+        return getString(USER_NAME_KEY)
     }
 }

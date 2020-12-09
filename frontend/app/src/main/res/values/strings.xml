@@ -12,6 +12,7 @@
     <!--    UserFragment-->
     <string name="user_fragment_empty_posts">W tym miejscu będą Twoje posty, kiedy ich dodasz</string>
     <string name="user_fragment_add_first_post">Dodaj pierwszy post</string>
+    <string name="user_fragment_log_out">Wyloguj</string>
 
     <!--    EditPostFragment-->
     <string name="edit_post_fragment_edit">Edytuj</string>
