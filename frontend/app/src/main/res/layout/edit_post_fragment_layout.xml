@@ -45,8 +45,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp">
+                android:layout_height="wrap_content">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/imageCardView"
@@ -83,7 +82,6 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="12dp"
-                    android:paddingBottom="72dp"
                     app:boxBackgroundColor="@android:color/transparent"
                     app:layout_constraintTop_toBottomOf="@id/imageCardView">
 
@@ -96,24 +94,22 @@
                         android:hint="@string/add_post_fragment_post_description_hint"
                         android:maxLines="3"
                         android:text="@{viewModel.post.description}" />
-                </com.google.android.material.textfield.TextInputLayout>
 
-                <!--Bottom margin-->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/addPostView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:enabled="@{viewModel.state != viewModel.State.LOADING}"
-                    android:onClick="@{() -> viewModel.editPost(descriptionView.getText().toString())}"
-                    android:paddingStart="48dp"
-                    android:paddingEnd="48dp"
-                    android:text="@string/edit_post_fragment_edit"
-                    app:layout_constraintBottom_toBottomOf="@id/descriptionLayout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:shapeAppearance="@style/ShapeAppearance.Button.CutCorners" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/addPostView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:enabled="@{viewModel.state != viewModel.State.LOADING}"
+                        android:onClick="@{() -> viewModel.editPost(descriptionView.getText().toString())}"
+                        android:paddingStart="48dp"
+                        android:paddingEnd="48dp"
+                        android:text="@string/edit_post_fragment_edit"
+                        app:shapeAppearance="@style/ShapeAppearance.Button.CutCorners" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/glVertical30"

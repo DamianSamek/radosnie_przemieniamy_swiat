@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/addPostFragment"
-        android:icon="@drawable/ic_add_photo"
+        android:icon="@drawable/ic_add_post"
         android:title="@string/bottom_menu_add_post" />
 
     <item
