@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.navArgs
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.fragment.BaseFragment
 import com.wsiz.projekt_zespolowy.databinding.EditPostFragmentLayoutBinding
@@ -21,8 +20,6 @@ class EditPostFragment : BaseFragment<EditPostViewModel>() {
 
     private lateinit var binding: EditPostFragmentLayoutBinding
     override val viewModel: EditPostViewModel by viewModels()
-
-    private val navArguments: EditPostFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,

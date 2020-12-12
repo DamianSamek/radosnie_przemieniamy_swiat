@@ -72,6 +72,7 @@
                             android:onClick="@{(view) -> viewModel.logout(view)}"
                             android:padding="12dp"
                             android:text="@string/user_fragment_log_out"
+                            android:textStyle="bold"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
                     </FrameLayout>
