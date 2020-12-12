@@ -8,7 +8,6 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.children
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
@@ -41,14 +40,15 @@ object BindingAdapter {
     fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>) {
         recyclerView.adapter = adapter
 
-        if(adapter is ConcatAdapter) {
-            for(subAdapter in adapter.adapters) {
-                subAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
-            }
-        }
-        else {
-            adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
-        }
+        /** Doesn't work as expected in 1.2.0-beta01 version **/
+//        if(adapter is ConcatAdapter) {
+//            for(subAdapter in adapter.adapters) {
+//                subAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+//            }
+//        }
+//        else {
+//            adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+//        }
     }
 
     @BindingAdapter("errorText", "cancelErrorEditText", "isErrorEnabled", requireAll = true)

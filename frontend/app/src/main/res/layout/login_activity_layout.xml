@@ -9,89 +9,95 @@
             type="com.wsiz.projekt_zespolowy.activity.login.LoginViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include
-            android:id="@+id/headerView"
-            layout="@layout/header_item"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
-            app:layout_constraintBottom_toTopOf="@+id/loginLayout" />
+            android:layout_marginBottom="24dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loginLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
-            errorText="@{@string/login_no_username}"
-            cancelErrorEditText="@{loginView}"
-            isErrorEnabled="@{viewModel.state == viewModel.state.NO_LOGIN || viewModel.state == viewModel.state.NO_LOGIN_AND_PASSWORD}"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:layout_constraintBottom_toTopOf="@+id/passwordLayout">
+            <include
+                android:id="@+id/headerView"
+                layout="@layout/header_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="60dp"
+                app:layout_constraintBottom_toTopOf="@+id/loginLayout" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/loginView"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loginLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                cancelErrorEditText="@{loginView}"
+                errorText="@{@string/login_no_username}"
+                isErrorEnabled="@{viewModel.state == viewModel.state.NO_LOGIN || viewModel.state == viewModel.state.NO_LOGIN_AND_PASSWORD}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:enabled="@{viewModel.state != viewModel.State.LOADING}"
-                android:hint="@string/login_username_hint"
-                android:inputType="text"
-                android:textColor="@android:color/black" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:layout_constraintBottom_toTopOf="@+id/passwordLayout">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="24dp"
-            errorText="@{@string/login_no_password}"
-            cancelErrorEditText="@{passwordView}"
-            isErrorEnabled="@{viewModel.state == viewModel.state.NO_PASSWORD || viewModel.state == viewModel.state.NO_LOGIN_AND_PASSWORD}"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:layout_constraintBottom_toTopOf="@+id/loginButton">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loginView"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:enabled="@{viewModel.state != viewModel.State.LOADING}"
+                    android:hint="@string/login_username_hint"
+                    android:inputType="text"
+                    android:textColor="@android:color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordView"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                cancelErrorEditText="@{passwordView}"
+                errorText="@{@string/login_no_password}"
+                isErrorEnabled="@{viewModel.state == viewModel.state.NO_PASSWORD || viewModel.state == viewModel.state.NO_LOGIN_AND_PASSWORD}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="24dp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:layout_constraintBottom_toTopOf="@+id/loginButton">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.state != viewModel.State.LOADING}"
+                    android:hint="@string/login_password_hint"
+                    android:inputType="textPassword"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintTop_toBottomOf="@+id/loginView" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
                 android:enabled="@{viewModel.state != viewModel.State.LOADING}"
-                android:hint="@string/login_password_hint"
-                android:inputType="textPassword"
-                android:textColor="@android:color/black"
-                app:layout_constraintTop_toBottomOf="@+id/loginView" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:onClick="@{() -> viewModel.login(loginView.getText().toString(), passwordView.getText().toString())}"
+                android:paddingStart="48dp"
+                android:paddingEnd="48dp"
+                android:text="@string/login_password_login"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:shapeAppearance="@style/ShapeAppearance.Button.CutCorners" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:enabled="@{viewModel.state != viewModel.State.LOADING}"
-            android:onClick="@{() -> viewModel.login(loginView.getText().toString(), passwordView.getText().toString())}"
-            android:paddingStart="48dp"
-            android:paddingEnd="48dp"
-            android:text="@string/login_password_login"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:shapeAppearance="@style/ShapeAppearance.Button.CutCorners" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glHorizontal50"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glHorizontal50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

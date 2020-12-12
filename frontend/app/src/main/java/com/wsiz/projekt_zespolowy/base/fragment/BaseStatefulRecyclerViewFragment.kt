@@ -13,14 +13,8 @@ abstract class BaseStatefulRecyclerViewFragment<ViewModel : BaseStatefulRecycler
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getRecyclerView()?.scrollToPosition(viewModel.adapterSavedPosition)
+        viewModel.setupRecyclerView(getRecyclerView())
     }
 
     abstract fun getRecyclerView(): RecyclerView?
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.adapterSavedPosition =
-            (getRecyclerView()?.layoutManager as LinearLayoutManager?)
-                ?.findLastCompletelyVisibleItemPosition() ?: 0
-    }
 }

@@ -9,118 +9,124 @@
             type="com.wsiz.projekt_zespolowy.fragment.add_post.AddPostViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/addImageCardView"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginTop="92dp"
-            android:enabled="@{viewModel.state != viewModel.State.LOADING &amp;&amp; viewModel.postImage == null}"
-            android:foreground="?selectableItemBackground"
-            app:cardBackgroundColor="@android:color/transparent"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:padding="18dp"
-                android:src="@drawable/ic_add_photo" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/imageCardView"
-            bitmap="@{viewModel.postImage}"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:layout_margin="12dp"
-            android:layout_marginTop="48dp"
-            app:cardCornerRadius="24dp"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="24dp">
 
-            <ImageView
-                android:id="@+id/postImageView"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/addImageCardView"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="92dp"
+                android:enabled="@{viewModel.state != viewModel.State.LOADING &amp;&amp; viewModel.postImage == null}"
+                android:foreground="?selectableItemBackground"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="60dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:padding="18dp"
+                    android:src="@drawable/ic_add_photo" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageCardView"
+                bitmap="@{viewModel.postImage}"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
-        </androidx.cardview.widget.CardView>
+                android:layout_height="320dp"
+                android:layout_margin="12dp"
+                android:layout_marginTop="48dp"
+                app:cardCornerRadius="24dp"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            android:enabled="@{viewModel.state != viewModel.State.LOADING}"
-            android:onClick="@{() -> viewModel.removeImage()}"
-            android:visibility="@{viewModel.postImage == null ? android.view.View.GONE : android.view.View.VISIBLE}"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="24dp"
-            android:foreground="?selectableItemBackground"
-            app:layout_constraintEnd_toEndOf="@+id/imageCardView"
-            app:layout_constraintTop_toTopOf="@+id/imageCardView">
+                <ImageView
+                    android:id="@+id/postImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:elevation="6dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_close" />
-        </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:enabled="@{viewModel.state != viewModel.State.LOADING}"
+                android:foreground="?selectableItemBackground"
+                android:onClick="@{() -> viewModel.removeImage()}"
+                android:visibility="@{viewModel.postImage == null ? android.view.View.GONE : android.view.View.VISIBLE}"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageCardView"
+                app:layout_constraintTop_toTopOf="@+id/imageCardView">
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/imageBottomBarrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="addImageCardView, imageCardView" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:elevation="6dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_close" />
+            </androidx.cardview.widget.CardView>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/descriptionLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            cancelErrorEditText="@{descriptionView}"
-            errorText="@{@string/add_post_fragment_no_description}"
-            isErrorEnabled="@{viewModel.state == viewModel.State.NO_DESCRIPTION || viewModel.state == viewModel.State.NO_IMAGE_AND_DESCRIPTION}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="12dp"
-            android:paddingBottom="72dp"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:layout_constraintTop_toBottomOf="@id/imageBottomBarrier">
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/imageBottomBarrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="addImageCardView, imageCardView" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/descriptionView"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/descriptionLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                cancelErrorEditText="@{descriptionView}"
+                errorText="@{@string/add_post_fragment_no_description}"
+                isErrorEnabled="@{viewModel.state == viewModel.State.NO_DESCRIPTION || viewModel.state == viewModel.State.NO_IMAGE_AND_DESCRIPTION}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:enabled="@{viewModel.state != viewModel.State.LOADING}"
-                android:hint="@string/add_post_fragment_post_description_hint"
-                android:maxLines="3" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="12dp"
+                android:paddingBottom="72dp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:layout_constraintTop_toBottomOf="@id/imageBottomBarrier">
 
-        <!--Bottom margin-->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/addPostView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:enabled="@{viewModel.state != viewModel.State.LOADING}"
-            android:onClick="@{() -> viewModel.addPost(descriptionView.getText().toString())}"
-            android:paddingStart="48dp"
-            android:paddingEnd="48dp"
-            android:text="@string/add_post_fragment_add_post"
-            app:layout_constraintBottom_toBottomOf="@id/descriptionLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:shapeAppearance="@style/ShapeAppearance.Button.CutCorners" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/descriptionView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:enabled="@{viewModel.state != viewModel.State.LOADING}"
+                    android:hint="@string/add_post_fragment_post_description_hint"
+                    android:maxLines="3" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Bottom margin-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addPostView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:enabled="@{viewModel.state != viewModel.State.LOADING}"
+                android:onClick="@{() -> viewModel.addPost(descriptionView.getText().toString())}"
+                android:paddingStart="48dp"
+                android:paddingEnd="48dp"
+                android:text="@string/add_post_fragment_add_post"
+                app:layout_constraintBottom_toBottomOf="@id/descriptionLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:shapeAppearance="@style/ShapeAppearance.Button.CutCorners" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
