@@ -35,7 +35,6 @@
                 android:id="@+id/loginLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 cancelErrorEditText="@{loginView}"
-                errorText="@{@string/login_no_username}"
                 isErrorEnabled="@{viewModel.state == viewModel.state.NO_LOGIN || viewModel.state == viewModel.state.NO_LOGIN_AND_PASSWORD}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,13 +54,13 @@
                     android:enabled="@{viewModel.state != viewModel.State.LOADING}"
                     android:hint="@string/login_username_hint"
                     android:inputType="text"
+                    android:nextFocusDown="@id/passwordView"
                     android:textColor="@android:color/black" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/passwordLayout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     cancelErrorEditText="@{passwordView}"
-                    errorText="@{@string/login_no_password}"
                     isErrorEnabled="@{viewModel.state == viewModel.state.NO_PASSWORD || viewModel.state == viewModel.state.NO_LOGIN_AND_PASSWORD}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

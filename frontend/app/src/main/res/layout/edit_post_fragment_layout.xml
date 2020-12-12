@@ -75,7 +75,6 @@
                     android:id="@+id/descriptionLayout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     cancelErrorEditText="@{descriptionView}"
-                    errorText="@{@string/add_post_fragment_no_description}"
                     isErrorEnabled="@{viewModel.state == viewModel.State.NO_DESCRIPTION}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

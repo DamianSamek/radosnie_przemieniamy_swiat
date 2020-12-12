@@ -51,19 +51,19 @@ object BindingAdapter {
 //        }
     }
 
-    @BindingAdapter("errorText", "cancelErrorEditText", "isErrorEnabled", requireAll = true)
+    @BindingAdapter("cancelErrorEditText", "isErrorEnabled", requireAll = true)
     @JvmStatic
     fun setError(
         textInputLayout: TextInputLayout,
-        error: String,
         editText: EditText,
         isErrorEnabled: Boolean
     ) {
         if (isErrorEnabled) {
-            textInputLayout.error = error
+            textInputLayout.isErrorEnabled = true
+            textInputLayout.error = " "
 
             editText.doOnTextChanged { text, _, _, _ ->
-                textInputLayout.isErrorEnabled = text.isNullOrEmpty()
+                textInputLayout.isErrorEnabled =  textInputLayout.isErrorEnabled && text.isNullOrEmpty()
             }
         } else {
             textInputLayout.isErrorEnabled = false
