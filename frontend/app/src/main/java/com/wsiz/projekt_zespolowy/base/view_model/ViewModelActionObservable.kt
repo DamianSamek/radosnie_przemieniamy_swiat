@@ -1,4 +1,4 @@
-package com.wsiz.projekt_zespolowy.base.fragment.view_model
+package com.wsiz.projekt_zespolowy.base.view_model
 
 import com.wsiz.projekt_zespolowy.utils.RxUtils
 import io.reactivex.disposables.Disposable

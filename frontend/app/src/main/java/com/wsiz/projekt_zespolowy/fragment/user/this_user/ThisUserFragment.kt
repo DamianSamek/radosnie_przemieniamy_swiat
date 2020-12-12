@@ -3,6 +3,7 @@ package com.wsiz.projekt_zespolowy.fragment.user.this_user
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.recyclerview.widget.RecyclerView
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
@@ -40,5 +41,9 @@ class ThisUserFragment : UserFragment<ThisUserFragmentLayoutBinding, ThisUserVie
             }
             is UserViewModel.State.PostClick -> onPostClick(state.cardView, state.userPost)
         }
+    }
+
+    override fun getRecyclerView(): RecyclerView {
+        return binding.recyclerView
     }
 }

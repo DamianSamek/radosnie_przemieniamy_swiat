@@ -3,7 +3,7 @@ package com.wsiz.projekt_zespolowy.fragment.add_post
 import android.graphics.Bitmap
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import com.wsiz.projekt_zespolowy.base.fragment.view_model.BaseViewModel
+import com.wsiz.projekt_zespolowy.base.view_model.BaseViewModel
 import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.network.FirebaseStorageService
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository

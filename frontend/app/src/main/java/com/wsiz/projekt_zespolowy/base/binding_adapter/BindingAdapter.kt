@@ -1,4 +1,4 @@
-package com.wsiz.projekt_zespolowy.base.fragment.view_model.binding_adapter
+package com.wsiz.projekt_zespolowy.base.binding_adapter
 
 import android.graphics.Bitmap
 import android.view.View
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
-import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BaseAdapter
 
 object BindingAdapter {
 

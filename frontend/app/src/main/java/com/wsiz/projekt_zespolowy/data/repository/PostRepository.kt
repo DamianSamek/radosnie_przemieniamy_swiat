@@ -1,6 +1,6 @@
 package com.wsiz.projekt_zespolowy.data.repository
 
-import com.wsiz.projekt_zespolowy.base.fragment.view_model.ViewModelActionObservable
+import com.wsiz.projekt_zespolowy.base.view_model.ViewModelActionObservable
 import com.wsiz.projekt_zespolowy.data.dto.EditPost
 import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.dto.UserPost

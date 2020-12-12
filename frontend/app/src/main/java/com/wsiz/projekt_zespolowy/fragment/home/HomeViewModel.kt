@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ConcatAdapter
 import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
 import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.HeaderRecycleViewAdapter
-import com.wsiz.projekt_zespolowy.base.fragment.view_model.BaseViewModel
+import com.wsiz.projekt_zespolowy.base.view_model.BaseStatefulRecyclerViewViewModel
+import com.wsiz.projekt_zespolowy.base.view_model.BaseViewModel
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
 import io.reactivex.Single
 
 class HomeViewModel @ViewModelInject constructor(private val postRepository: PostRepository) :
-    BaseViewModel<HomeViewModel.State>(), BasePostsAdapter.PostInteractionContract {
+    BaseStatefulRecyclerViewViewModel<HomeViewModel.State>(), BasePostsAdapter.PostInteractionContract {
 
     sealed class State {
         class OnPostClick(val cardView: CardView, val userPost: UserPost) : State()

@@ -2,7 +2,7 @@ package com.wsiz.projekt_zespolowy.activity.login
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import com.wsiz.projekt_zespolowy.base.fragment.view_model.BaseViewModel
+import com.wsiz.projekt_zespolowy.base.view_model.BaseViewModel
 import com.wsiz.projekt_zespolowy.data.dto.Login
 import com.wsiz.projekt_zespolowy.data.repository.UserRepository
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences

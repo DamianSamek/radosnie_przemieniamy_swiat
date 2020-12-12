@@ -12,14 +12,15 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.recyclerview.widget.RecyclerView
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.base.fragment.BaseFragment
+import com.wsiz.projekt_zespolowy.base.fragment.BaseStatefulRecyclerViewFragment
 import com.wsiz.projekt_zespolowy.data.dto.Article
 import com.wsiz.projekt_zespolowy.databinding.ArticlesFragmentLayoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
+class ArticlesFragment : BaseStatefulRecyclerViewFragment<ArticlesViewModel>() {
 
     private lateinit var binding: ArticlesFragmentLayoutBinding
     override val viewModel: ArticlesViewModel by viewModels()
@@ -46,7 +47,13 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
                     onErrorLoading(it.error)
                 }
                 is ArticlesViewModel.State.PostClick -> {
-                    onArticleClick(it.cardView, it.titleView, it.contentView, it.separatorView, it.article)
+                    onArticleClick(
+                        it.cardView,
+                        it.titleView,
+                        it.contentView,
+                        it.separatorView,
+                        it.article
+                    )
                 }
             }
         })
@@ -57,7 +64,13 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
         Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
     }
 
-    private fun onArticleClick(cardView: CardView, titleView: TextView, contentView: TextView, separatorView: View, article: Article) {
+    private fun onArticleClick(
+        cardView: CardView,
+        titleView: TextView,
+        contentView: TextView,
+        separatorView: View,
+        article: Article
+    ) {
         val extras = FragmentNavigatorExtras(
             cardView to "articleTransition",
             titleView to "articleTransitionTitle",
@@ -67,5 +80,9 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
         val direction =
             ArticlesFragmentDirections.actionArticlesFragmentToOneArticleFragment(article)
         mainActivity().navigateTo(direction, extras)
+    }
+
+    override fun getRecyclerView(): RecyclerView {
+        return binding.recyclerView
     }
 }

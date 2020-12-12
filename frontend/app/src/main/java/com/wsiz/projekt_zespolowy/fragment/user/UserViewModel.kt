@@ -3,9 +3,10 @@ package com.wsiz.projekt_zespolowy.fragment.user
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.wsiz.projekt_zespolowy.base.fragment.view_model.BaseViewModel
-import com.wsiz.projekt_zespolowy.base.fragment.view_model.ViewModelActionObservable
+import com.wsiz.projekt_zespolowy.base.view_model.BaseViewModel
+import com.wsiz.projekt_zespolowy.base.view_model.ViewModelActionObservable
 import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
+import com.wsiz.projekt_zespolowy.base.view_model.BaseStatefulRecyclerViewViewModel
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
 import io.reactivex.Single
@@ -13,7 +14,7 @@ import io.reactivex.Single
 abstract class UserViewModel(
     private val userId: Int,
     private val postRepository: PostRepository
-) : BaseViewModel<UserViewModel.State>(), BasePostsAdapter.PostInteractionContract {
+) : BaseStatefulRecyclerViewViewModel<UserViewModel.State>(), BasePostsAdapter.PostInteractionContract {
 
     // Cannot use sealed class because need additional <OpenAddPost out State> class in ThisUserViewModel. Issue: https://youtrack.jetbrains.com/issue/KT-13495
     open class State {

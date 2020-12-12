@@ -10,12 +10,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.wsiz.projekt_zespolowy.R
 import com.wsiz.projekt_zespolowy.base.fragment.BaseFragment
+import com.wsiz.projekt_zespolowy.base.fragment.BaseStatefulRecyclerViewFragment
 
-abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : BaseFragment<VM>() {
+abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : BaseStatefulRecyclerViewFragment<VM>() {
 
-    private lateinit var binding: Binding
+    protected lateinit var binding: Binding
 
     @LayoutRes
     abstract fun getLayoutId(): Int
@@ -41,7 +44,7 @@ abstract class UserFragment<Binding : ViewDataBinding, VM : UserViewModel> : Bas
 
     private fun observeViewModelState() {
         viewModel.state.observe(viewLifecycleOwner, Observer {
-            when(it) {
+            when (it) {
                 null -> return@Observer
                 is UserViewModel.State.ErrorLoading -> {
                     val context = context ?: return@Observer

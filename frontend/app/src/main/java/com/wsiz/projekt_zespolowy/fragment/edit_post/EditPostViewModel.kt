@@ -4,7 +4,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import com.wsiz.projekt_zespolowy.base.fragment.view_model.BaseViewModel
+import com.wsiz.projekt_zespolowy.base.view_model.BaseViewModel
 import com.wsiz.projekt_zespolowy.data.dto.EditPost
 import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.network.FirebaseStorageService

@@ -10,8 +10,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.wsiz.projekt_zespolowy.R
-import com.wsiz.projekt_zespolowy.base.fragment.BaseFragment
+import com.wsiz.projekt_zespolowy.base.fragment.BaseStatefulRecyclerViewFragment
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.databinding.HomeFragmentLayoutBinding
@@ -19,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<HomeViewModel>() {
+class HomeFragment : BaseStatefulRecyclerViewFragment<HomeViewModel>() {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
@@ -71,5 +72,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
                 HomeFragmentDirections.actionHomeFragmentToOtherUserFragment(userPost.userId)
             )
         }
+    }
+
+    override fun getRecyclerView(): RecyclerView {
+        return binding.recyclerView
     }
 }

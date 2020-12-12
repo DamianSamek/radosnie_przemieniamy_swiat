@@ -7,13 +7,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ConcatAdapter
 import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.HeaderRecycleViewAdapter
-import com.wsiz.projekt_zespolowy.base.fragment.view_model.BaseViewModel
+import com.wsiz.projekt_zespolowy.base.view_model.BaseStatefulRecyclerViewViewModel
 import com.wsiz.projekt_zespolowy.data.dto.Article
 import com.wsiz.projekt_zespolowy.data.repository.ArticleRepository
 import io.reactivex.Single
 
 class ArticlesViewModel @ViewModelInject constructor(private val articleRepository: ArticleRepository) :
-    BaseViewModel<ArticlesViewModel.State>(),
+    BaseStatefulRecyclerViewViewModel<ArticlesViewModel.State>(),
     ArticlesRecyclerViewAdapter.ArticleInteractionContract {
 
     private var recyclerViewAdapter: ConcatAdapter? = null
