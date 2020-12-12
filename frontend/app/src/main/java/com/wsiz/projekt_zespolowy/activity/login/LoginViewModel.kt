@@ -13,13 +13,16 @@ class LoginViewModel @ViewModelInject constructor(
 ) : BaseViewModel<LoginViewModel.State>() {
 
     enum class State {
-        NO_LOGIN, NO_PASSWORD, LOADING, ERROR, SUCCESS
+        NO_LOGIN_AND_PASSWORD, NO_LOGIN, NO_PASSWORD, LOADING, ERROR, SUCCESS
     }
 
     override val state = MutableLiveData<State>()
 
     fun login(username: String, password: String) {
         when {
+            username.isEmpty() and password.isEmpty() -> {
+                state.postValue(State.NO_LOGIN_AND_PASSWORD)
+            }
             username.isEmpty() -> {
                 state.postValue(State.NO_LOGIN)
             }

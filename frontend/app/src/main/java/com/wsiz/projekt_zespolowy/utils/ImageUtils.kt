@@ -22,8 +22,8 @@ object ImageUtils {
             val input = activity.contentResolver?.openInputStream(imageData)
             val bitmap = BitmapFactory.decodeStream(input)
 
-            // 200 kB
-            scaleToFileSize(activity, bitmap, 1 * 1000 * 200)
+            // 500 kB
+            scaleToFileSize(activity, bitmap, 1 * 1000 * 500)
         } else {
             null
         }

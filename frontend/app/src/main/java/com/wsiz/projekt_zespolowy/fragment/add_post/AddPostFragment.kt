@@ -53,17 +53,18 @@ class AddPostFragment : BaseFragment<AddPostViewModel>() {
         viewModel.state.observe(viewLifecycleOwner, Observer { postState ->
             val context = context ?: return@Observer
             when (postState) {
-                null, AddPostViewModel.State.LOADING -> return@Observer
                 AddPostViewModel.State.NO_IMAGE -> Toast.makeText(
                     context,
                     R.string.add_post_fragment_no_image,
                     Toast.LENGTH_LONG
                 ).show()
-                AddPostViewModel.State.NO_DESCRIPTION -> Toast.makeText(
-                    context,
-                    R.string.add_post_fragment_no_description,
-                    Toast.LENGTH_LONG
-                ).show()
+                AddPostViewModel.State.NO_IMAGE_AND_DESCRIPTION -> {
+                    Toast.makeText(
+                        context,
+                        R.string.add_post_fragment_no_image_and_description,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
                 AddPostViewModel.State.ERROR -> Toast.makeText(
                     context,
                     R.string.error,
@@ -73,15 +74,10 @@ class AddPostFragment : BaseFragment<AddPostViewModel>() {
                     Toast.makeText(context, R.string.add_post_fragment_success, Toast.LENGTH_LONG)
                         .show()
                     mainActivity().navigateTo(AddPostFragmentDirections.actionAddPostFragmentToThisUserFragment())
-
-                    forgetData()
                 }
+                else -> return@Observer
             }
         })
-    }
-
-    private fun forgetData() {
-        binding.descriptionView.setText("")
     }
 
     private fun openGallery() {

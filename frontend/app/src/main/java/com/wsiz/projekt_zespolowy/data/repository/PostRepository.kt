@@ -1,5 +1,6 @@
 package com.wsiz.projekt_zespolowy.data.repository
 
+import com.wsiz.projekt_zespolowy.base.fragment.view_model.ViewModelActionObservable
 import com.wsiz.projekt_zespolowy.data.dto.EditPost
 import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
@@ -12,16 +13,20 @@ import javax.inject.Inject
 
 class PostRepository @Inject constructor(private val postService: PostService) {
 
+    private fun Completable.notifyPostsChanged(): Completable {
+        return this.doOnComplete { ViewModelActionObservable.userPostsUpdated() }
+    }
+
     fun create(post: Post): Completable {
-        return postService.create(post)
+        return postService.create(post).notifyPostsChanged()
     }
 
     fun delete(postId: Int): Completable {
-        return postService.delete(postId)
+        return postService.delete(postId).notifyPostsChanged()
     }
 
     fun update(post: EditPost): Completable {
-        return postService.update(post)
+        return postService.update(post).notifyPostsChanged()
     }
 
     fun getAll(pageNumber: Int): Single<List<UserPost>> {

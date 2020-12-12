@@ -10,9 +10,19 @@ import io.reactivex.schedulers.Schedulers
 
 abstract class BaseViewModel<State> : ViewModel() {
 
+    abstract val state: MutableLiveData<State>
+
     private val compositeDisposable = CompositeDisposable()
 
-    abstract val state: MutableLiveData<State>
+    init {
+        ViewModelActionObservable.subscribe { onViewModelAction(it) }.also {
+            compositeDisposable.add(it)
+        }
+    }
+
+    protected open fun onViewModelAction(viewModelAction: ViewModelActionObservable.ViewModelAction) {
+        // Empty
+    }
 
     protected fun <T> Single<T>.io(onSuccess: (T) -> Unit, onError: (Throwable) -> Unit) {
         compositeDisposable.add(
@@ -28,8 +38,12 @@ abstract class BaseViewModel<State> : ViewModel() {
         )
     }
 
-    fun onViewDestroyed() {
+    open fun onViewDestroyed() {
         state.postValue(null)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
         compositeDisposable.dispose()
     }
 }

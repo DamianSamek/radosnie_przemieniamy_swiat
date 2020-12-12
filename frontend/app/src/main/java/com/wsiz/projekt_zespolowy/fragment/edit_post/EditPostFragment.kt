@@ -28,12 +28,11 @@ class EditPostFragment : BaseFragment<EditPostViewModel>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.edit_post_fragment_layout, container, false)
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, viewModel)
-        binding.setVariable(BR.post, navArguments.post)
         return binding.root
     }
 
@@ -50,12 +49,6 @@ class EditPostFragment : BaseFragment<EditPostViewModel>() {
         viewModel.state.observe(viewLifecycleOwner, Observer { postState ->
             val context = context ?: return@Observer
             when (postState) {
-                null, EditPostViewModel.State.INIT, EditPostViewModel.State.LOADING -> return@Observer
-                EditPostViewModel.State.NO_DESCRIPTION -> Toast.makeText(
-                    context,
-                    R.string.add_post_fragment_no_description,
-                    Toast.LENGTH_LONG
-                ).show()
                 EditPostViewModel.State.ERROR -> Toast.makeText(
                     context,
                     R.string.error,
@@ -71,6 +64,10 @@ class EditPostFragment : BaseFragment<EditPostViewModel>() {
                         .show()
                     mainActivity().navigateUp()
                 }
+                EditPostViewModel.State.NO_CHANGES -> {
+                    mainActivity().navigateUp()
+                }
+                else -> return@Observer
             }
         })
     }

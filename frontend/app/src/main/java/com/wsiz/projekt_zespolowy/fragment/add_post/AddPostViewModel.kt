@@ -14,7 +14,7 @@ class AddPostViewModel @ViewModelInject constructor(
 ) : BaseViewModel<AddPostViewModel.State>() {
 
     enum class State {
-        NO_IMAGE, NO_DESCRIPTION, LOADING, ERROR, SUCCESS
+        NO_IMAGE_AND_DESCRIPTION, NO_IMAGE, NO_DESCRIPTION, LOADING, ERROR, SUCCESS
     }
 
     override val state = MutableLiveData<State>()
@@ -32,6 +32,9 @@ class AddPostViewModel @ViewModelInject constructor(
         val bitmap = postImage.value
 
         when {
+            (bitmap == null) and description.isEmpty() -> {
+                state.postValue(State.NO_IMAGE_AND_DESCRIPTION)
+            }
             bitmap == null -> {
                 state.postValue(State.NO_IMAGE)
             }

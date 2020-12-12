@@ -93,5 +93,13 @@
             android:name="post"
             app:argType="com.wsiz.projekt_zespolowy.data.dto.Post"
             app:nullable="false" />
+
+        <action
+            android:id="@+id/action_editPostFragment_to_thisUserFragment"
+            app:destination="@id/thisUserFragment"
+            app:enterAnim="@anim/appearing_alpha"
+            app:exitAnim="@anim/disappearing_alpha"
+            app:popEnterAnim="@anim/appearing_alpha"
+            app:popExitAnim="@anim/disappearing_alpha" />
     </fragment>
 </navigation>

@@ -3,9 +3,9 @@ package com.wsiz.projekt_zespolowy.fragment.user
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
 import com.wsiz.projekt_zespolowy.base.fragment.view_model.BaseViewModel
-import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.PaginationAdapter
+import com.wsiz.projekt_zespolowy.base.fragment.view_model.ViewModelActionObservable
+import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
 import io.reactivex.Single
@@ -34,7 +34,7 @@ abstract class UserViewModel(
     }
 
     fun getRecyclerViewAdapter(): RecyclerView.Adapter<*> {
-        if(adapter == null) {
+        if (adapter == null) {
             adapter = buildRecycleViewAdapter()
         }
 
@@ -57,5 +57,11 @@ abstract class UserViewModel(
 
     override fun loadMoreData(pageNumber: Int): Single<List<UserPost>> {
         return loadPosts(userId, pageNumber)
+    }
+
+    override fun onViewModelAction(viewModelAction: ViewModelActionObservable.ViewModelAction) {
+        if (viewModelAction is ViewModelActionObservable.ViewModelAction.UserPostsUpdated) {
+            adapter = null
+        }
     }
 }

@@ -2,10 +2,11 @@
     <string name="app_name">Radośnie Przemieniamy Świat</string>
 
     <!--    AddPostFragment-->
-    <string name="add_post_fragment_post_description_hint">Dodaj opis</string>
+    <string name="add_post_fragment_post_description_hint">Opis</string>
     <string name="add_post_fragment_add_post">Dodaj</string>
     <string name="add_post_fragment_choose_image">Wybierz zdjęcie</string>
     <string name="add_post_fragment_no_image">Wybierz zdjęcie</string>
+    <string name="add_post_fragment_no_image_and_description">Wybierz zdjęcie i wpisz opis</string>
     <string name="add_post_fragment_no_description">Opis nie może być pusty</string>
     <string name="add_post_fragment_success">Post został dodany</string>
 
