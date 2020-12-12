@@ -28,6 +28,9 @@ abstract class PaginationAdapter<VH: PaginationAdapter.BasePaginationViewHolder,
 
     val isNoItems = MutableLiveData<Boolean>()
 
+    // test only
+    var received = false
+
     private val compositeDisposable = CompositeDisposable()
 
     protected val items = mutableListOf<ItemsType>()
@@ -65,7 +68,8 @@ abstract class PaginationAdapter<VH: PaginationAdapter.BasePaginationViewHolder,
     private fun addItems(newItems: List<ItemsType>) {
         if (newItems.isEmpty() && pageNumber == 0) onEmpty()
 
-        loadingStatus = if (newItems.isEmpty()) {
+        // to test (remove "|| received" when production)
+        loadingStatus = if (newItems.isEmpty() || received) {
             // last page was loaded
 
             notifyItemChanged(itemCount - 1)
@@ -73,6 +77,8 @@ abstract class PaginationAdapter<VH: PaginationAdapter.BasePaginationViewHolder,
             isNoItems.postValue(items.size == 0)
             LoadingStatus.LAST_PAGE_LOADED
         } else {
+            // to test
+            received = true
             items.addAll(newItems)
             notifyItemRangeInserted(itemCount - newItems.size, newItems.size)
 
