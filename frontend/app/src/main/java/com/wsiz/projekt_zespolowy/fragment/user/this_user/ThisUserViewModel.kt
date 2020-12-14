@@ -22,6 +22,7 @@ class ThisUserViewModel @ViewModelInject constructor(
         sharedPreferences.apply {
             putToken("")
             putUserId(-1)
+            putUserName("")
         }
 
         val intent = Intent(context, LoginActivity::class.java)
