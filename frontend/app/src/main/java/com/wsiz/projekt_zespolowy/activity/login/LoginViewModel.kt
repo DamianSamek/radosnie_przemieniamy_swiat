@@ -47,7 +47,7 @@ class LoginViewModel @ViewModelInject constructor(
 
             sharedPreferences.putUserId(userLoginResponse.id)
             sharedPreferences.putToken(token)
-            sharedPreferences.putUserName(userLoginResponse.name)
+            sharedPreferences.putUserName(userLoginResponse.name ?: "")
             state.postValue(State.SUCCESS)
         }, { state.postValue(State.ERROR) })
     }
