@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.wsiz.projekt_zespolowy.fragment.user.other_user.OtherUserViewModel" />
+            type="com.wsiz.projekt_zespolowy.fragment.user.OtherUserViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.wsiz.projekt_zespolowy.fragment.user.this_user.ThisUserViewModel" />
+            type="com.wsiz.projekt_zespolowy.fragment.user.ThisUserViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

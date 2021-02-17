@@ -1,4 +1,4 @@
-package com.wsiz.projekt_zespolowy.fragment.user.this_user
+package com.wsiz.projekt_zespolowy.fragment.user
 
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
@@ -9,8 +9,6 @@ import com.wsiz.projekt_zespolowy.data.dto.Post
 import com.wsiz.projekt_zespolowy.data.dto.UserPost
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
 import com.wsiz.projekt_zespolowy.databinding.ThisUserFragmentLayoutBinding
-import com.wsiz.projekt_zespolowy.fragment.user.UserFragment
-import com.wsiz.projekt_zespolowy.fragment.user.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -30,7 +28,9 @@ class ThisUserFragment : UserFragment<ThisUserFragmentLayoutBinding, ThisUserVie
         )
 
         val direction =
-            ThisUserFragmentDirections.actionThisUserFragmentToEditPostFragment(Post.map(userPost))
+            ThisUserFragmentDirections.actionThisUserFragmentToEditPostFragment(
+                Post.map(userPost)
+            )
         mainActivity().navigateTo(direction, extras)
     }
 

@@ -1,4 +1,4 @@
-package com.wsiz.projekt_zespolowy.fragment.user.this_user
+package com.wsiz.projekt_zespolowy.fragment.user
 
 import android.content.Intent
 import android.view.View
@@ -7,7 +7,6 @@ import com.wsiz.projekt_zespolowy.activity.login.LoginActivity
 import com.wsiz.projekt_zespolowy.base.recycler_view_adapter.BasePostsAdapter
 import com.wsiz.projekt_zespolowy.data.repository.PostRepository
 import com.wsiz.projekt_zespolowy.data.shared_preferences.SharedPreferences
-import com.wsiz.projekt_zespolowy.fragment.user.UserViewModel
 
 class ThisUserViewModel @ViewModelInject constructor(
     private val sharedPreferences: SharedPreferences,

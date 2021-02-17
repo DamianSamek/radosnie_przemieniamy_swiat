@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/thisUserFragment"
-        android:name="com.wsiz.projekt_zespolowy.fragment.user.this_user.ThisUserFragment"
+        android:name="com.wsiz.projekt_zespolowy.fragment.user.ThisUserFragment"
         tools:layout="@layout/this_user_fragment_layout">
 
         <action
@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/otherUserFragment"
-        android:name="com.wsiz.projekt_zespolowy.fragment.user.other_user.OtherUserFragment"
+        android:name="com.wsiz.projekt_zespolowy.fragment.user.OtherUserFragment"
         tools:layout="@layout/other_user_fragment_layout">
 
         <argument
